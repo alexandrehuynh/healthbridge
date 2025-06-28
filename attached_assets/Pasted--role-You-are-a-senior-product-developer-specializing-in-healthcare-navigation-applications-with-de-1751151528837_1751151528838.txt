@@ -1,0 +1,240 @@
+<role>
+You are a senior product developer specializing in healthcare navigation applications with deep expertise in Quebec's healthcare system (RAMQ), immigration patterns, and provincial insurance regulations.
+</role>
+
+<task>
+Pivot HealthBridge from a Canada-wide application to a Quebec-focused MVP that specifically serves the 50,000+ new permanent residents and 25,000+ international students arriving in Quebec annually. Update all content, data structures, statistics, and user flows to reflect Quebec's unique healthcare rules and waiting periods.
+</task>
+
+<context>
+We're focusing on Quebec because it has the most complex and unique healthcare eligibility rules in Canada, with definite waiting periods and exceptions that most newcomers don't understand. Quebec's distinct rules around RAMQ eligibility, social security agreements, and the 5-day private insurance recommendation create a clear value proposition for a specialized navigation tool.
+
+Quebec represents Canada's second-largest immigrant destination with specific challenges: mandatory 3-month RAMQ waiting periods, work permits often being ineligible (unlike other provinces), bilateral agreements with 30+ countries that can waive waiting periods, and critical 5-day window for private insurance enrollment.
+</context>
+
+<quebec_specific_changes_required>
+**1. Update All Statistics and Copy**
+- Change "400,000+ New Canadians" to "50,000+ New Quebecers" 
+- Update "90 day waiting period" to "3-month RAMQ waiting period"
+- Replace generic Canadian references with Quebec-specific information
+- Update medical cost examples to Quebec healthcare rates
+
+**2. Remove Provincial Selection**
+- Eliminate province dropdown from assessment wizard
+- All logic should assume Quebec as the province
+- Update waiting period calculations for Quebec's specific 3-month rule
+- Focus entirely on RAMQ eligibility and Quebec insurance options
+
+**3. Add Quebec-Specific Questions**
+- "What country are you from?" (to check social security agreements)
+- "When did you submit your RAMQ application?" (waiting period starts from submission)
+- "Have you purchased private insurance within 5 days?" (Quebec recommendation)
+- Quebec-specific immigration status questions
+
+**4. Update Insurance Provider Data**
+- Focus on insurance companies operating in Quebec
+- Include Quebec-specific plans and pricing
+- Add bilingual insurance options (French/English)
+- Update coverage to Quebec healthcare context
+
+**5. Add Social Security Agreement Logic**
+- Include list of 30+ countries with Quebec bilateral agreements
+- Show different waiting period rules for agreement countries
+- Explain waiver possibilities for eligible countries
+</quebec_specific_changes_required>
+
+<quebec_healthcare_rules>
+**RAMQ Eligibility Rules to Implement:**
+
+```javascript
+const quebecEligibilityRules = {
+  permanent_resident: {
+    waiting_period: 90, // 3 months from application submission
+    eligible: true,
+    notes: "3-month waiting period applies to most PRs"
+  },
+  
+  work_permit: {
+    waiting_period: null,
+    eligible: false, // Unlike other provinces!
+    notes: "Work permit holders generally NOT eligible for RAMQ",
+    exceptions: ["Temporary foreign workers in specific programs"]
+  },
+  
+  study_permit: {
+    eligible: false,
+    notes: "International students must have private insurance",
+    requirements: ["Full-time enrollment", "Private health insurance mandatory"]
+  },
+  
+  social_security_countries: {
+    // Countries with bilateral agreements - no waiting period
+    eligible_countries: [
+      "France", "Belgium", "Denmark", "Finland", "Luxembourg", 
+      "Norway", "Portugal", "Sweden", "Greece", "United States",
+      // ... add full list of 30+ countries
+    ],
+    benefit: "No waiting period for citizens of agreement countries"
+  }
+};
+```
+
+**Key Quebec Rules:**
+- Waiting period starts from RAMQ application submission, not arrival
+- 5-day recommendation for private insurance purchase
+- Work permits generally not eligible (major difference from other provinces)
+- Social security agreements can eliminate waiting periods entirely
+- Children under 18 may have different rules
+</quebec_healthcare_rules>
+
+<updated_user_flow>
+**New Quebec-Focused Assessment Flow:**
+
+**Step 1: Immigration Status**
+- Permanent Resident
+- Work Permit Holder  
+- International Student
+- Visitor/Tourist
+
+**Step 2: Country of Origin** (NEW - for social security agreements)
+- Dropdown of countries
+- Highlight countries with Quebec bilateral agreements
+- Show "No waiting period!" for agreement countries
+
+**Step 3: RAMQ Application Status** (Quebec-specific)
+- "Have you submitted your RAMQ application?" (Yes/No)
+- "When did you submit it?" (Date picker)
+- "Have you received your RAMQ card?" (Yes/No)
+
+**Step 4: Insurance Status** (Quebec-specific)
+- "Have you purchased private insurance within 5 days of arrival?" (Quebec recommendation)
+- "What type of coverage do you currently have?" (None/Basic/Comprehensive)
+
+**Step 5: Family Information**
+- Family size
+- Any children under 18 (different rules may apply)
+- Mixed immigration status families
+</updated_user_flow>
+
+<quebec_specific_content>
+**Landing Page Updates:**
+```javascript
+const quebecHeroContent = {
+  title: "Navigate Quebec Healthcare with Confidence",
+  subtitle: "Don't Face Unexpected Medical Bills in Quebec",
+  description: "Navigate your RAMQ waiting period with confidence. Get personalized insurance recommendations and avoid $3,000-8,000+ medical expenses during your first 3 months in Quebec.",
+  trustIndicator: "Trusted by 50,000+ New Quebecers",
+  
+  keyStats: [
+    { number: "50,000+", label: "New PRs in Quebec annually" },
+    { number: "3", label: "Month RAMQ waiting period" },
+    { number: "$5,500", label: "Average uninsured medical bill" },
+    { number: "$85", label: "Average monthly Quebec coverage" }
+  ]
+};
+```
+
+**Quebec-Specific Features to Add:**
+- RAMQ application timeline and checklist
+- Social security agreement country checker
+- Quebec insurance provider directory
+- 5-day insurance enrollment reminder
+- Bilingual resource links (French/English)
+- Quebec settlement services directory
+</quebec_specific_content>
+
+<insurance_data_updates>
+**Update Insurance Provider Data for Quebec:**
+
+```javascript
+const quebecInsuranceProviders = [
+  {
+    name: "Desjardins Visitor Insurance",
+    price: 75,
+    coverage: "$1M emergency medical",
+    features: ["Hospital coverage", "Emergency transportation", "Bilingual service"],
+    quoteUrl: "https://www.desjardins.com/ca/personal/insurance/travel/visitors-canada/",
+    badge: "Most Popular in Quebec"
+  },
+  
+  {
+    name: "Blue Cross Quebec Plan",
+    price: 85, 
+    coverage: "$2M emergency + prescription",
+    features: ["Prescription drugs", "24/7 French helpline", "Pre-existing coverage"],
+    quoteUrl: "https://www.qc.bluecross.ca/",
+    badge: "Comprehensive"
+  },
+  
+  {
+    name: "Sun Life Essential Quebec",
+    price: 65,
+    coverage: "$500K emergency medical",
+    features: ["Basic emergency", "Ambulance coverage", "Budget-friendly"],
+    quoteUrl: "https://www.sunlife.ca/ca/insurance/health-insurance/travel-insurance/",
+    badge: "Budget Option"
+  }
+];
+```
+</insurance_data_updates>
+
+<bilingual_considerations>
+**Add Quebec Bilingual Elements:**
+- Insurance provider information in both French and English
+- Key healthcare terms glossary (RAMQ, Régie, carte d'assurance maladie)
+- Links to French-language RAMQ resources
+- Bilingual settlement services directory
+- Option to display interface in French (future enhancement)
+
+**Quebec Healthcare Terminology:**
+- RAMQ = Régie de l'assurance maladie du Québec
+- Carte d'assurance maladie = Health insurance card
+- Période d'attente = Waiting period
+- Assurance privée = Private insurance
+</bilingual_considerations>
+
+<implementation_priorities>
+**Update in this order:**
+
+1. **Landing Page Content** - Change all copy to Quebec-specific
+2. **Remove Provincial Selection** - Hardcode Quebec as the province
+3. **Update Statistics** - Quebec-specific numbers throughout
+4. **Add Country Selection** - For social security agreement checking
+5. **Update Assessment Questions** - Quebec-specific RAMQ questions
+6. **Update Insurance Data** - Quebec insurance providers and pricing
+7. **Add Social Security Logic** - Country agreement checking
+8. **Update Results Pages** - RAMQ-focused recommendations
+9. **Add Quebec Resources** - Settlement services, RAMQ links
+10. **Test Complete Flow** - Ensure Quebec focus throughout
+</implementation_priorities>
+
+<output_format>
+**Please implement these changes systematically:**
+
+1. **Show me the updated landing page** with Quebec-specific messaging
+2. **Demonstrate the new assessment flow** without province selection
+3. **Show the Quebec insurance provider cards** with local options
+4. **Test the social security agreement feature** (show different results for agreement vs non-agreement countries)
+5. **Display Quebec-specific resources page** with RAMQ links and local settlement services
+
+**Key validation points:**
+- No references to other provinces remain
+- All statistics are Quebec-specific
+- Insurance options are Quebec-focused
+- Social security agreement logic works
+- RAMQ terminology is used consistently
+- 5-day insurance recommendation is prominently featured
+</output_format>
+
+<constraints>
+- Remove all provincial selection options - Quebec only
+- Ensure all content is Quebec healthcare system focused
+- Include both French and English terminology where helpful
+- Maintain the same visual design and user experience
+- Update all data sources to Quebec-specific information
+- Test that social security agreement countries show different flows
+- Ensure work permit holders see "not eligible for RAMQ" messaging
+- Keep the 5-day private insurance recommendation prominent
+
+**Goal: Create a Quebec healthcare navigation specialist tool that newcomers can't find anywhere else.**
+</constraints>

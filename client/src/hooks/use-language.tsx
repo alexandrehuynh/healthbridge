@@ -16,11 +16,11 @@ const translations = {
     'nav.french': 'Français',
     
     // Landing page
-    'landing.title': "Don't Face Unexpected Medical Bills",
-    'landing.subtitle': 'Navigate healthcare coverage during your transition. Many provinces now offer immediate coverage, while others have waiting periods. Get personalized guidance and avoid unexpected medical bills.',
+    'landing.title': "Navigate Quebec Healthcare with Confidence",
+    'landing.subtitle': 'Don\'t face unexpected medical bills in Quebec during your RAMQ waiting period. Get personalized insurance recommendations and avoid $3,000-8,000+ medical expenses during your first 3 months in Quebec.',
     'landing.startAssessment': 'Start Free Assessment',
     'landing.viewResources': 'View Resources',
-    'landing.trustedBy': 'Trusted by 400,000+ New Canadians',
+    'landing.trustedBy': 'Trusted by 50,000+ New Quebecers',
     
     // Common
     'common.loading': 'Loading...',
@@ -42,11 +42,11 @@ const translations = {
     'nav.french': 'English',
     
     // Landing page
-    'landing.title': "Évitez les Factures Médicales Inattendues",
-    'landing.subtitle': 'Naviguez la couverture de soins de santé pendant votre transition. Plusieurs provinces offrent maintenant une couverture immédiate, tandis que d\'autres ont des périodes d\'attente. Obtenez des conseils personnalisés et évitez les factures médicales inattendues.',
+    'landing.title': "Naviguez les Soins de Santé du Québec avec Confiance",
+    'landing.subtitle': 'Évitez les factures médicales inattendues au Québec pendant votre période d\'attente RAMQ. Obtenez des recommandations d\'assurance personnalisées et évitez $3,000-8,000+ en frais médicaux pendant vos premiers 3 mois au Québec.',
     'landing.startAssessment': 'Commencer l\'Évaluation Gratuite',
     'landing.viewResources': 'Voir les Ressources',
-    'landing.trustedBy': 'Fait confiance par 400 000+ Nouveaux Canadiens',
+    'landing.trustedBy': 'Fait confiance par 50 000+ Nouveaux Québécois',
     
     // Common
     'common.loading': 'Chargement...',

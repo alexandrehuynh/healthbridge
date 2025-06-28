@@ -1,11 +1,17 @@
 export interface AssessmentData {
   immigrationStatus: string;
-  province: string;
+  countryOfOrigin: string;
   arrivalDate: string;
   familySize: number;
   universityInsurance: string;
   employerBenefits: string;
   coverageNeeds: string[];
+  // Quebec-specific RAMQ fields
+  ramqApplicationSubmitted: string;
+  ramqSubmissionDate: string;
+  ramqCardReceived: string;
+  insuranceWithin5Days: string;
+  // Coverage preferences
   includeDental: boolean;
   includeVision: boolean;
   includePrescription: boolean;

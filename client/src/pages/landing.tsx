@@ -13,31 +13,31 @@ export default function Landing() {
   };
 
   const stats = [
-    { value: '400,000+', label: 'New PR annually', color: 'text-primary' },
-    { value: '7/13', label: 'Provinces with immediate coverage', color: 'text-success' },
-    { value: '$5,200', label: 'Average uninsured bill', color: 'text-warning' },
-    { value: '$85', label: 'Avg monthly coverage', color: 'text-success' },
+    { value: '50,000+', label: 'New Quebecers annually', color: 'text-primary' },
+    { value: '3', label: 'Month RAMQ waiting period', color: 'text-warning' },
+    { value: '$5,500', label: 'Average uninsured bill', color: 'text-warning' },
+    { value: '$85', label: 'Average monthly Quebec coverage', color: 'text-success' },
   ];
 
   const trustIndicators = [
     {
       icon: Shield,
-      title: 'Government Standards',
-      description: 'Following official Canadian healthcare guidelines and provincial requirements',
+      title: 'RAMQ Standards',
+      description: 'Following official Quebec healthcare guidelines and RAMQ requirements',
       color: 'text-primary',
       bgColor: 'bg-primary/10'
     },
     {
       icon: Users,
-      title: 'Immigration Experts',
-      description: 'Developed with settlement agencies and immigration professionals',
+      title: 'Quebec Experts',
+      description: 'Developed with Quebec settlement agencies and immigration professionals',
       color: 'text-success',
       bgColor: 'bg-success/10'
     },
     {
       icon: Clock,
-      title: 'Real-Time Updates',
-      description: 'Current provincial waiting periods and insurance provider information',
+      title: 'Real-Time Quebec Updates',
+      description: 'Current RAMQ waiting periods and Quebec insurance provider information',
       color: 'text-warning',
       bgColor: 'bg-warning/10'
     }

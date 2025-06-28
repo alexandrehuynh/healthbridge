@@ -3,12 +3,18 @@ import { AssessmentData } from '@/types/assessment';
 
 const initialData: AssessmentData = {
   immigrationStatus: '',
-  province: '',
+  countryOfOrigin: '',
   arrivalDate: '',
   familySize: 1,
   universityInsurance: '',
   employerBenefits: '',
   coverageNeeds: [],
+  // Quebec-specific RAMQ fields
+  ramqApplicationSubmitted: '',
+  ramqSubmissionDate: '',
+  ramqCardReceived: '',
+  insuranceWithin5Days: '',
+  // Coverage preferences
   includeDental: false,
   includeVision: false,
   includePrescription: false,
