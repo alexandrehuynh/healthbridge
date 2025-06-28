@@ -1,0 +1,128 @@
+[
+  {
+    "id": "desjardins-visitor",
+    "name": "Desjardins Visitor Insurance",
+    "abbreviation": "DJ",
+    "monthlyPrice": 75,
+    "coverage": {
+      "emergencyMedical": "$1M emergency medical",
+      "prescriptionDrugs": true,
+      "dental": false,
+      "vision": false,
+      "physio": true
+    },
+    "features": [
+      "Hospital coverage",
+      "Emergency transportation", 
+      "Bilingual service (French/English)",
+      "24/7 helpline",
+      "Pre-existing condition coverage"
+    ],
+    "quoteUrl": "https://www.desjardins.com/ca/personal/insurance/travel/visitors-canada/",
+    "provinces": ["quebec"],
+    "tag": "Most Popular in Quebec",
+    "targetStatuses": ["permanent_resident", "work_permit", "study_permit", "visitor"],
+    "insuranceType": "primary"
+  },
+  {
+    "id": "blue-cross-quebec",
+    "name": "Blue Cross Quebec Plan",
+    "abbreviation": "BCQ",
+    "monthlyPrice": 85,
+    "coverage": {
+      "emergencyMedical": "$2M emergency + prescription",
+      "prescriptionDrugs": true,
+      "dental": true,
+      "vision": true,
+      "physio": true
+    },
+    "features": [
+      "Comprehensive coverage",
+      "Prescription drug coverage",
+      "24/7 French helpline",
+      "Dental emergencies",
+      "Vision care included",
+      "Mental health support"
+    ],
+    "quoteUrl": "https://www.qc.bluecross.ca/",
+    "provinces": ["quebec"],
+    "tag": "Comprehensive",
+    "targetStatuses": ["permanent_resident", "work_permit", "study_permit"],
+    "insuranceType": "primary"
+  },
+  {
+    "id": "sun-life-quebec",
+    "name": "Sun Life Essential Quebec",
+    "abbreviation": "SLQ",
+    "monthlyPrice": 65,
+    "coverage": {
+      "emergencyMedical": "$500K emergency medical",
+      "prescriptionDrugs": false,
+      "dental": false,
+      "vision": false,
+      "physio": false
+    },
+    "features": [
+      "Basic emergency coverage",
+      "Ambulance coverage",
+      "Budget-friendly option",
+      "Quick enrollment",
+      "Online claims"
+    ],
+    "quoteUrl": "https://www.sunlife.ca/ca/insurance/health-insurance/travel-insurance/",
+    "provinces": ["quebec"],
+    "tag": "Budget Option",
+    "targetStatuses": ["permanent_resident", "work_permit", "study_permit", "visitor"],
+    "insuranceType": "primary"
+  },
+  {
+    "id": "manulife-quebec",
+    "name": "Manulife CoverMe Quebec",
+    "abbreviation": "MLQ",
+    "monthlyPrice": 78,
+    "coverage": {
+      "emergencyMedical": "$1M emergency medical",
+      "prescriptionDrugs": true,
+      "dental": false,
+      "vision": false,
+      "physio": true
+    },
+    "features": [
+      "Emergency medical coverage",
+      "Prescription coverage",
+      "Physiotherapy included",
+      "Mental health support",
+      "Bilingual customer service"
+    ],
+    "quoteUrl": "https://www.manulife.ca/personal/insurance/health-and-dental/travel-insurance.html",
+    "provinces": ["quebec"],
+    "tag": "Balanced Coverage",
+    "targetStatuses": ["permanent_resident", "work_permit", "study_permit"],
+    "insuranceType": "primary"
+  },
+  {
+    "id": "guard-me-quebec",
+    "name": "Guard.me Quebec Student Plan",
+    "abbreviation": "GMQ",
+    "monthlyPrice": 45,
+    "coverage": {
+      "emergencyMedical": "$200K emergency medical",
+      "prescriptionDrugs": false,
+      "dental": false,
+      "vision": false,
+      "physio": false
+    },
+    "features": [
+      "Student-focused coverage",
+      "Affordable rates",
+      "University partnerships",
+      "Online enrollment",
+      "Quick claims processing"
+    ],
+    "quoteUrl": "https://www.guard.me/",
+    "provinces": ["quebec"],
+    "tag": "Student Focused",
+    "targetStatuses": ["study_permit"],
+    "insuranceType": "primary"
+  }
+]

@@ -26,20 +26,9 @@ export function useAssessment() {
   const [currentStep, setCurrentStep] = useState(1);
   
   const getTotalSteps = useCallback(() => {
-    if (!data.immigrationStatus) return 4;
-    switch (data.immigrationStatus) {
-      case 'permanent_resident':
-        return 4; // Status → Province → PR Questions → Family Size
-      case 'work_permit':
-        return 3; // Status → Province → Work Questions (includes conditional arrival date)
-      case 'study_permit':
-        return 3; // Status → Province → Student Questions
-      case 'visitor':
-        return 3; // Status → Province → Family Size
-      default:
-        return 4;
-    }
-  }, [data.immigrationStatus]);
+    // Quebec-focused flow: Status → Country → RAMQ Questions → Family Size
+    return 4;
+  }, []);
 
   const totalSteps = getTotalSteps();
 
@@ -84,22 +73,14 @@ export function useAssessment() {
       case 1:
         return data.immigrationStatus !== '';
       case 2:
-        return data.province !== '';
+        return data.countryOfOrigin !== '';
       case 3:
-        // Conditional validation based on immigration status
-        if (data.immigrationStatus === 'permanent_resident') {
-          return data.arrivalDate !== '' && data.familySize > 0;
-        } else if (data.immigrationStatus === 'work_permit') {
-          return data.employerBenefits !== '' && 
-                 (data.employerBenefits === 'yes' || data.arrivalDate !== '');
-        } else if (data.immigrationStatus === 'study_permit') {
-          return data.universityInsurance !== '' && data.coverageNeeds.length > 0;
-        } else if (data.immigrationStatus === 'visitor') {
-          return data.familySize > 0;
-        }
-        return true;
+        // RAMQ questions validation
+        return data.ramqApplicationSubmitted !== '' && 
+               data.insuranceWithin5Days !== '' &&
+               (data.ramqApplicationSubmitted !== 'yes' || data.ramqSubmissionDate !== '');
       case 4:
-        // Only for permanent residents - final family size step
+        // Family size and coverage preferences
         return data.familySize > 0;
       default:
         return false;

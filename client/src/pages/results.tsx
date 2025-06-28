@@ -4,13 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useLocation } from 'wouter';
 import { AssessmentData } from '@/types/assessment';
-import { useWaitingPeriod } from '@/hooks/use-waiting-period';
-import { getInsuranceProviders } from '@/utils/insurance-filtering';
-import { formatDate } from '@/utils/date-calculations';
+import { getQuebecInsuranceProviders } from '@/utils/insurance-filtering';
+import { formatDate, calculateWaitingPeriod } from '@/utils/date-calculations';
 import TimelineVisualization from '@/components/dashboard/timeline-visualization';
 import InsuranceComparison from '@/components/dashboard/insurance-comparison';
 import ActionChecklist from '@/components/dashboard/action-checklist';
-import provincesData from '@/data/provinces.json';
 import { useToast } from '@/hooks/use-toast';
 
 export default function Results() {

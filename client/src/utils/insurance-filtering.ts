@@ -1,9 +1,9 @@
 import { InsuranceProvider } from '@/types/assessment';
-import insuranceData from '@/data/insurance-providers.json';
+import quebecInsuranceData from '@/data/quebec-insurance-providers.json';
 
-export function getInsuranceProviders(province: string, familySize: number): InsuranceProvider[] {
-  return insuranceData
-    .filter(provider => provider.provinces.includes(province))
+export function getQuebecInsuranceProviders(familySize: number, immigrationStatus: string): InsuranceProvider[] {
+  return quebecInsuranceData
+    .filter(provider => provider.targetStatuses.includes(immigrationStatus))
     .map(provider => ({
       ...provider,
       monthlyPrice: calculatePrice(provider.monthlyPrice, familySize)
