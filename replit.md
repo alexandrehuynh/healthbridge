@@ -116,6 +116,17 @@ HealthBridge is a comprehensive healthcare navigation web application designed t
   - Updated all footer links to be functional (removed placeholder # links)
   - Corrected broken government URLs to working Health Canada links
   - Added language switching functionality in both header and footer
+- June 28, 2025: Major pivot to Quebec-focused MVP
+  - Pivoted from Canada-wide to Quebec-only healthcare navigation specialist
+  - Removed provincial selection - hardcoded Quebec focus throughout application
+  - Updated statistics: 400,000+ → 50,000+ New Quebecers, 90-day → 3-month RAMQ waiting period
+  - Implemented Quebec-specific assessment flow: Status → Country → RAMQ Questions → Family Size
+  - Added country selection with social security agreement detection (30+ countries)
+  - Created Quebec-specific RAMQ application status questions
+  - Added 5-day private insurance recommendation prominently
+  - Updated insurance providers to Quebec-focused companies (Desjardins, Blue Cross Quebec, etc.)
+  - Implemented bilingual terminology (RAMQ, Régie, carte d'assurance maladie)
+  - Added work permit ineligibility messaging (Quebec differs from other provinces)
 
 ## User Preferences
 

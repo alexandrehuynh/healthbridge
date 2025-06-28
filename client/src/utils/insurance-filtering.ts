@@ -6,7 +6,9 @@ export function getQuebecInsuranceProviders(familySize: number, immigrationStatu
     .filter(provider => provider.targetStatuses.includes(immigrationStatus))
     .map(provider => ({
       ...provider,
-      monthlyPrice: calculatePrice(provider.monthlyPrice, familySize)
+      monthlyPrice: calculatePrice(provider.monthlyPrice, familySize),
+      provinces: ['quebec'], // Ensure provinces array exists
+      insuranceType: provider.insuranceType as 'primary' | 'supplementary' | 'gap' | 'travel'
     }))
     .sort((a, b) => a.monthlyPrice - b.monthlyPrice);
 }

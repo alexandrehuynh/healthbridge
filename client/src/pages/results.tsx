@@ -26,32 +26,31 @@ export default function Results() {
     }
   }, [setLocation]);
 
-  const waitingPeriodCalculation = useWaitingPeriod(
-    assessmentData?.province || '',
-    assessmentData?.arrivalDate || ''
-  );
+  // Quebec-specific waiting period calculation
+  const waitingPeriodCalculation = assessmentData?.ramqSubmissionDate 
+    ? calculateWaitingPeriod(assessmentData.ramqSubmissionDate, 90) // 90 days for Quebec
+    : null;
 
-  const provinceData = provincesData.find(p => p.id === assessmentData?.province);
-  const insuranceProviders = assessmentData ? getInsuranceProviders(
-    assessmentData.province,
-    assessmentData.familySize
+  const insuranceProviders = assessmentData ? getQuebecInsuranceProviders(
+    assessmentData.familySize,
+    assessmentData.immigrationStatus
   ) : [];
 
   const savePlan = () => {
-    if (!assessmentData || !waitingPeriodCalculation || !provinceData) return;
+    if (!assessmentData || !waitingPeriodCalculation) return;
     
     const planData = {
       id: Date.now(),
       timestamp: new Date().toISOString(),
-      province: assessmentData.province,
-      status: assessmentData.status,
-      arrivalDate: assessmentData.arrivalDate,
+      immigrationStatus: assessmentData.immigrationStatus,
+      countryOfOrigin: assessmentData.countryOfOrigin,
+      ramqSubmissionDate: assessmentData.ramqSubmissionDate,
       familySize: assessmentData.familySize,
-      healthPlanName: provinceData.healthPlanName,
-      daysRemaining,
+      healthPlanName: 'RAMQ (Régie de l\'assurance maladie du Québec)',
+      daysRemaining: waitingPeriodCalculation.daysRemaining,
       coverageStartDate: formatDate(waitingPeriodCalculation.coverageStartDate),
       recommendedInsurance: insuranceProviders.slice(0, 3),
-      estimatedCost
+      estimatedCost: insuranceProviders[0]?.monthlyPrice || 0
     };
     
     localStorage.setItem(`healthbridge_plan_${planData.id}`, JSON.stringify(planData));
@@ -62,17 +61,17 @@ export default function Results() {
   };
 
   const shareResults = async () => {
-    if (!assessmentData || !provinceData) return;
+    if (!assessmentData || !waitingPeriodCalculation) return;
     
-    const summary = `HealthBridge Assessment Results:
+    const summary = `HealthBridge Quebec Assessment Results:
 
-Province: ${provinceData.name}
-Status: ${assessmentData.status === 'pr' ? 'Permanent Resident' : 'Work Permit Holder'}
-Health Plan: ${provinceData.healthPlanName}
-${daysRemaining > 0 ? `Days until coverage: ${daysRemaining}` : 'Coverage now active!'}
+Immigration Status: ${assessmentData.immigrationStatus.replace('_', ' ')}
+Country: ${assessmentData.countryOfOrigin}
+Health Plan: RAMQ (Régie de l'assurance maladie du Québec)
+${waitingPeriodCalculation.daysRemaining > 0 ? `Days until RAMQ coverage: ${waitingPeriodCalculation.daysRemaining}` : 'RAMQ coverage now active!'}
 ${insuranceProviders.length > 0 ? `Recommended: ${insuranceProviders[0].name} - $${insuranceProviders[0].monthlyPrice}/month` : ''}
 
-Visit HealthBridge to get your personalized healthcare navigation plan.`;
+Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
 
     try {
       await navigator.clipboard.writeText(summary);
