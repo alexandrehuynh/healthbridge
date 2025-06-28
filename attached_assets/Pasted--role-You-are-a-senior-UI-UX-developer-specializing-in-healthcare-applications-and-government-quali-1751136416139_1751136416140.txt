@@ -1,0 +1,163 @@
+<role>
+You are a senior UI/UX developer specializing in healthcare applications and government-quality digital services. You have expertise in Tailwind CSS, React components, accessibility standards, and creating trustworthy interfaces for vulnerable populations.
+</role>
+
+<task>
+Fix the broken "Protected Coverage" button and polish the visual design of the HealthBridge landing page to meet professional healthcare application standards. Focus on improving button functionality, visual hierarchy, color contrast, and overall user experience.
+</task>
+
+<context>
+HealthBridge is a healthcare navigation app for new Canadian immigrants. The landing page currently has:
+- A non-functional "Protected Coverage" button that needs to be fixed or removed
+- Poor color contrast on secondary buttons (like "Learn More")
+- Visual hierarchy issues that make the interface less trustworthy
+- Missing micro-interactions and polish expected in professional healthcare tools
+
+The app must convey government-level trustworthiness while remaining user-friendly for people under stress.
+</context>
+
+<specific_issues_to_fix>
+**Critical Issues**:
+1. **Broken "Protected Coverage" Button**: Currently does nothing - either connect it to assessment wizard or remove it
+2. **Poor Button Visibility**: "Learn More" and secondary buttons have insufficient contrast
+3. **Visual Hierarchy**: Primary and secondary actions aren't clearly distinguished
+4. **Trust Indicators**: "Trusted by 400,000+ New Canadians" needs more prominence
+
+**Design Polish Needed**:
+5. **Button Styling**: Inconsistent button sizes, spacing, and hover states
+6. **Color System**: Improve contrast ratios for accessibility (WCAG AA)
+7. **Spacing**: Inconsistent padding and margins throughout layout
+8. **Mobile Responsiveness**: Ensure buttons and layout work well on mobile
+</specific_issues_to_fix>
+
+<design_improvements_required>
+**Button System Fixes**:
+- Primary CTA: "Start Free Assessment" should be highly visible with strong contrast
+- Secondary buttons: Clear but not competing with primary action
+- Remove or fix non-functional buttons
+- Add proper hover and focus states
+- Ensure mobile-friendly touch targets (44px minimum)
+
+**Color and Contrast Improvements**:
+- Primary blue: #2563eb (current) - ensure sufficient contrast
+- Secondary buttons: Use outline style or muted colors that are still visible
+- Text contrast: Ensure all text meets WCAG AA standards
+- Trust indicators: Use success green (#059669) for credibility elements
+
+**Visual Hierarchy Enhancement**:
+- Hero headline: Stronger typography weight and sizing
+- Trust indicator: More prominent badge or banner style
+- Button grouping: Clear primary/secondary relationship
+- Content sections: Better visual separation and flow
+
+**Micro-interactions and Polish**:
+- Smooth hover transitions on all interactive elements
+- Loading states for buttons when clicked
+- Subtle animations that enhance rather than distract
+- Professional government-appropriate styling throughout
+</design_improvements_required>
+
+<suggested_fixes>
+**Option 1 - Fix Protected Coverage Button**:
+```jsx
+// Make it launch the assessment wizard
+<Button 
+  variant="outline" 
+  onClick={() => navigate('/assessment')}
+  className="border-white/20 text-white hover:bg-white/10"
+>
+  Learn About Coverage
+</Button>
+```
+
+**Option 2 - Remove Protected Coverage Button**:
+```jsx
+// Simply remove the button and improve the remaining layout
+<div className="flex flex-col sm:flex-row gap-4 justify-center">
+  <Button size="lg" onClick={() => navigate('/assessment')}>
+    Start Free Assessment
+    <ArrowRight className="ml-2 h-5 w-5" />
+  </Button>
+</div>
+```
+
+**Option 3 - Replace with Resource Link**:
+```jsx
+// Make it link to resources page
+<Button 
+  variant="ghost" 
+  asChild
+  className="text-white hover:bg-white/10"
+>
+  <a href="/resources" target="_blank">
+    View Resources
+  </a>
+</Button>
+```
+</suggested_fixes>
+
+<color_system_improvements>
+**Enhanced Button Styling**:
+```css
+/* Primary CTA - High contrast, action-oriented */
+.btn-primary {
+  @apply bg-white text-blue-600 hover:bg-gray-50 font-semibold;
+  @apply shadow-lg hover:shadow-xl transition-all duration-200;
+  @apply px-8 py-4 text-lg rounded-lg;
+}
+
+/* Secondary CTA - Visible but not competing */
+.btn-secondary {
+  @apply border-2 border-white/30 text-white hover:bg-white/10;
+  @apply font-medium px-6 py-3 rounded-lg;
+  @apply transition-all duration-200;
+}
+
+/* Trust indicator enhancement */
+.trust-badge {
+  @apply bg-green-500/20 text-green-100 px-4 py-2 rounded-full;
+  @apply border border-green-400/30 font-medium;
+}
+```
+</color_system_improvements>
+
+<output_format>
+**Please implement these changes in this order**:
+
+1. **Fix the Protected Coverage button** by choosing one of the three options above
+2. **Improve button contrast and styling** using the enhanced color system
+3. **Polish the trust indicator** to be more prominent and credible
+4. **Test mobile responsiveness** and adjust button sizes for touch
+5. **Add hover states and transitions** for professional polish
+6. **Review accessibility** - ensure all elements meet contrast requirements
+
+**After each change, show me**:
+- What you fixed and why
+- How it looks now vs. before
+- Any decisions you made (like which button option you chose)
+- What should we tackle next
+</output_format>
+
+<testing_checklist>
+**After implementing changes, verify**:
+- [ ] All buttons are functional and lead somewhere appropriate
+- [ ] Primary CTA is clearly the most prominent action
+- [ ] Secondary buttons are visible but don't compete
+- [ ] Trust indicator draws attention and builds credibility
+- [ ] Hover states work smoothly on desktop
+- [ ] Touch targets are appropriate size on mobile
+- [ ] Color contrast meets accessibility standards
+- [ ] Overall layout feels professional and trustworthy
+</testing_checklist>
+
+<constraints>
+- Maintain the existing blue gradient hero background
+- Keep the Canadian government-inspired professional aesthetic
+- Don't add unnecessary animations - subtle and purposeful only
+- Ensure changes work well on both mobile and desktop
+- Maintain accessibility standards throughout
+- Focus on trustworthiness over flashy design
+- Use existing shadcn/ui components when possible
+
+**Start with fixing the broken button first, then move to visual polish. Show me what you've done after each major change so we can review together.**
+</constraints>

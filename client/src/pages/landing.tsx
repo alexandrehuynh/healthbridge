@@ -49,33 +49,34 @@ export default function Landing() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center space-x-2 mb-6">
-                <span className="bg-white/20 text-white px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2">
+                <span className="bg-success/20 text-green-100 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 border border-green-400/30">
                   <Flag className="w-4 h-4" />
                   Trusted by 400,000+ New Canadians
                 </span>
               </div>
-              <h1 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight">
+              <h1 className="text-4xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
                 Don't Face Unexpected Medical Bills
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
                 Navigate your 3-month waiting period with confidence. Get personalized insurance 
                 recommendations and avoid $1,000-$20,000+ medical expenses.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 sm:justify-start">
                 <Button 
                   onClick={startAssessment}
                   size="lg"
-                  className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-colors shadow-lg"
+                  className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 min-h-[3rem] w-full sm:w-auto"
                 >
                   Start Free Assessment
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <Button 
+                  onClick={() => setLocation('/resources')}
                   variant="outline"
                   size="lg"
-                  className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-colors"
+                  className="border-2 border-white/40 text-white px-8 py-4 rounded-lg font-medium hover:bg-white/15 hover:border-white/60 transition-all duration-200 min-h-[3rem] w-full sm:w-auto"
                 >
-                  Learn More
+                  View Resources
                 </Button>
               </div>
             </div>
@@ -85,10 +86,10 @@ export default function Landing() {
                 alt="Healthcare professional helping family" 
                 className="rounded-xl shadow-2xl w-full h-auto"
               />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
+              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg border border-success/20">
                 <div className="flex items-center space-x-3">
                   <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-                  <span className="text-gray-700 font-medium">Protected Coverage</span>
+                  <span className="text-gray-700 font-medium">Comprehensive Coverage Available</span>
                 </div>
               </div>
             </div>
@@ -107,12 +108,12 @@ export default function Landing() {
             {trustIndicators.map((indicator, index) => {
               const IconComponent = indicator.icon;
               return (
-                <div key={index} className="text-center">
-                  <div className={`w-16 h-16 ${indicator.bgColor} rounded-full flex items-center justify-center mx-auto mb-4`}>
+                <div key={index} className="text-center group">
+                  <div className={`w-16 h-16 ${indicator.bgColor} rounded-full flex items-center justify-center mx-auto mb-4 transition-all duration-200 group-hover:scale-110 shadow-sm`}>
                     <IconComponent className={`${indicator.color} w-6 h-6`} />
                   </div>
-                  <h3 className="font-semibold text-lg mb-2">{indicator.title}</h3>
-                  <p className="text-gray-600">{indicator.description}</p>
+                  <h3 className="font-semibold text-lg mb-2 text-gray-900">{indicator.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{indicator.description}</p>
                 </div>
               );
             })}
@@ -121,15 +122,19 @@ export default function Landing() {
       </div>
 
       {/* Quick Stats */}
-      <div className="bg-gray-50 py-12">
+      <div className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Critical Facts for New Canadians</h2>
+            <p className="text-gray-600">Understanding the healthcare landscape during your transition</p>
+          </div>
+          <div className="grid md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
-              <div key={index}>
-                <div className={`text-3xl font-bold ${stat.color} mb-2`}>
+              <div key={index} className="bg-white p-6 rounded-xl shadow-sm text-center group hover:shadow-md transition-all duration-200">
+                <div className={`text-4xl font-extrabold ${stat.color} mb-3 group-hover:scale-105 transition-transform duration-200`}>
                   {stat.value}
                 </div>
-                <div className="text-gray-600">{stat.label}</div>
+                <div className="text-gray-600 font-medium">{stat.label}</div>
               </div>
             ))}
           </div>
