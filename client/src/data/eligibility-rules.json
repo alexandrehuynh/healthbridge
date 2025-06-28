@@ -1,0 +1,42 @@
+[
+  {
+    "status": "pr",
+    "provinces": ["ontario", "bc", "alberta", "manitoba", "saskatchewan", "nova-scotia", "new-brunswick", "newfoundland", "pei"],
+    "waitingPeriodModifier": 0,
+    "specialConsiderations": [
+      "Must apply within 90 days of arrival",
+      "Coverage begins after 3-month waiting period",
+      "Temporary health insurance recommended"
+    ]
+  },
+  {
+    "status": "work",
+    "provinces": ["ontario", "bc", "alberta", "manitoba"],
+    "waitingPeriodModifier": 0,
+    "specialConsiderations": [
+      "Must have valid work permit",
+      "Waiting period applies in most provinces",
+      "Some employers provide health benefits"
+    ]
+  },
+  {
+    "status": "student",
+    "provinces": ["ontario", "bc", "alberta"],
+    "waitingPeriodModifier": 0,
+    "specialConsiderations": [
+      "Must be enrolled in approved study program",
+      "University health insurance may be required",
+      "Provincial coverage varies by province"
+    ]
+  },
+  {
+    "status": "quebec-special",
+    "provinces": ["quebec"],
+    "waitingPeriodModifier": -90,
+    "specialConsiderations": [
+      "No waiting period for permanent residents",
+      "Must apply for RAMQ immediately",
+      "Different rules from other provinces"
+    ]
+  }
+]

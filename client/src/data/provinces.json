@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ontario",
+    "name": "Ontario",
+    "abbreviation": "ON",
+    "waitingPeriod": 90,
+    "healthPlanName": "OHIP",
+    "applicationUrl": "https://www.ontario.ca/page/apply-ohip-and-get-health-card",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "bc",
+    "name": "British Columbia",
+    "abbreviation": "BC",
+    "waitingPeriod": 90,
+    "healthPlanName": "MSP",
+    "applicationUrl": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "alberta",
+    "name": "Alberta",
+    "abbreviation": "AB",
+    "waitingPeriod": 90,
+    "healthPlanName": "AHCIP",
+    "applicationUrl": "https://www.alberta.ca/alberta-health-care-insurance-plan",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "quebec",
+    "name": "Quebec",
+    "abbreviation": "QC",
+    "waitingPeriod": 0,
+    "healthPlanName": "RAMQ",
+    "applicationUrl": "https://www.ramq.gouv.qc.ca/en",
+    "hasWaitingPeriod": false
+  },
+  {
+    "id": "manitoba",
+    "name": "Manitoba",
+    "abbreviation": "MB",
+    "waitingPeriod": 90,
+    "healthPlanName": "Manitoba Health",
+    "applicationUrl": "https://www.gov.mb.ca/health/mhsip/",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "saskatchewan",
+    "name": "Saskatchewan",
+    "abbreviation": "SK",
+    "waitingPeriod": 90,
+    "healthPlanName": "Saskatchewan Health",
+    "applicationUrl": "https://www.saskatchewan.ca/residents/health/health-cards",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "nova-scotia",
+    "name": "Nova Scotia",
+    "abbreviation": "NS",
+    "waitingPeriod": 90,
+    "healthPlanName": "MSI",
+    "applicationUrl": "https://www.nshealth.ca/",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "new-brunswick",
+    "name": "New Brunswick",
+    "abbreviation": "NB",
+    "waitingPeriod": 90,
+    "healthPlanName": "Medicare",
+    "applicationUrl": "https://www2.gnb.ca/content/gnb/en/departments/health.html",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "newfoundland",
+    "name": "Newfoundland and Labrador",
+    "abbreviation": "NL",
+    "waitingPeriod": 90,
+    "healthPlanName": "MCP",
+    "applicationUrl": "https://www.gov.nl.ca/hcs/mcp/",
+    "hasWaitingPeriod": true
+  },
+  {
+    "id": "pei",
+    "name": "Prince Edward Island",
+    "abbreviation": "PE",
+    "waitingPeriod": 90,
+    "healthPlanName": "Health PEI",
+    "applicationUrl": "https://www.princeedwardisland.ca/en/topic/health-cards",
+    "hasWaitingPeriod": true
+  }
+]

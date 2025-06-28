@@ -1,0 +1,89 @@
+[
+  {
+    "id": "blue-cross-newcomer",
+    "name": "Blue Cross Newcomer Plan",
+    "abbreviation": "BC",
+    "monthlyPrice": 59,
+    "coverage": {
+      "emergencyMedical": "$1M",
+      "prescriptionDrugs": true,
+      "dental": false,
+      "vision": false,
+      "physio": false
+    },
+    "features": [
+      "$1M emergency medical coverage",
+      "Prescription drugs included",
+      "24/7 nurse helpline",
+      "Coverage from day 1"
+    ],
+    "quoteUrl": "https://www.bluecross.ca/en/products/travel-insurance",
+    "provinces": ["ontario", "bc", "alberta", "manitoba", "saskatchewan"],
+    "tag": "Most Popular"
+  },
+  {
+    "id": "manulife-coverme",
+    "name": "Manulife CoverMe",
+    "abbreviation": "ML",
+    "monthlyPrice": 67,
+    "coverage": {
+      "emergencyMedical": "$2M",
+      "prescriptionDrugs": true,
+      "dental": true,
+      "vision": true,
+      "physio": true
+    },
+    "features": [
+      "$2M emergency medical coverage",
+      "Dental care included",
+      "Vision care coverage",
+      "Physiotherapy benefits"
+    ],
+    "quoteUrl": "https://www.manulife.ca/personal/insurance/health-insurance.html",
+    "provinces": ["ontario", "bc", "alberta", "quebec", "manitoba"],
+    "tag": "Best Value"
+  },
+  {
+    "id": "sun-life-essential",
+    "name": "Sun Life Essential",
+    "abbreviation": "SL",
+    "monthlyPrice": 45,
+    "coverage": {
+      "emergencyMedical": "$500K",
+      "prescriptionDrugs": true,
+      "dental": false,
+      "vision": false,
+      "physio": false
+    },
+    "features": [
+      "$500K emergency medical coverage",
+      "Prescription drugs (limited)",
+      "Ambulance coverage"
+    ],
+    "quoteUrl": "https://www.sunlife.ca/en/insurance/health-insurance/",
+    "provinces": ["ontario", "bc", "alberta", "manitoba", "saskatchewan", "nova-scotia"],
+    "tag": "Budget Option"
+  },
+  {
+    "id": "chambers-visitor",
+    "name": "Chambers Visitor Insurance",
+    "abbreviation": "CV",
+    "monthlyPrice": 52,
+    "coverage": {
+      "emergencyMedical": "$1M",
+      "prescriptionDrugs": false,
+      "dental": false,
+      "vision": false,
+      "physio": false
+    },
+    "features": [
+      "$1M emergency medical coverage",
+      "Hospital coverage",
+      "Emergency transportation",
+      "Pre-existing condition coverage"
+    ],
+    "quoteUrl": "https://www.chambers.ca/",
+    "provinces": ["ontario", "bc", "alberta", "quebec"],
+    "tag": "Comprehensive"
+  }
+]

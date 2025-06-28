@@ -1,0 +1,61 @@
+{
+  "provincialHealthPlans": [
+    {
+      "province": "ontario",
+      "name": "OHIP Application",
+      "url": "https://www.ontario.ca/page/apply-ohip-and-get-health-card",
+      "description": "Apply for Ontario Health Insurance Plan coverage"
+    },
+    {
+      "province": "bc",
+      "name": "MSP Application", 
+      "url": "https://www2.gov.bc.ca/gov/content/health/health-drug-coverage/msp",
+      "description": "Apply for Medical Services Plan coverage"
+    },
+    {
+      "province": "alberta",
+      "name": "AHCIP Application",
+      "url": "https://www.alberta.ca/alberta-health-care-insurance-plan",
+      "description": "Apply for Alberta Health Care Insurance Plan"
+    }
+  ],
+  "settlementServices": [
+    {
+      "name": "IRCC Settlement Services",
+      "url": "https://www.canada.ca/en/immigration-refugees-citizenship/services/new-immigrants/new-life-canada/settle-canada.html",
+      "description": "Official government settlement services for new immigrants"
+    },
+    {
+      "name": "Local Settlement Agencies",
+      "url": "https://www.cic.gc.ca/english/newcomers/services/index.asp",
+      "description": "Find settlement agencies in your area"
+    },
+    {
+      "name": "Newcomer Healthcare Guide",
+      "url": "https://www.canada.ca/en/health-canada/services/health-care-system/reports-publications/health-care-accessibility/newcomer-guide-canadian-health-care-system.html",
+      "description": "Official guide to the Canadian healthcare system"
+    }
+  ],
+  "emergencyContacts": [
+    {
+      "name": "Emergency Services",
+      "phone": "911",
+      "description": "Fire, police, ambulance emergency services"
+    },
+    {
+      "name": "Telehealth Ontario",
+      "phone": "1-866-797-0000",
+      "description": "24/7 health advice from registered nurses"
+    },
+    {
+      "name": "Poison Control",
+      "phone": "1-800-268-9017",
+      "description": "24/7 poison information and emergency advice"
+    },
+    {
+      "name": "Mental Health Crisis Line",
+      "phone": "1-833-456-4566",
+      "description": "24/7 mental health crisis support"
+    }
+  ]
+}
