@@ -58,8 +58,8 @@ export default function Landing() {
                 Don't Face Unexpected Medical Bills
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
-                Navigate your 3-month waiting period with confidence. Get personalized insurance 
-                recommendations and avoid $1,000-$20,000+ medical expenses.
+                Navigate healthcare coverage during your transition. Many provinces now offer immediate coverage, 
+                while others have waiting periods. Get personalized guidance and avoid unexpected medical bills.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 sm:justify-start">
                 <Button 
