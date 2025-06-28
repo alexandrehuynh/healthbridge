@@ -1,0 +1,172 @@
+<role>
+You are a UI/UX designer specializing in healthcare landing pages with expertise in creating compelling hero sections that build trust and clearly communicate value propositions.
+</role>
+
+<task>
+Enhance the HealthBridge landing page hero section by adding meaningful content to the hero card overlay and styling the trust indicator with a Quebec flag circle design similar to the original layout.
+</task>
+
+<context>
+The current landing page has a hero card overlay that shows "Comprehensive Coverage Available" but this doesn't provide clear value. We want to replace this with something more meaningful for Quebec newcomers. Also, the trust indicator should be styled with a flag circle design like the original.
+</context>
+
+<hero_card_content_options>
+**Option 1: Quebec-Specific Value Proposition**
+```jsx
+<div className="hero-card">
+  <div className="card-content">
+    <h3>Quebec Healthcare Specialist</h3>
+    <p>Navigate RAMQ waiting periods with expert guidance</p>
+  </div>
+</div>
+```
+
+**Option 2: Key Benefit Highlight**
+```jsx
+<div className="hero-card">
+  <div className="card-content">
+    <h3>3-Month Coverage Gap?</h3>
+    <p>We'll find your perfect interim insurance in 5 minutes</p>
+  </div>
+</div>
+```
+
+**Option 3: Trust/Expert Positioning**
+```jsx
+<div className="hero-card">
+  <div className="card-content">
+    <h3>RAMQ Experts</h3>
+    <p>Helping 50,000+ newcomers navigate Quebec healthcare annually</p>
+  </div>
+</div>
+```
+
+**Option 4: Clear Action/Outcome**
+```jsx
+<div className="hero-card">
+  <div className="card-content">
+    <h3>Avoid $8,000+ Medical Bills</h3>
+    <p>Get the right coverage before you need it</p>
+  </div>
+</div>
+```
+</hero_card_content_options>
+
+<trust_indicator_styling>
+**Quebec Flag Circle Design:**
+```jsx
+<div className="trust-indicator">
+  <div className="flag-circle">
+    {/* Quebec flag icon or stylized fleur-de-lis */}
+    <span className="flag-icon">⚜️</span>
+  </div>
+  <span className="trust-text">Trusted by 50,000+ New Quebecers</span>
+</div>
+```
+
+**CSS Styling:**
+```css
+.trust-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  padding: 12px 20px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.flag-circle {
+  width: 32px;
+  height: 32px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+
+.trust-text {
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
+}
+```
+</trust_indicator_styling>
+
+<content_updates_needed>
+**1. Update Trust Indicator**
+- Change "400,000+ New Canadians" to "50,000+ New Quebecers"
+- Add Quebec flag or fleur-de-lis icon in circle
+- Style with glassmorphism effect like original
+
+**2. Update Hero Text**
+- Change generic "healthcare coverage during transition" to Quebec-specific
+- Mention "RAMQ waiting period" specifically
+- Update to "3-month" instead of generic waiting periods
+
+**3. Add Meaningful Hero Card**
+- Choose one of the content options above
+- Style consistently with the overall design
+- Make it actionable and specific to Quebec newcomers
+
+**4. Update Description Text**
+Replace current generic text with Quebec-focused version:
+```
+"Navigate your RAMQ waiting period with confidence. Get personalized insurance recommendations and avoid $3,000-8,000+ medical expenses during your first 3 months in Quebec."
+```
+</content_updates_needed>
+
+<implementation_requirements>
+**Hero Card Positioning:**
+- Position over the hero illustration (family/brain image)
+- Semi-transparent background with blur effect
+- Readable typography with good contrast
+- Mobile-responsive sizing
+
+**Trust Indicator Enhancement:**
+- Prominent flag circle with Quebec symbol
+- Glassmorphism styling (blur + transparency)
+- Updated Quebec-specific statistics
+- Positioned prominently in hero section
+
+**Content Hierarchy:**
+1. **Main headline**: "Don't Face Unexpected Medical Bills in Quebec"
+2. **Hero card**: [Choose one of the 4 options above]
+3. **Description**: Quebec-specific explanation
+4. **Trust indicator**: "Trusted by 50,000+ New Quebecers" with flag
+5. **CTAs**: "Start Free Assessment" and "View Resources"
+</implementation_requirements>
+
+<output_format>
+**Please implement these changes:**
+
+1. **Add Quebec flag circle design** to the trust indicator
+2. **Choose and implement one hero card option** (I recommend Option 4: "Avoid $8,000+ Medical Bills")
+3. **Update all text to Quebec-specific language** (RAMQ, 3-month waiting period, Quebec statistics)
+4. **Style the hero card** with proper positioning and readability
+5. **Test mobile responsiveness** of the new elements
+
+**Show me:**
+- The updated hero section with flag circle trust indicator
+- The new hero card with meaningful content
+- How it looks on both desktop and mobile
+- Confirm all text is Quebec-focused (no generic Canadian references)
+
+**Recommended hero card choice:** Option 4 ("Avoid $8,000+ Medical Bills") because it's:
+- Specific and urgent
+- Quantifies the risk clearly
+- Motivates immediate action
+- Directly addresses the pain point
+</output_format>
+
+<constraints>
+- Keep the same visual hierarchy and layout structure
+- Ensure hero card doesn't obstruct important visual elements
+- Maintain accessibility standards with proper contrast
+- Use Quebec symbols respectfully (fleur-de-lis or Quebec flag colors)
+- Keep content concise and scannable
+- Make sure all elements work on mobile devices
+</constraints>

@@ -52,22 +52,23 @@ export default function Landing() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <div className="bg-white p-2 rounded-lg shadow-sm border border-blue-100">
-                  <CanadianFlag size="md" />
+                <div className="trust-indicator flex items-center gap-3 bg-white/15 backdrop-blur-md px-5 py-3 rounded-full border border-white/20 shadow-lg">
+                  <div className="flag-circle w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <span className="text-blue-600 text-lg">⚜️</span>
+                  </div>
+                  <span className="text-blue-700 font-medium text-sm">
+                    Trusted by 50,000+ New Quebecers
+                  </span>
                 </div>
-                <span className="text-blue-700 font-medium bg-gradient-to-r from-blue-100 to-indigo-100 px-4 py-2 rounded-full text-sm border border-blue-200">
-                  <MapPin className="w-4 h-4 inline mr-1" />
-                  {t('landing.trustedBy')}
-                </span>
               </div>
               
               <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent leading-tight mb-6">
-                {t('landing.title')}
+                Don't Face Unexpected Medical Bills in Quebec
               </h1>
               
               <p className="text-xl text-gray-600 leading-relaxed mb-8">
                 <Heart className="w-5 h-5 inline text-red-400 mr-2" />
-                {t('landing.subtitle')}
+                Navigate your RAMQ waiting period with confidence. Get personalized insurance recommendations and avoid $3,000-8,000+ medical expenses during your first 3 months in Quebec.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4">
@@ -77,7 +78,7 @@ export default function Landing() {
                   className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 shadow-lg px-8 py-4 text-lg"
                 >
                   <FileText className="w-5 h-5" />
-                  <span>{t('landing.startAssessment')}</span>
+                  <span>Start Free Assessment</span>
                   <ArrowRight className="w-5 h-5" />
                 </Button>
                 <Button 
@@ -86,7 +87,7 @@ export default function Landing() {
                   onClick={() => setLocation('/resources')} 
                   className="border-2 border-blue-200 hover:bg-blue-50 px-8 py-4 text-lg"
                 >
-                  {t('landing.viewResources')}
+                  View Resources
                 </Button>
               </div>
             </div>
@@ -94,10 +95,15 @@ export default function Landing() {
               <div className="bg-white p-6 rounded-2xl shadow-2xl border border-blue-100">
                 <HeroNewcomers />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-green-500 to-emerald-500 text-white p-4 rounded-lg shadow-lg border border-green-200">
-                <div className="flex items-center space-x-2">
-                  <Shield className="w-6 h-6" />
-                  <span className="font-semibold">{t('landing.heroCardTitle')}</span>
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 rounded-xl shadow-2xl border border-red-200 max-w-xs">
+                <div className="space-y-2">
+                  <h3 className="font-bold text-lg flex items-center">
+                    <Shield className="w-5 h-5 mr-2" />
+                    Avoid $8,000+ Medical Bills
+                  </h3>
+                  <p className="text-sm text-red-50">
+                    Get the right coverage before you need it
+                  </p>
                 </div>
               </div>
             </div>
@@ -109,8 +115,8 @@ export default function Landing() {
       <div className="bg-white py-12 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Trusted Healthcare Navigation</h2>
-            <p className="text-gray-600">Built with Canadian immigration and healthcare expertise</p>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Trusted Quebec Healthcare Navigation</h2>
+            <p className="text-gray-600">Built with Quebec immigration and RAMQ expertise</p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
             {trustIndicators.map((indicator, index) => {
