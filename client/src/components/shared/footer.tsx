@@ -1,19 +1,25 @@
 import { Clover, Info } from 'lucide-react';
 import { Link } from 'wouter';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function Footer() {
+  const { language, setLanguage, t } = useLanguage();
+
+  const handleLanguageToggle = () => {
+    setLanguage(language === 'en' ? 'fr' : 'en');
+  };
   const quickLinks = [
-    { name: 'How It Works', href: '#' },
-    { name: 'Insurance Providers', href: '#' },
+    { name: 'How It Works', href: '/wizard' },
+    { name: 'Insurance Providers', href: '/results' },
     { name: 'Provincial Information', href: '/resources' },
     { name: 'Settlement Resources', href: '/resources' },
   ];
 
   const supportLinks = [
-    { name: 'Help Center', href: '#' },
-    { name: 'Contact Us', href: '#' },
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Terms of Service', href: '#' },
+    { name: 'Help Center', href: '/help' },
+    { name: 'Contact Us', href: '/help' },
+    { name: 'Privacy Policy', href: 'https://www.canada.ca/en/transparency/privacy.html' },
+    { name: 'Terms of Service', href: 'https://www.canada.ca/en/transparency/terms.html' },
   ];
 
   return (
@@ -60,13 +66,25 @@ export default function Footer() {
             <h4 className="font-semibold mb-4">Support</h4>
             <div className="space-y-2">
               {supportLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="block text-gray-400 hover:text-white transition-colors"
-                >
-                  {link.name}
-                </Link>
+                link.href.startsWith('http') ? (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-gray-400 hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                ) : (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="block text-gray-400 hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </Link>
+                )
               ))}
             </div>
           </div>
@@ -76,8 +94,18 @@ export default function Footer() {
           <p className="text-gray-400">&copy; 2024 HealthBridge. Built for new Canadians with care.</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <span className="text-gray-400">Available in:</span>
-            <button className="text-gray-400 hover:text-white transition-colors">English</button>
-            <button className="text-gray-400 hover:text-white transition-colors">Français</button>
+            <button 
+              onClick={handleLanguageToggle}
+              className={`transition-colors ${language === 'en' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+            >
+              English
+            </button>
+            <button 
+              onClick={handleLanguageToggle}
+              className={`transition-colors ${language === 'fr' ? 'text-white' : 'text-gray-400 hover:text-white'}`}
+            >
+              Français
+            </button>
           </div>
         </div>
       </div>

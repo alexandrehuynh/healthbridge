@@ -2,14 +2,10 @@ import { ArrowLeft, Phone, Mail, MapPin, Clock, Users, FileText } from 'lucide-r
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import Header from '@/components/shared/header';
-import Footer from '@/components/shared/footer';
 
 export default function Help() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-6">
           <Link href="/">
@@ -115,12 +111,12 @@ export default function Help() {
               <div>
                 <p className="font-semibold">Government of Canada</p>
                 <a 
-                  href="https://www.canada.ca/en/health-canada/services/health-care-system/health-care-insurance.html" 
+                  href="https://www.canada.ca/en/health-canada/services/health-care-system.html" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="text-primary hover:underline text-sm"
                 >
-                  Official Health Care Insurance Information
+                  Official Health Care System Information
                 </a>
               </div>
               <div>
@@ -176,8 +172,6 @@ export default function Help() {
           </Card>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
