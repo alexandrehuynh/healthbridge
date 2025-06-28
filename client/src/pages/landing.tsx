@@ -1,10 +1,12 @@
 import { ArrowRight, Shield, Users, Clock, Flag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
+import { useLanguage } from '@/hooks/use-language';
 import CanadianFlag from '@/components/ui/canadian-flag';
 
 export default function Landing() {
   const [, setLocation] = useLocation();
+  const { t } = useLanguage();
 
   const startAssessment = () => {
     setLocation('/wizard');
@@ -51,15 +53,14 @@ export default function Landing() {
               <div className="flex items-center space-x-2 mb-6">
                 <span className="bg-success/20 text-green-100 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 border border-green-400/30">
                   <Flag className="w-4 h-4" />
-                  Trusted by 400,000+ New Canadians
+                  {t('landing.trustedBy')}
                 </span>
               </div>
               <h1 className="text-4xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
-                Don't Face Unexpected Medical Bills
+                {t('landing.title')}
               </h1>
               <p className="text-xl mb-8 text-blue-100 leading-relaxed">
-                Navigate healthcare coverage during your transition. Many provinces now offer immediate coverage, 
-                while others have waiting periods. Get personalized guidance and avoid unexpected medical bills.
+                {t('landing.subtitle')}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 sm:justify-start">
                 <Button 
@@ -67,7 +68,7 @@ export default function Landing() {
                   size="lg"
                   className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 min-h-[3rem] w-full sm:w-auto"
                 >
-                  Start Free Assessment
+                  {t('landing.startAssessment')}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <Button 
@@ -75,7 +76,7 @@ export default function Landing() {
                   size="lg"
                   className="bg-white/10 text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 min-h-[3rem] w-full sm:w-auto"
                 >
-                  View Resources
+                  {t('landing.viewResources')}
                 </Button>
               </div>
             </div>
