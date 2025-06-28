@@ -11,10 +11,12 @@ import TimelineVisualization from '@/components/dashboard/timeline-visualization
 import InsuranceComparison from '@/components/dashboard/insurance-comparison';
 import ActionChecklist from '@/components/dashboard/action-checklist';
 import provincesData from '@/data/provinces.json';
+import { useToast } from '@/hooks/use-toast';
 
 export default function Results() {
   const [, setLocation] = useLocation();
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
     const savedData = localStorage.getItem('assessmentData');
@@ -37,6 +39,57 @@ export default function Results() {
     assessmentData.familySize
   ) : [];
 
+  const savePlan = () => {
+    if (!assessmentData || !waitingPeriodCalculation || !provinceData) return;
+    
+    const planData = {
+      id: Date.now(),
+      timestamp: new Date().toISOString(),
+      province: assessmentData.province,
+      status: assessmentData.status,
+      arrivalDate: assessmentData.arrivalDate,
+      familySize: assessmentData.familySize,
+      healthPlanName: provinceData.healthPlanName,
+      daysRemaining,
+      coverageStartDate: formatDate(waitingPeriodCalculation.coverageStartDate),
+      recommendedInsurance: insuranceProviders.slice(0, 3),
+      estimatedCost
+    };
+    
+    localStorage.setItem(`healthbridge_plan_${planData.id}`, JSON.stringify(planData));
+    toast({
+      title: "Plan Saved Successfully!",
+      description: "Your healthcare plan has been saved to your device.",
+    });
+  };
+
+  const shareResults = async () => {
+    if (!assessmentData || !provinceData) return;
+    
+    const summary = `HealthBridge Assessment Results:
+
+Province: ${provinceData.name}
+Status: ${assessmentData.status === 'pr' ? 'Permanent Resident' : 'Work Permit Holder'}
+Health Plan: ${provinceData.healthPlanName}
+${daysRemaining > 0 ? `Days until coverage: ${daysRemaining}` : 'Coverage now active!'}
+${insuranceProviders.length > 0 ? `Recommended: ${insuranceProviders[0].name} - $${insuranceProviders[0].monthlyPrice}/month` : ''}
+
+Visit HealthBridge to get your personalized healthcare navigation plan.`;
+
+    try {
+      await navigator.clipboard.writeText(summary);
+      toast({
+        title: "Results Copied!",
+        description: "Your assessment summary has been copied to clipboard.",
+      });
+    } catch (error) {
+      toast({
+        title: "Share Feature",
+        description: "Your results are ready to share. Copy the summary manually if needed.",
+      });
+    }
+  };
+
   const startOver = () => {
     localStorage.removeItem('assessmentData');
     setLocation('/');
@@ -56,7 +109,7 @@ export default function Results() {
   }
 
   const { daysRemaining } = waitingPeriodCalculation;
-  const estimatedCost = Math.round(67 * (insuranceProviders[0]?.monthlyPrice || 60) / 30);
+  const estimatedCost = Math.round((daysRemaining / 30) * (insuranceProviders[0]?.monthlyPrice || 85));
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -166,7 +219,7 @@ export default function Results() {
               </div>
               <div className="mt-4 p-3 bg-success/10 rounded-lg">
                 <p className="text-sm text-success font-medium">
-                  🎉 Savings: ${8500 - estimatedCost} vs. average uninsured medical bill
+                  Savings: ${5200 - estimatedCost} vs. average uninsured medical bill
                 </p>
               </div>
             </div>
@@ -186,11 +239,18 @@ export default function Results() {
         {/* Save & Share Results */}
         <div className="mt-8 text-center">
           <div className="space-x-4">
-            <Button className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+            <Button 
+              onClick={savePlan}
+              className="bg-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
               <Bookmark className="mr-2 w-4 h-4" />
               Save My Plan
             </Button>
-            <Button variant="outline" className="px-6 py-3 rounded-lg font-semibold">
+            <Button 
+              onClick={shareResults}
+              variant="outline" 
+              className="px-6 py-3 rounded-lg font-semibold"
+            >
               <Share className="mr-2 w-4 h-4" />
               Share Results
             </Button>

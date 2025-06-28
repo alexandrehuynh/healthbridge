@@ -12,9 +12,9 @@ export default function Landing() {
 
   const stats = [
     { value: '400,000+', label: 'New PR annually', color: 'text-primary' },
-    { value: '90', label: 'Day waiting period', color: 'text-canadian-red' },
-    { value: '$8,500', label: 'Average medical bill', color: 'text-warning' },
-    { value: '$150', label: 'Avg monthly coverage', color: 'text-success' },
+    { value: '7/13', label: 'Provinces with immediate coverage', color: 'text-success' },
+    { value: '$5,200', label: 'Average uninsured bill', color: 'text-warning' },
+    { value: '$85', label: 'Avg monthly coverage', color: 'text-success' },
   ];
 
   const trustIndicators = [

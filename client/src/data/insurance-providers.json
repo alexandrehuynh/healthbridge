@@ -3,7 +3,7 @@
     "id": "blue-cross-newcomer",
     "name": "Blue Cross Newcomer Plan",
     "abbreviation": "BC",
-    "monthlyPrice": 59,
+    "monthlyPrice": 79,
     "coverage": {
       "emergencyMedical": "$1M",
       "prescriptionDrugs": true,
@@ -17,7 +17,7 @@
       "24/7 nurse helpline",
       "Coverage from day 1"
     ],
-    "quoteUrl": "https://www.bluecross.ca/en/products/travel-insurance",
+    "quoteUrl": "https://www.bluecross.ca/en/visitors-to-canada",
     "provinces": ["ontario", "bc", "alberta", "manitoba", "saskatchewan"],
     "tag": "Most Popular"
   },
@@ -25,7 +25,7 @@
     "id": "manulife-coverme",
     "name": "Manulife CoverMe",
     "abbreviation": "ML",
-    "monthlyPrice": 67,
+    "monthlyPrice": 89,
     "coverage": {
       "emergencyMedical": "$2M",
       "prescriptionDrugs": true,
@@ -39,7 +39,7 @@
       "Vision care coverage",
       "Physiotherapy benefits"
     ],
-    "quoteUrl": "https://www.manulife.ca/personal/insurance/health-insurance.html",
+    "quoteUrl": "https://www.manulife.ca/personal/insurance/health-insurance/travel-insurance.html",
     "provinces": ["ontario", "bc", "alberta", "quebec", "manitoba"],
     "tag": "Best Value"
   },
@@ -47,7 +47,7 @@
     "id": "sun-life-essential",
     "name": "Sun Life Essential",
     "abbreviation": "SL",
-    "monthlyPrice": 45,
+    "monthlyPrice": 65,
     "coverage": {
       "emergencyMedical": "$500K",
       "prescriptionDrugs": true,
@@ -60,7 +60,7 @@
       "Prescription drugs (limited)",
       "Ambulance coverage"
     ],
-    "quoteUrl": "https://www.sunlife.ca/en/insurance/health-insurance/",
+    "quoteUrl": "https://www.sunlife.ca/ca/insurance/health-insurance/travel-insurance/",
     "provinces": ["ontario", "bc", "alberta", "manitoba", "saskatchewan", "nova-scotia"],
     "tag": "Budget Option"
   },
@@ -68,7 +68,7 @@
     "id": "chambers-visitor",
     "name": "Chambers Visitor Insurance",
     "abbreviation": "CV",
-    "monthlyPrice": 52,
+    "monthlyPrice": 72,
     "coverage": {
       "emergencyMedical": "$1M",
       "prescriptionDrugs": false,
@@ -82,7 +82,7 @@
       "Emergency transportation",
       "Pre-existing condition coverage"
     ],
-    "quoteUrl": "https://www.chambers.ca/",
+    "quoteUrl": "https://www.chambers.ca/visitor-insurance/",
     "provinces": ["ontario", "bc", "alberta", "quebec"],
     "tag": "Comprehensive"
   }

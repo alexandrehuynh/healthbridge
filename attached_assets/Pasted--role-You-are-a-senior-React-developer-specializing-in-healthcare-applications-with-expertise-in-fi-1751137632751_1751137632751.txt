@@ -1,0 +1,167 @@
+<role>
+You are a senior React developer specializing in healthcare applications with expertise in fixing critical functionality issues and updating inaccurate data that could mislead vulnerable users.
+</role>
+
+<task>
+Fix critical functionality issues in HealthBridge and update factually incorrect healthcare statistics that could harm new Canadian immigrants by providing wrong information about provincial health coverage.
+</task>
+
+<context>
+HealthBridge is currently displaying incorrect information about Canadian healthcare waiting periods and has broken functionality that prevents users from getting insurance quotes or saving their results. These issues directly impact the app's core purpose of helping new immigrants navigate healthcare coverage.
+
+Based on recent research: 6 out of 13 Canadian provinces now offer immediate health coverage (no waiting period), while only 7 have waiting periods. The app currently shows "90 day waiting period" universally, which is dangerously misleading.
+</context>
+
+<critical_fixes_required>
+**1. Fix Broken Insurance Quote Links**
+- "Get Quote" buttons currently lead to bad URLs
+- Need to connect to real insurance provider quote pages or create functional placeholder links
+- Ensure external links open in new tabs for better UX
+
+**2. Implement Save Plan Functionality**
+- "Save My Plan" button currently does nothing
+- Should save assessment results to localStorage with unique ID
+- Provide user feedback when plan is saved
+
+**3. Implement Share Results Feature**
+- "Share Results" button currently non-functional  
+- Should generate shareable link or copy assessment summary to clipboard
+- Show confirmation when sharing is complete
+
+**4. Correct Provincial Health Coverage Data**
+- Update waiting period information to reflect current provincial policies
+- Show accurate province-by-province coverage details
+- Remove misleading "90 day" universal claim
+
+**5. Update Cost Statistics**
+- Research shows $150/month insurance cost is inflated (should be $75-100)
+- Medical bill costs need verification against actual Canadian healthcare rates
+- Ensure all statistics are evidence-based and cited
+</critical_fixes_required>
+
+<accurate_provincial_data>
+**Provinces with IMMEDIATE coverage (no waiting period):**
+- Alberta
+- Manitoba  
+- New Brunswick
+- Newfoundland and Labrador
+- Nova Scotia
+- Prince Edward Island
+- Ontario (recently eliminated waiting period)
+
+**Provinces with 2-3 month waiting periods:**
+- British Columbia
+- Quebec (with exceptions for children under 18)
+- Saskatchewan
+- Yukon
+- Northwest Territories
+- Nunavut
+
+**Update the app to show province-specific information instead of universal "90 day" claim.**
+</accurate_provincial_data>
+
+<implementation_priorities>
+**Fix in this order:**
+
+1. **View Resources Button Visibility** - Critical UI issue blocking navigation
+   ```css
+   /* Ensure button has proper styling and contrast */
+   .btn-secondary {
+     border: 2px solid rgba(255, 255, 255, 0.8);
+     color: white;
+     background: transparent;
+     font-weight: 600;
+   }
+   
+   .btn-secondary:hover {
+     background: rgba(255, 255, 255, 0.1);
+     border-color: white;
+   }
+   ```
+
+2. **Insurance Quote Links** - Most critical for user journey
+   ```javascript
+   // Replace placeholder URLs with real provider links
+   const insuranceProviders = [
+     {
+       name: "Sun Life Essential",
+       quoteUrl: "https://www.sunlife.ca/ca/insurance/health-insurance/travel-insurance/"
+     },
+     {
+       name: "Chambers Visitor Insurance", 
+       quoteUrl: "https://www.chambers.ca/visitor-insurance/"
+     },
+     {
+       name: "Blue Cross Newcomer Plan",
+       quoteUrl: "https://www.bluecross.ca/en/visitors-to-canada"
+     }
+   ];
+   ```
+
+2. **Save Plan Functionality**
+   ```javascript
+   // Save to localStorage with timestamp
+   const savePlan = () => {
+     const planData = {
+       id: Date.now(),
+       timestamp: new Date().toISOString(),
+       province: userAssessment.province,
+       recommendations: selectedInsurance,
+       checklist: actionItems
+     };
+     localStorage.setItem(`healthbridge_plan_${planData.id}`, JSON.stringify(planData));
+     showToast("Plan saved successfully!");
+   };
+   ```
+
+3. **Share Results Feature**
+   ```javascript
+   // Generate shareable summary
+   const shareResults = () => {
+     const summary = `HealthBridge Assessment Results:
+   Province: ${userAssessment.province}
+   Recommended: ${topInsurance.name} - $${topInsurance.price}/month
+   Next Steps: Apply for provincial health coverage
+   `;
+     navigator.clipboard.writeText(summary);
+     showToast("Results copied to clipboard!");
+   };
+   ```
+
+4. **Update Provincial Data**
+   - Replace hardcoded "90 day" references
+   - Add province-specific waiting period data
+   - Update calculator logic to handle immediate coverage provinces
+
+5. **Correct Cost Statistics**
+   - Update insurance costs from $150 to $75-100 range
+   - Verify medical bill statistics against Canadian sources
+   - Add disclaimers for cost estimates
+</implementation_priorities>
+
+<output_format>
+**For each fix, show me:**
+
+1. **What you're fixing** and why it's important
+2. **The code changes** you're making
+3. **How it works now** vs. before
+4. **Test it** by demonstrating the functionality
+
+**Priority order:**
+- View Resources button visibility (critical UI blocker)
+- Insurance quote links (test that they actually work)
+- Save/Share button functionality (show the features working)
+- Provincial data accuracy (verify against official sources)
+- Cost statistic updates (show corrected numbers)
+</output_format>
+
+<constraints>
+- Ensure all external links open in new tabs
+- Use localStorage for persistence (no database needed yet)
+- Provide user feedback for all actions (toasts, confirmations)
+- Verify all statistics against Canadian government sources
+- Make sharing feature work without requiring user accounts
+- Test functionality thoroughly before marking as complete
+
+**Most importantly: Fix the invisible View Resources button first - users can't navigate to key information. Then fix the quote links - that's the core user journey blocker.**
+</constraints>
