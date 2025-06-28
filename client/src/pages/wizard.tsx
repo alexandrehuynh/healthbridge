@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useAssessment } from '@/hooks/use-assessment';
 import ProgressIndicator from '@/components/wizard/progress-indicator';
+import ImmigrationStatusSelection from '@/components/wizard/immigration-status';
 import ProvinceSelection from '@/components/wizard/province-selection';
-import StatusSelection from '@/components/wizard/status-selection';
-import ArrivalDate from '@/components/wizard/arrival-date';
+import PermanentResidentQuestions from '@/components/wizard/permanent-resident-questions';
+import WorkPermitQuestions from '@/components/wizard/work-permit-questions';
+import StudentQuestions from '@/components/wizard/student-questions';
 import FamilySize from '@/components/wizard/family-size';
 
 export default function Wizard() {
@@ -35,38 +37,83 @@ export default function Wizard() {
     switch (currentStep) {
       case 1:
         return (
-          <ProvinceSelection
-            value={data.province}
-            onChange={(province) => updateData({ province })}
+          <ImmigrationStatusSelection
+            value={data.immigrationStatus}
+            onChange={(immigrationStatus) => updateData({ immigrationStatus })}
           />
         );
       case 2:
         return (
-          <StatusSelection
-            value={data.status}
-            onChange={(status) => updateData({ status })}
+          <ProvinceSelection
+            value={data.province}
+            onChange={(province) => updateData({ province })}
+            immigrationStatus={data.immigrationStatus}
           />
         );
       case 3:
-        return (
-          <ArrivalDate
-            value={data.arrivalDate}
-            onChange={(arrivalDate) => updateData({ arrivalDate })}
-          />
-        );
+        // Conditional step based on immigration status
+        if (data.immigrationStatus === 'permanent_resident') {
+          return (
+            <PermanentResidentQuestions
+              arrivalDate={data.arrivalDate}
+              familySize={data.familySize}
+              onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
+              onFamilySizeChange={(familySize) => updateData({ familySize })}
+              province={data.province}
+            />
+          );
+        } else if (data.immigrationStatus === 'work_permit') {
+          return (
+            <WorkPermitQuestions
+              employerBenefits={data.employerBenefits}
+              arrivalDate={data.arrivalDate}
+              onEmployerBenefitsChange={(employerBenefits) => updateData({ employerBenefits })}
+              onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
+              province={data.province}
+            />
+          );
+        } else if (data.immigrationStatus === 'study_permit') {
+          return (
+            <StudentQuestions
+              universityInsurance={data.universityInsurance}
+              coverageNeeds={data.coverageNeeds}
+              onUniversityInsuranceChange={(universityInsurance) => updateData({ universityInsurance })}
+              onCoverageNeedsChange={(coverageNeeds) => updateData({ coverageNeeds })}
+              province={data.province}
+            />
+          );
+        } else {
+          // For visitors - simple family size question
+          return (
+            <FamilySize
+              familySize={data.familySize}
+              onFamilySizeChange={(familySize) => updateData({ familySize })}
+              includeDental={data.includeDental}
+              includeVision={data.includeVision}
+              includePrescription={data.includePrescription}
+              onDentalChange={(includeDental) => updateData({ includeDental })}
+              onVisionChange={(includeVision) => updateData({ includeVision })}
+              onPrescriptionChange={(includePrescription) => updateData({ includePrescription })}
+            />
+          );
+        }
       case 4:
-        return (
-          <FamilySize
-            familySize={data.familySize}
-            onFamilySizeChange={(familySize) => updateData({ familySize })}
-            includeDental={data.includeDental}
-            includeVision={data.includeVision}
-            includePrescription={data.includePrescription}
-            onDentalChange={(includeDental) => updateData({ includeDental })}
-            onVisionChange={(includeVision) => updateData({ includeVision })}
-            onPrescriptionChange={(includePrescription) => updateData({ includePrescription })}
-          />
-        );
+        // Final step for family size/coverage options if not already handled
+        if (data.immigrationStatus === 'permanent_resident' || data.immigrationStatus === 'visitor') {
+          return (
+            <FamilySize
+              familySize={data.familySize}
+              onFamilySizeChange={(familySize) => updateData({ familySize })}
+              includeDental={data.includeDental}
+              includeVision={data.includeVision}
+              includePrescription={data.includePrescription}
+              onDentalChange={(includeDental) => updateData({ includeDental })}
+              onVisionChange={(includeVision) => updateData({ includeVision })}
+              onPrescriptionChange={(includePrescription) => updateData({ includePrescription })}
+            />
+          );
+        }
+        return null;
       default:
         return null;
     }

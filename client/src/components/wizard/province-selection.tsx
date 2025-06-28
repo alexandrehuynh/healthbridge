@@ -6,9 +6,10 @@ import provincesData from '@/data/provinces.json';
 interface ProvinceSelectionProps {
   value: string;
   onChange: (value: string) => void;
+  immigrationStatus?: string;
 }
 
-export default function ProvinceSelection({ value, onChange }: ProvinceSelectionProps) {
+export default function ProvinceSelection({ value, onChange, immigrationStatus }: ProvinceSelectionProps) {
   return (
     <div className="fade-in">
       <div className="text-center mb-8">
@@ -19,7 +20,12 @@ export default function ProvinceSelection({ value, onChange }: ProvinceSelection
           Which province are you settling in?
         </h2>
         <p className="text-gray-600 text-lg">
-          Different provinces have different waiting periods and health coverage rules.
+          {immigrationStatus === 'study_permit' 
+            ? 'Provincial health eligibility varies significantly for international students.'
+            : immigrationStatus === 'work_permit'
+            ? 'Work permit holders have different eligibility rules in each province.'
+            : 'Different provinces have different waiting periods and health coverage rules.'
+          }
         </p>
       </div>
       
