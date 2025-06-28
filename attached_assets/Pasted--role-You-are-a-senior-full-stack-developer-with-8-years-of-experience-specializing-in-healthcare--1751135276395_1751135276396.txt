@@ -1,0 +1,220 @@
+<role>
+You are a senior full-stack developer with 8+ years of experience specializing in healthcare applications, government digital services, and React.js development. You have extensive experience building user-friendly tools for vulnerable populations and understand the critical importance of accessible, trustworthy design for healthcare navigation apps. Your expertise includes modern React patterns, responsive design, and creating applications that serve users during stressful life transitions.
+</role>
+
+<task>
+Build HealthBridge: a complete, production-ready healthcare navigation web application that helps new Canadian Permanent Residents navigate their 3-month waiting period before provincial health coverage begins. Create a comprehensive MVP that addresses the critical information gap causing new immigrants to face unexpected medical bills of $1,000-$20,000+.
+
+Don't hold back. Give it your all. Create an impressive demonstration showcasing full-stack web development capabilities with professional healthcare application standards.
+</task>
+
+<context>
+HealthBridge addresses a critical problem: 400,000+ new Permanent Residents annually face potential catastrophic medical bills due to confusion about interim health insurance during their mandatory 3-month waiting period before provincial coverage begins. Settlement agencies and immigrants need a trustworthy, government-quality tool that provides clear guidance and actionable next steps.
+
+This application will be used by:
+- New Canadian immigrants during a stressful transition period
+- Settlement agencies recommending resources to clients
+- Community organizations providing immigration support
+
+The app must convey professionalism and trustworthiness equivalent to government healthcare tools while remaining user-friendly and accessible.
+</context>
+
+<methodology>
+Build the application using this systematic approach:
+
+1. **Project Setup & Structure**: Initialize React project with proper folder organization and dependencies
+2. **Data Layer Implementation**: Create static JSON data structures for provinces, insurance providers, and rules
+3. **Core Components Development**: Build reusable UI components following the design system
+4. **User Flow Implementation**: Develop the complete wizard-to-dashboard flow
+5. **Responsive Design Integration**: Ensure mobile-first responsive behavior across all screens
+6. **State Management**: Implement React hooks for seamless data flow
+7. **Production Optimization**: Add error handling, loading states, and deployment preparation
+8. **Quality Assurance**: Test complete user journey and edge cases
+</methodology>
+
+<technical_specifications>
+**Frontend Framework**: React.js with functional components and hooks
+**Styling**: Tailwind CSS with custom design system
+**State Management**: React hooks (useState, useEffect, useContext)
+**Data Storage**: Static JSON files for all application data
+**Deployment**: Ready for Vercel/Netlify deployment
+**Browser Support**: Modern browsers with mobile-first responsive design
+**Performance**: Optimized loading with proper component structure
+</technical_specifications>
+
+<core_features_requirements>
+**Primary Components to Build**:
+
+1. **Landing Page**
+   - Hero section with clear value proposition
+   - Trust indicators (Canadian styling, professional appearance)
+   - Call-to-action to start eligibility assessment
+
+2. **Eligibility Assessment Wizard**
+   - 4-step multi-screen questionnaire with progress indicator
+   - Questions: Province selection, immigration status, arrival date, family size
+   - Form validation and error handling
+   - Mobile-optimized single-question-per-screen flow
+
+3. **Waiting Period Calculator**
+   - Dynamic calculation based on province and arrival date
+   - Visual countdown display showing days remaining
+   - Coverage start date prominently displayed
+   - Alert styling for urgent timeframes
+
+4. **Insurance Comparison Tool**
+   - Side-by-side comparison cards for 3-4 insurance options
+   - Pricing prominently displayed with coverage details
+   - Direct links to provider quote pages
+   - Filtering based on family size and province
+
+5. **Results Dashboard**
+   - Personalized timeline visualization
+   - Insurance recommendations with reasoning
+   - Checklist-style next steps section
+   - Resource links to provincial health applications
+
+6. **Resource Directory**
+   - Links to provincial health plan applications
+   - Settlement services contact information
+   - Emergency resources and guidance
+</core_features_requirements>
+
+<design_system_requirements>
+**Visual Design Standards**:
+- **Color Palette**: Primary blue (#2563eb), success green (#059669), warning amber (#d97706), neutral grays (#6b7280, #f3f4f6)
+- **Typography**: System fonts (Inter or SF Pro fallbacks) for maximum readability
+- **Layout**: Card-based design with subtle shadows (shadow-sm, shadow-md)
+- **Spacing**: Generous white space following 8px grid system
+- **Border Radius**: Consistent rounded corners (rounded-lg, rounded-xl)
+
+**Design Inspiration References**:
+Apply patterns from these successful interfaces:
+- TurboTax questionnaire flow: Clear progress indicators, one question per screen
+- Stripe payment forms: Clean input design with excellent validation states
+- Healthcare.gov plan comparison: Effective side-by-side insurance card layout
+- Canada.ca design system: Government-appropriate styling with modern usability
+
+**Component Design Requirements**:
+- Step-by-step progress indicator showing (1/4, 2/4, 3/4, 4/4)
+- Insurance comparison cards with pricing prominently displayed
+- Timeline visualization for waiting period countdown
+- Alert boxes for urgent information ("67 days remaining until coverage")
+- Professional form inputs with clear labels and validation states
+- Prominent CTA buttons with proper contrast ratios
+- Trust indicators throughout (Canadian flag elements, official styling)
+
+**Layout Patterns**:
+- Single-column mobile layout with max-width container on desktop
+- Sticky navigation/progress bar for wizard flow
+- Clear visual separation between content sections
+- Footer with privacy policy and contact information
+- Responsive breakpoints following Tailwind defaults
+</design_system_requirements>
+
+<data_structures_needed>
+Create these JSON data files:
+
+**provinces.json**: Provincial waiting periods, health plan details, application links
+**insuranceProviders.json**: Provider details including name, coverage options, pricing tiers, quote URLs
+**eligibilityRules.json**: Immigration status mappings and special considerations
+**resources.json**: Settlement services, emergency contacts, helpful links
+
+Include comprehensive test data covering all provinces and common immigration scenarios.
+</data_structures_needed>
+
+<user_flow_implementation>
+**Complete User Journey**:
+1. Landing Page → Eligibility Quiz start
+2. Question 1: Province selection (dropdown with all provinces)
+3. Question 2: Immigration status (radio buttons: PR, Work Permit, Student, Other)
+4. Question 3: Arrival date (date picker with validation)
+5. Question 4: Family size (optional number input)
+6. Results Dashboard with personalized recommendations
+7. Insurance comparison tool with external quote links
+8. Resource directory for additional support
+
+**Interactive Elements**:
+- Progress saving between wizard steps
+- Dynamic content updates based on selections
+- Hover states and micro-interactions for enhanced UX
+- Loading states during data processing
+- Error handling with helpful messaging
+</user_flow_implementation>
+
+<thinking>
+Before beginning development, systematically plan:
+
+1. What is the most logical project structure for maintainability?
+2. How can I implement the data layer to be easily extensible?
+3. What React patterns will provide the best user experience?
+4. How should I structure components for maximum reusability?
+5. What edge cases need handling (invalid dates, unknown provinces, etc.)?
+6. How can I ensure the design conveys trustworthiness while remaining user-friendly?
+7. What loading and error states are needed for production readiness?
+8. How should I optimize the mobile experience given the target users?
+</thinking>
+
+<output_format>
+Create a complete React.js application with this structure:
+
+```
+healthbridge/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+├── src/
+│   ├── components/
+│   │   ├── ui/ (reusable UI components)
+│   │   ├── wizard/ (assessment wizard components)
+│   │   ├── dashboard/ (results dashboard components)
+│   │   └── shared/ (shared layout components)
+│   ├── data/ (JSON data files)
+│   ├── hooks/ (custom React hooks)
+│   ├── utils/ (helper functions)
+│   ├── App.js
+│   └── index.js
+├── package.json
+└── tailwind.config.js
+```
+
+Provide:
+1. Complete, functional React components with proper TypeScript-style PropTypes
+2. Comprehensive Tailwind CSS styling following the design system
+3. Static JSON data covering all provinces and insurance providers
+4. Production-ready error handling and loading states
+5. Mobile-responsive design tested across different screen sizes
+6. Clean, well-documented code with clear component organization
+7. README.md with deployment instructions and project overview
+</output_format>
+
+<constraints>
+**Technical Constraints**:
+- Use only React.js and Tailwind CSS (no additional UI libraries)
+- Implement responsive design without CSS Grid (Flexbox and Tailwind utilities only)
+- Ensure all data is static JSON (no external API dependencies)
+- Code must be deployment-ready for Vercel/Netlify without configuration
+- Support modern browsers (no IE11 compatibility required)
+
+**Design Constraints**:
+- Maintain professional, government-appropriate aesthetic throughout
+- Avoid overly colorful or playful design elements
+- Ensure accessibility with proper contrast ratios (WCAG AA minimum)
+- Keep navigation simple with no multi-level menus
+- Display no more than 4 insurance options to avoid decision paralysis
+
+**Content Constraints**:
+- Use placeholder content that represents real Canadian immigration scenarios
+- Include disclaimers that this is educational/informational only
+- Ensure all external links open in new tabs
+- Provide clear privacy considerations for data handling
+
+**Quality Standards**:
+- Code must be production-ready with error handling
+- All components must be fully functional, not placeholder implementations
+- Mobile experience must be optimized for one-handed use
+- Loading states and form validation must be implemented
+- Application must handle edge cases gracefully
+
+**If insufficient information is provided about specific requirements, use industry best practices for healthcare navigation applications and Canadian government digital service standards.**
+</constraints>
