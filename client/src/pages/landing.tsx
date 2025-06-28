@@ -95,7 +95,7 @@ export default function Landing() {
               <div className="bg-white p-6 rounded-2xl shadow-2xl border border-blue-100">
                 <HeroNewcomers />
               </div>
-              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 rounded-xl shadow-2xl border border-red-200 max-w-xs">
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-red-500 to-orange-500 text-white p-6 rounded-xl shadow-2xl border border-red-200 max-w-xs hero-card">
                 <div className="space-y-2">
                   <h3 className="font-bold text-lg flex items-center">
                     <Shield className="w-5 h-5 mr-2" />

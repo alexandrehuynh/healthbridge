@@ -110,3 +110,54 @@
     transform: translateY(0); 
   }
 }
+
+/* Quebec-specific hero section styling */
+.trust-indicator {
+  transition: all 0.3s ease;
+}
+
+.trust-indicator:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+}
+
+.flag-circle {
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.1);
+}
+
+.flag-circle:hover {
+  transform: scale(1.1);
+}
+
+/* Hero card responsive styling */
+.hero-card {
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(239, 68, 68, 0.15);
+}
+
+/* Mobile responsiveness for hero elements */
+@media (max-width: 640px) {
+  .trust-indicator {
+    flex-direction: column;
+    text-align: center;
+    padding: 12px 16px;
+  }
+  
+  .flag-circle {
+    margin-bottom: 4px;
+  }
+  
+  .hero-card {
+    position: relative !important;
+    bottom: auto !important;
+    left: auto !important;
+    margin-top: 16px;
+    max-width: 100%;
+  }
+}
