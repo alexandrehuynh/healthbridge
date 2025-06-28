@@ -1,6 +1,10 @@
 import { Calendar, Info } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import { Calendar as CalendarComponent } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { format } from 'date-fns';
 
 interface ArrivalDateProps {
   value: string;
@@ -8,6 +12,19 @@ interface ArrivalDateProps {
 }
 
 export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
+  const selectedDate = value ? new Date(value) : undefined;
+
+  const handleDateSelect = (date: Date | undefined) => {
+    if (date) {
+      onChange(format(date, 'yyyy-MM-dd'));
+    }
+  };
+
+  const handleTodayClick = () => {
+    const today = new Date();
+    onChange(format(today, 'yyyy-MM-dd'));
+  };
+
   return (
     <div className="fade-in">
       <div className="text-center mb-8">
@@ -23,17 +40,47 @@ export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
       </div>
       
       <div className="max-w-md mx-auto">
-        <Label htmlFor="arrival-date" className="block text-sm font-medium text-gray-700 mb-2">
+        <Label className="block text-sm font-medium text-gray-700 mb-2">
           Arrival Date
         </Label>
-        <Input
-          id="arrival-date"
-          type="date"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-primary focus:outline-none text-lg"
-          max={new Date().toISOString().split('T')[0]}
-        />
+        
+        <div className="space-y-3">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className={cn(
+                  "w-full justify-start text-left font-normal px-4 py-3 h-auto border-2 border-gray-200 rounded-lg focus:border-primary",
+                  !selectedDate && "text-muted-foreground"
+                )}
+              >
+                <Calendar className="mr-2 h-4 w-4" />
+                {selectedDate ? format(selectedDate, "PPP") : "Pick a date"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <div className="p-3 border-b">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleTodayClick}
+                  className="w-full"
+                >
+                  Today
+                </Button>
+              </div>
+              <CalendarComponent
+                mode="single"
+                selected={selectedDate}
+                onSelect={handleDateSelect}
+                initialFocus
+                fromYear={2020}
+                toYear={2030}
+                className="rounded-md"
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
         
         <div className="mt-6 p-4 bg-blue-50 rounded-lg">
           <div className="flex items-start space-x-3">
@@ -42,7 +89,7 @@ export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
               <p className="font-medium mb-1">Your waiting period calculation:</p>
               <p>
                 Most provinces require a 3-month (90-day) waiting period from your arrival date 
-                before provincial health coverage begins.
+                before provincial health coverage begins. You can also plan for future arrival dates.
               </p>
             </div>
           </div>

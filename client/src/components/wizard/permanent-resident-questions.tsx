@@ -63,12 +63,24 @@ export default function PermanentResidentQuestions({
                 </Button>
               </PopoverTrigger>
               <PopoverContent className="w-auto p-0" align="start">
+                <div className="p-3 border-b">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => onArrivalDateChange(format(new Date(), 'yyyy-MM-dd'))}
+                    className="w-full"
+                  >
+                    Today
+                  </Button>
+                </div>
                 <Calendar
                   mode="single"
                   selected={selectedDate}
-                  onSelect={(date) => onArrivalDateChange(date ? date.toISOString().split('T')[0] : '')}
-                  disabled={(date) => date > new Date() || date < new Date("2020-01-01")}
+                  onSelect={(date) => onArrivalDateChange(date ? format(date, 'yyyy-MM-dd') : '')}
+                  fromYear={2020}
+                  toYear={2030}
                   initialFocus
+                  className="rounded-md"
                 />
               </PopoverContent>
             </Popover>

@@ -18,7 +18,24 @@ const initialData: AssessmentData = {
 export function useAssessment() {
   const [data, setData] = useState<AssessmentData>(initialData);
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 4;
+  
+  const getTotalSteps = useCallback(() => {
+    if (!data.immigrationStatus) return 4;
+    switch (data.immigrationStatus) {
+      case 'permanent_resident':
+        return 4; // Status → Province → PR Questions → Family Size
+      case 'work_permit':
+        return 3; // Status → Province → Work Questions (includes conditional arrival date)
+      case 'study_permit':
+        return 3; // Status → Province → Student Questions
+      case 'visitor':
+        return 3; // Status → Province → Family Size
+      default:
+        return 4;
+    }
+  }, [data.immigrationStatus]);
+
+  const totalSteps = getTotalSteps();
 
   const updateData = useCallback((updates: Partial<AssessmentData>) => {
     setData(prev => ({ ...prev, ...updates }));
