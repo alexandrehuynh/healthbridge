@@ -6,8 +6,8 @@ import { useLocation } from 'wouter';
 import { AssessmentData } from '@/types/assessment';
 import { getQuebecInsuranceProviders } from '@/utils/insurance-filtering';
 import { formatDate, calculateWaitingPeriod } from '@/utils/date-calculations';
-import TimelineVisualization from '@/components/dashboard/timeline-visualization';
-import InsuranceComparison from '@/components/dashboard/insurance-comparison';
+import VisualTimeline from '@/components/dashboard/visual-timeline';
+import EnhancedInsuranceCard from '@/components/dashboard/enhanced-insurance-card';
 import ActionChecklist from '@/components/dashboard/action-checklist';
 import { useToast } from '@/hooks/use-toast';
 
@@ -92,7 +92,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
     setLocation('/');
   };
 
-  if (!assessmentData || !waitingPeriodCalculation || !provinceData) {
+  if (!assessmentData || !waitingPeriodCalculation) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -119,7 +119,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Your Personalized Healthcare Plan</h1>
           <p className="text-xl text-gray-600">
-            Based on your arrival in {provinceData.name} as a {assessmentData.status === 'pr' ? 'Permanent Resident' : 'Work Permit Holder'}
+            Based on your arrival in Quebec as a {assessmentData.immigrationStatus === 'permanent_resident' ? 'Permanent Resident' : 'Newcomer'}
           </p>
         </div>
 
@@ -130,8 +130,8 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-2">
                   {daysRemaining > 0 
-                    ? `${daysRemaining} days until your ${provinceData.healthPlanName} coverage begins`
-                    : `Your ${provinceData.healthPlanName} coverage is now active!`
+                    ? `${daysRemaining} days until your RAMQ coverage begins`
+                    : `Your RAMQ coverage is now active!`
                   }
                 </h3>
                 <p className="text-gray-700">
@@ -153,9 +153,9 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
           
           {/* Timeline Visualization */}
           <div className="lg:col-span-2">
-            <TimelineVisualization 
+            <VisualTimeline 
               calculation={waitingPeriodCalculation}
-              healthPlanName={provinceData.healthPlanName}
+              healthPlanName="RAMQ"
             />
           </div>
 
@@ -224,12 +224,26 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
         </div>
 
         {/* Insurance Comparison */}
-        <InsuranceComparison providers={insuranceProviders} />
+        <div className="bg-gradient-to-br from-blue-50 to-green-50 p-8 rounded-2xl">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent mb-6 text-center">
+            Quebec Insurance Options for You
+          </h2>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {insuranceProviders.map((provider, index) => (
+              <EnhancedInsuranceCard
+                key={provider.id}
+                provider={provider}
+                isRecommended={index === 0}
+                familySize={assessmentData.familySize}
+              />
+            ))}
+          </div>
+        </div>
 
         {/* Action Checklist */}
         <ActionChecklist 
-          province={assessmentData.province}
-          healthPlanName={provinceData.healthPlanName}
+          province="QC"
+          healthPlanName="RAMQ"
           daysRemaining={daysRemaining}
         />
 
