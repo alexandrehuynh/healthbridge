@@ -47,35 +47,44 @@ export default function Landing() {
   return (
     <div className="fade-in">
       {/* Hero Section */}
-      <div className="bg-gradient-to-br from-primary to-blue-700 text-white">
+      <div className="bg-gradient-to-br from-blue-50 via-white to-green-50 text-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="flex items-center space-x-2 mb-6">
-                <span className="bg-success/20 text-green-100 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 border border-green-400/30">
-                  <Flag className="w-4 h-4" />
+              <div className="flex items-center space-x-3 mb-6">
+                <div className="bg-white p-2 rounded-lg shadow-sm border border-blue-100">
+                  <CanadianFlag size="md" />
+                </div>
+                <span className="text-blue-700 font-medium bg-gradient-to-r from-blue-100 to-indigo-100 px-4 py-2 rounded-full text-sm border border-blue-200">
+                  <MapPin className="w-4 h-4 inline mr-1" />
                   {t('landing.trustedBy')}
                 </span>
               </div>
-              <h1 className="text-4xl lg:text-6xl font-extrabold mb-6 leading-tight tracking-tight">
+              
+              <h1 className="text-4xl lg:text-6xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent leading-tight mb-6">
                 {t('landing.title')}
               </h1>
-              <p className="text-xl mb-8 text-blue-100 leading-relaxed">
+              
+              <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                <Heart className="w-5 h-5 inline text-red-400 mr-2" />
                 {t('landing.subtitle')}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 sm:justify-start">
+
+              <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
-                  onClick={startAssessment}
-                  size="lg"
-                  className="bg-white text-primary px-8 py-4 rounded-lg font-semibold text-lg hover:bg-gray-50 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105 min-h-[3rem] w-full sm:w-auto"
+                  size="lg" 
+                  onClick={startAssessment} 
+                  className="flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 shadow-lg px-8 py-4 text-lg"
                 >
-                  {t('landing.startAssessment')}
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <FileText className="w-5 h-5" />
+                  <span>{t('landing.startAssessment')}</span>
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
                 <Button 
-                  onClick={() => setLocation('/resources')}
-                  size="lg"
-                  className="bg-white/10 text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 min-h-[3rem] w-full sm:w-auto"
+                  variant="outline" 
+                  size="lg" 
+                  onClick={() => setLocation('/resources')} 
+                  className="border-2 border-blue-200 hover:bg-blue-50 px-8 py-4 text-lg"
                 >
                   {t('landing.viewResources')}
                 </Button>
@@ -121,21 +130,38 @@ export default function Landing() {
       </div>
 
       {/* Quick Stats */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-gradient-to-br from-gray-50 to-blue-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Critical Facts for New Canadians</h2>
-            <p className="text-gray-600">Understanding the healthcare landscape during your transition</p>
+            <h2 className="text-2xl font-semibold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent mb-4">Critical Facts for New Quebecers</h2>
+            <p className="text-gray-600">Understanding Quebec's healthcare landscape during your transition</p>
           </div>
           <div className="grid md:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-sm text-center group hover:shadow-md transition-all duration-200">
-                <div className={`text-4xl font-extrabold ${stat.color} mb-3 group-hover:scale-105 transition-transform duration-200`}>
-                  {stat.value}
+            {stats.map((stat, index) => {
+              // Map stats to appropriate icons
+              const getStatIcon = (index: number) => {
+                switch(index) {
+                  case 0: return Users;
+                  case 1: return Shield;
+                  case 2: return Clock;
+                  case 3: return Heart;
+                  default: return Users;
+                }
+              };
+              const IconComponent = getStatIcon(index);
+              
+              return (
+                <div key={index} className="bg-white p-8 rounded-2xl shadow-lg text-center group hover:shadow-xl transition-all duration-200 border border-blue-100">
+                  <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-200">
+                    <IconComponent className="w-8 h-8 text-white" />
+                  </div>
+                  <div className={`text-4xl font-extrabold ${stat.color} mb-3 group-hover:scale-105 transition-transform duration-200`}>
+                    {stat.value}
+                  </div>
+                  <div className="text-gray-700 font-medium">{stat.label}</div>
                 </div>
-                <div className="text-gray-600 font-medium">{stat.label}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>

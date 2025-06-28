@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useAssessment } from '@/hooks/use-assessment';
 import ProgressIndicator from '@/components/wizard/progress-indicator';
+import { WizardProgressIllustration } from '@/components/illustrations/step-icons';
 import ImmigrationStatusSelection from '@/components/wizard/immigration-status';
 import CountrySelection from '@/components/wizard/country-selection';
 import RAMQQuestions from '@/components/wizard/ramq-questions';
@@ -82,6 +83,7 @@ export default function Wizard() {
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <WizardProgressIllustration currentStep={currentStep} totalSteps={totalSteps} />
         <ProgressIndicator currentStep={currentStep} totalSteps={totalSteps} />
         
         {renderCurrentStep()}
