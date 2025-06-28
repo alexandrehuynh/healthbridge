@@ -54,12 +54,24 @@ export default function ImmigrationStatusSelection({ value, onChange }: Immigrat
                 htmlFor={status.id}
                 className="flex cursor-pointer"
               >
-                <Card className="w-full transition-all duration-200 hover:shadow-md peer-checked:ring-2 peer-checked:ring-primary peer-checked:border-primary">
+                <Card className={`w-full transition-all duration-200 hover:shadow-md border-2 ${
+                  value === status.id 
+                    ? 'ring-2 ring-primary border-primary bg-primary/5' 
+                    : 'border-gray-200 hover:border-gray-300'
+                }`}>
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between">
                       <div className="flex items-start space-x-4">
-                        <div className="p-2 bg-primary/10 rounded-lg">
-                          <Icon className="w-6 h-6 text-primary" />
+                        <div className={`p-2 rounded-lg ${
+                          value === status.id 
+                            ? 'bg-primary text-white' 
+                            : 'bg-primary/10'
+                        }`}>
+                          <Icon className={`w-6 h-6 ${
+                            value === status.id 
+                              ? 'text-white' 
+                              : 'text-primary'
+                          }`} />
                         </div>
                         <div className="flex-1">
                           <h3 className="font-semibold text-gray-900 mb-1">
@@ -70,9 +82,16 @@ export default function ImmigrationStatusSelection({ value, onChange }: Immigrat
                           </p>
                         </div>
                       </div>
-                      <Badge className={eligibilityInfo.color}>
-                        {eligibilityInfo.label}
-                      </Badge>
+                      <div className="flex items-center space-x-2">
+                        <Badge className={eligibilityInfo.color}>
+                          {eligibilityInfo.label}
+                        </Badge>
+                        {value === status.id && (
+                          <div className="w-5 h-5 bg-primary rounded-full flex items-center justify-center">
+                            <div className="w-2 h-2 bg-white rounded-full"></div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

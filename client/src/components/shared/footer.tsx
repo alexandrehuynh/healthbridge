@@ -91,7 +91,7 @@ export default function Footer() {
         </div>
         
         <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400">&copy; 2024 HealthBridge. Built for new Canadians with care.</p>
+          <p className="text-gray-400">&copy; 2025 HealthBridge. Built for new Quebecers with care.</p>
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             <span className="text-gray-400">Available in:</span>
             <button 
