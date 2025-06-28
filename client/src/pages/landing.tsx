@@ -7,7 +7,7 @@ export default function Landing() {
   const [, setLocation] = useLocation();
 
   const startAssessment = () => {
-    setLocation('/assessment');
+    setLocation('/wizard');
   };
 
   const stats = [

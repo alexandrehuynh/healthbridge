@@ -3,15 +3,20 @@ import { Clover, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
+import { useLanguage } from '@/hooks/use-language';
 
 export default function Header() {
   const [location] = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { language, setLanguage, t } = useLanguage();
+
+  const handleLanguageToggle = () => {
+    setLanguage(language === 'en' ? 'fr' : 'en');
+  };
 
   const navigation = [
-    { name: 'Resources', href: '/resources' },
-    { name: 'Help', href: '#' },
-    { name: 'Français', href: '#' },
+    { name: t('nav.resources'), href: '/resources' },
+    { name: t('nav.help'), href: '/help' },
   ];
 
   return (
@@ -39,6 +44,13 @@ export default function Header() {
                 {item.name}
               </Link>
             ))}
+            <Button 
+              variant="ghost" 
+              onClick={handleLanguageToggle}
+              className="text-gray-600 hover:text-primary transition-colors"
+            >
+              {t('nav.french')}
+            </Button>
           </div>
 
           {/* Mobile Navigation */}
@@ -69,6 +81,13 @@ export default function Header() {
                       {item.name}
                     </Link>
                   ))}
+                  <Button 
+                    variant="ghost" 
+                    onClick={handleLanguageToggle}
+                    className="w-full text-left justify-start text-gray-600 hover:text-primary transition-colors"
+                  >
+                    {t('nav.french')}
+                  </Button>
                 </nav>
               </SheetContent>
             </Sheet>
