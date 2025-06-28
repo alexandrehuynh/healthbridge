@@ -96,22 +96,6 @@ export default function WorkPermitQuestions({
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0" align="start">
-                  <div className="p-3 border-b">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => {
-                        const today = new Date();
-                        const year = today.getFullYear();
-                        const month = String(today.getMonth() + 1).padStart(2, '0');
-                        const day = String(today.getDate()).padStart(2, '0');
-                        onArrivalDateChange(`${year}-${month}-${day}`);
-                      }}
-                      className="w-full"
-                    >
-                      Today
-                    </Button>
-                  </div>
                   <Calendar
                     mode="single"
                     selected={selectedDate}
@@ -128,6 +112,20 @@ export default function WorkPermitQuestions({
                     initialFocus
                     className="rounded-md"
                   />
+                  <div className="p-3 border-t">
+                    <button
+                      onClick={() => {
+                        const today = new Date();
+                        const year = today.getFullYear();
+                        const month = String(today.getMonth() + 1).padStart(2, '0');
+                        const day = String(today.getDate()).padStart(2, '0');
+                        onArrivalDateChange(`${year}-${month}-${day}`);
+                      }}
+                      className="text-primary hover:text-primary/80 underline text-sm font-medium"
+                    >
+                      Today
+                    </button>
+                  </div>
                 </PopoverContent>
               </Popover>
             </div>
