@@ -181,7 +181,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
                     <span className="text-primary font-bold text-xs">2</span>
                   </div>
                   <div>
-                    <p className="font-medium text-gray-900">Apply for {provinceData.healthPlanName}</p>
+                    <p className="font-medium text-gray-900">Apply for RAMQ</p>
                     <p className="text-sm text-gray-600 mt-1">Start application process now</p>
                   </div>
                 </div>
@@ -206,7 +206,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
                   <span className="font-semibold text-gray-900">${estimatedCost}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">{provinceData.healthPlanName} application</span>
+                  <span className="text-gray-600">RAMQ application</span>
                   <span className="font-semibold text-success">Free</span>
                 </div>
                 <div className="border-t pt-3 flex justify-between">
