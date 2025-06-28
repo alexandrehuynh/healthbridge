@@ -102,7 +102,13 @@ HealthBridge is a comprehensive healthcare navigation web application designed t
 - Database connection via environment variables
 
 ## Changelog
-- June 28, 2025. Initial setup
+- June 28, 2025: Initial setup
+- June 28, 2025: Fixed critical functionality issues and corrected provincial healthcare data
+  - Updated 7 provinces to show immediate coverage instead of misleading 90-day universal claim
+  - Fixed broken insurance quote links with working provider URLs
+  - Implemented Save Plan and Share Results functionality with localStorage
+  - Corrected inflated cost statistics ($150→$85, $8,500→$5,200)
+  - Fixed "View Resources" button visibility on landing page
 
 ## User Preferences
 

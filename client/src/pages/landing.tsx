@@ -73,7 +73,7 @@ export default function Landing() {
                 <Button 
                   onClick={() => setLocation('/resources')}
                   size="lg"
-                  className="bg-white/20 text-primary border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white/30 hover:text-blue-700 transition-all duration-200 min-h-[3rem] w-full sm:w-auto"
+                  className="bg-white/10 text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white/20 transition-all duration-200 min-h-[3rem] w-full sm:w-auto"
                 >
                   View Resources
                 </Button>
