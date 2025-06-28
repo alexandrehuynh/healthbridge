@@ -2,13 +2,17 @@ import { useState, useCallback } from 'react';
 import { AssessmentData } from '@/types/assessment';
 
 const initialData: AssessmentData = {
+  immigrationStatus: '',
   province: '',
-  status: '',
   arrivalDate: '',
   familySize: 1,
+  universityInsurance: '',
+  employerBenefits: '',
+  coverageNeeds: [],
   includeDental: false,
   includeVision: false,
   includePrescription: false,
+  includeEmergencyTravel: false,
 };
 
 export function useAssessment() {
@@ -37,16 +41,39 @@ export function useAssessment() {
     setCurrentStep(1);
   }, []);
 
+  const getRequiredStepsForStatus = useCallback((status: string) => {
+    switch (status) {
+      case 'permanent_resident':
+        return ['immigrationStatus', 'province', 'arrivalDate', 'familySize'];
+      case 'work_permit':
+        return ['immigrationStatus', 'province', 'employerBenefits', 'arrivalDate'];
+      case 'study_permit':
+        return ['immigrationStatus', 'province', 'universityInsurance', 'coverageNeeds'];
+      case 'visitor':
+        return ['immigrationStatus', 'province', 'familySize'];
+      default:
+        return ['immigrationStatus', 'province'];
+    }
+  }, []);
+
   const isStepValid = useCallback((step: number): boolean => {
     switch (step) {
       case 1:
-        return data.province !== '';
+        return data.immigrationStatus !== '';
       case 2:
-        return data.status !== '';
+        return data.province !== '';
       case 3:
-        return data.arrivalDate !== '';
+        // Conditional validation based on immigration status
+        if (data.immigrationStatus === 'permanent_resident') {
+          return data.arrivalDate !== '';
+        } else if (data.immigrationStatus === 'work_permit') {
+          return data.employerBenefits !== '';
+        } else if (data.immigrationStatus === 'study_permit') {
+          return data.universityInsurance !== '';
+        }
+        return true; // For visitors, step 3 might not be needed
       case 4:
-        return data.familySize > 0;
+        return data.familySize > 0 || data.coverageNeeds.length > 0;
       default:
         return false;
     }
@@ -71,5 +98,6 @@ export function useAssessment() {
     isStepValid,
     isCurrentStepValid,
     canProceed,
+    getRequiredStepsForStatus,
   };
 }

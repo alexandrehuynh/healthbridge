@@ -1,0 +1,26 @@
+[
+  {
+    "id": "permanent_resident",
+    "label": "Permanent Resident",
+    "description": "I have PR status or am a Canadian citizen",
+    "eligibility": "provincial_health_eligible"
+  },
+  {
+    "id": "work_permit",
+    "label": "Work Permit Holder",
+    "description": "I have a valid work permit",
+    "eligibility": "provincial_health_conditional"
+  },
+  {
+    "id": "study_permit",
+    "label": "International Student",
+    "description": "I have a study permit and attend a Canadian institution",
+    "eligibility": "provincial_health_not_eligible"
+  },
+  {
+    "id": "visitor",
+    "label": "Visitor/Other",
+    "description": "Tourist, visitor, or other temporary status",
+    "eligibility": "provincial_health_not_eligible"
+  }
+]

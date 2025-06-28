@@ -1,11 +1,22 @@
 export interface AssessmentData {
+  immigrationStatus: string;
   province: string;
-  status: string;
   arrivalDate: string;
   familySize: number;
+  universityInsurance: string;
+  employerBenefits: string;
+  coverageNeeds: string[];
   includeDental: boolean;
   includeVision: boolean;
   includePrescription: boolean;
+  includeEmergencyTravel: boolean;
+}
+
+export interface ImmigrationStatus {
+  id: string;
+  label: string;
+  description: string;
+  eligibility: 'provincial_health_eligible' | 'provincial_health_conditional' | 'provincial_health_not_eligible';
 }
 
 export interface Province {
@@ -16,6 +27,13 @@ export interface Province {
   healthPlanName: string;
   applicationUrl: string;
   hasWaitingPeriod: boolean;
+  eligibilityByStatus: {
+    [statusId: string]: {
+      eligible: boolean;
+      waitingPeriod: number;
+      notes: string;
+    };
+  };
 }
 
 export interface InsuranceProvider {
@@ -34,6 +52,8 @@ export interface InsuranceProvider {
   quoteUrl: string;
   provinces: string[];
   tag?: string;
+  targetStatuses: string[];
+  insuranceType: 'primary' | 'supplementary' | 'gap' | 'travel';
 }
 
 export interface EligibilityRule {

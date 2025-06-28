@@ -1,0 +1,280 @@
+<role>
+You are a senior UX developer specializing in healthcare applications with deep expertise in Canadian immigration and health eligibility rules. You understand that different immigration statuses have completely different healthcare paths and requirements.
+</role>
+
+<task>
+Restructure the HealthBridge assessment wizard to use a status-first approach with conditional logic that provides accurate, relevant information based on immigration status and provincial eligibility rules.
+</task>
+
+<context>
+The current assessment flow (Province → Status → Arrival Date → Family Size) is fundamentally flawed because it assumes all users follow the same path. In reality, immigration status determines healthcare eligibility, and some users (like international students) have completely different needs and aren't eligible for provincial health plans at all.
+
+International students with study permits often have mandatory university health insurance (UHIP) and need supplementary coverage, not primary insurance. The arrival date becomes irrelevant since they're not eligible for provincial coverage.
+</context>
+
+<new_assessment_flow>
+**Step 1: Immigration Status** (determines entire user journey)
+```javascript
+const immigrationStatuses = [
+  {
+    id: 'permanent_resident',
+    label: 'Permanent Resident',
+    description: 'I have PR status or am a Canadian citizen',
+    eligibility: 'provincial_health_eligible'
+  },
+  {
+    id: 'work_permit',
+    label: 'Work Permit Holder',
+    description: 'I have a valid work permit',
+    eligibility: 'provincial_health_conditional'
+  },
+  {
+    id: 'study_permit',
+    label: 'International Student',
+    description: 'I have a study permit and attend a Canadian institution',
+    eligibility: 'provincial_health_not_eligible'
+  },
+  {
+    id: 'visitor',
+    label: 'Visitor/Other',
+    description: 'Tourist, visitor, or other temporary status',
+    eligibility: 'provincial_health_not_eligible'
+  }
+];
+```
+
+**Step 2: Province Selection** (now shows status-specific information)
+- Display province-specific eligibility based on status from Step 1
+- Show relevant waiting periods or "not eligible" messages
+- Customize messaging for each status type
+
+**Step 3: Conditional Questions Based on Status**
+
+**For Permanent Residents:**
+```javascript
+const prQuestions = [
+  {
+    field: 'arrival_date',
+    type: 'date',
+    question: 'When did you arrive in Canada as a PR?',
+    required: true,
+    purpose: 'waiting_period_calculation'
+  },
+  {
+    field: 'family_size',
+    type: 'number',
+    question: 'How many people in your family need coverage?',
+    required: false,
+    purpose: 'insurance_pricing'
+  }
+];
+```
+
+**For International Students:**
+```javascript
+const studentQuestions = [
+  {
+    field: 'university_insurance',
+    type: 'radio',
+    question: 'Do you have university health insurance (UHIP/SHIP)?',
+    options: [
+      { value: 'uhip', label: 'Yes, I have UHIP (Ontario)' },
+      { value: 'ship', label: 'Yes, I have SHIP or other university plan' },
+      { value: 'none', label: 'No, I don\'t have university insurance' }
+    ],
+    required: true
+  },
+  {
+    field: 'coverage_needs',
+    type: 'checkbox',
+    question: 'What additional coverage do you need?',
+    options: [
+      { value: 'dental', label: 'Dental care' },
+      { value: 'vision', label: 'Vision/Eyecare' },
+      { value: 'prescription', label: 'Prescription drugs' },
+      { value: 'emergency_travel', label: 'Emergency travel home' }
+    ],
+    conditional: 'university_insurance !== "none"'
+  }
+];
+```
+
+**For Work Permit Holders:**
+```javascript
+const workPermitQuestions = [
+  {
+    field: 'employer_benefits',
+    type: 'radio',
+    question: 'Does your employer provide health benefits?',
+    options: [
+      { value: 'full', label: 'Yes, comprehensive coverage' },
+      { value: 'basic', label: 'Yes, but basic coverage only' },
+      { value: 'none', label: 'No employer health benefits' }
+    ]
+  },
+  {
+    field: 'arrival_date',
+    type: 'date',
+    question: 'When did you arrive in Canada?',
+    conditional: 'province_allows_work_permit_coverage',
+    purpose: 'waiting_period_calculation'
+  }
+];
+```
+</new_assessment_flow>
+
+<status_specific_logic>
+**Provincial Eligibility Rules by Status:**
+
+```javascript
+const eligibilityRules = {
+  permanent_resident: {
+    ontario: { waiting_period: 0, eligible: true, notes: "Immediate coverage since 2020" },
+    bc: { waiting_period: 90, eligible: true, notes: "3-month waiting period" },
+    alberta: { waiting_period: 0, eligible: true, notes: "Immediate coverage" },
+    // ... all provinces
+  },
+  
+  work_permit: {
+    ontario: { waiting_period: 0, eligible: true, notes: "Eligible with valid work permit" },
+    bc: { waiting_period: 90, eligible: true, notes: "3-month waiting period" },
+    alberta: { waiting_period: 0, eligible: true, notes: "Immediate coverage" },
+    quebec: { waiting_period: 90, eligible: false, notes: "Work permits not eligible for RAMQ" },
+    // ... varies by province
+  },
+  
+  study_permit: {
+    ontario: { eligible: false, notes: "Must have UHIP, not eligible for OHIP" },
+    bc: { eligible: false, notes: "Must have BC provincial health insurance for students" },
+    alberta: { eligible: true, notes: "International students eligible for AHCIP" },
+    quebec: { eligible: false, notes: "Must have private insurance" },
+    // ... varies significantly
+  },
+  
+  visitor: {
+    // Not eligible anywhere, needs private insurance
+    all_provinces: { eligible: false, notes: "Must have private travel/visitor insurance" }
+  }
+};
+```
+</status_specific_logic>
+
+<insurance_recommendations_by_status>
+**Different Insurance Types by Status:**
+
+**Permanent Residents:**
+- Primary health insurance during waiting period
+- Comprehensive emergency coverage
+- Family coverage options
+
+**International Students:**
+- Supplementary coverage to complement UHIP/SHIP
+- Dental and vision add-ons
+- Travel home emergency coverage
+- Prescription drug coverage
+
+**Work Permit Holders:**
+- Gap coverage for employer plan limitations
+- Primary coverage if no employer benefits
+- Short-term coverage during waiting periods
+
+**Visitors:**
+- Comprehensive travel insurance
+- Emergency medical coverage
+- Repatriation coverage
+</insurance_recommendations_by_status>
+
+<user_experience_improvements>
+**Status-Specific Results Pages:**
+
+**For International Students:**
+```javascript
+const studentResults = {
+  title: "Your Supplementary Coverage Options",
+  subtitle: "Since you have university insurance, here are additional coverage options",
+  
+  primary_message: "Your UHIP covers basic medical emergencies. Consider these add-ons:",
+  
+  insurance_focus: "supplementary_coverage",
+  
+  action_checklist: [
+    "Confirm your UHIP coverage details",
+    "Consider dental coverage (not included in UHIP)",
+    "Look into vision care if you need glasses/contacts",
+    "Get emergency travel coverage for trips home"
+  ]
+};
+```
+
+**For Permanent Residents (No Waiting Period Provinces):**
+```javascript
+const prImmediateResults = {
+  title: "Great News: Immediate Coverage Available!",
+  subtitle: "Ontario eliminated waiting periods in 2020",
+  
+  primary_message: "You can apply for OHIP immediately upon arrival",
+  
+  action_checklist: [
+    "Apply for OHIP online within 30 days of arrival",
+    "Bring required documents to ServiceOntario",
+    "Consider short-term private insurance until OHIP card arrives (2-4 weeks)"
+  ]
+};
+```
+</user_experience_improvements>
+
+<implementation_requirements>
+**Technical Changes Needed:**
+
+1. **Reorder Wizard Steps**
+   - Move status selection to Step 1
+   - Make subsequent steps conditional on status
+   - Update progress indicator to reflect new flow
+
+2. **Add Conditional Logic**
+   - Show/hide questions based on status
+   - Display different provincial information per status
+   - Calculate different waiting periods or show "not eligible"
+
+3. **Update Insurance Data**
+   - Add supplementary insurance options for students
+   - Separate primary vs. gap coverage for work permits
+   - Include university insurance information
+
+4. **Revise Results Pages**
+   - Create status-specific result templates
+   - Show relevant action items per status
+   - Provide accurate next steps for each immigration status
+
+5. **Update Provincial Data**
+   - Add status-specific eligibility rules per province
+   - Include work permit eligibility variations
+   - Add student-specific resources and requirements
+</implementation_requirements>
+
+<output_format>
+**Please implement these changes:**
+
+1. **Restructure the wizard flow** - Status first, then conditional questions
+2. **Add status-specific logic** - Different paths for different immigration statuses  
+3. **Update provincial data** - Include eligibility rules by status
+4. **Create conditional question sets** - Show relevant questions only
+5. **Revise results pages** - Status-specific recommendations and action items
+
+**Test the new flow by:**
+- Going through as a PR (should see waiting periods/immediate coverage)
+- Going through as international student (should see supplementary options)
+- Going through as work permit holder (should see employer benefit questions)
+- Verifying that irrelevant questions are hidden for each status
+
+**Show me the updated wizard flow and how each status path works differently.**
+</output_format>
+
+<constraints>
+- Maintain the same visual design and styling
+- Ensure all question transitions are smooth
+- Provide clear explanations for why certain questions appear/disappear
+- Include helpful tooltips explaining status-specific eligibility
+- Make sure the provincial information is accurate for each status type
+- Keep the assessment concise - don't add unnecessary complexity
+</constraints>
