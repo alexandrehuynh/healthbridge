@@ -1,0 +1,220 @@
+<role>
+You are a UX/UI designer specializing in healthcare applications with expertise in creating welcoming, culturally inclusive visuals for immigrant-focused digital services.
+</role>
+
+<task>
+Transform HealthBridge from a text-heavy blue interface into a visually engaging, warm Quebec healthcare navigation tool. Add meaningful illustrations, icons, and graphics that help newcomers feel welcomed and confident about navigating Quebec's healthcare system.
+</task>
+
+<context>
+HealthBridge serves 50,000+ new permanent residents and 25,000+ international students arriving in Quebec annually. The current interface is primarily blue gradients with minimal visuals. Users are often stressed, dealing with language barriers, and need visual cues to understand complex RAMQ eligibility rules and insurance options during their 3-month waiting period.
+</context>
+
+<visual_design_requirements>
+**Design Philosophy:**
+- Warm, welcoming atmosphere that reduces anxiety
+- Culturally inclusive representations of diverse Quebec newcomers
+- Clear visual communication for non-native French/English speakers
+- Government-quality trustworthiness with modern, approachable styling
+
+**Color Palette Enhancement:**
+- Primary: Keep existing blues but add warmth
+- Secondary: Soft greens (#10B981), warm oranges (#F59E0B)
+- Neutrals: Warm grays, not cold grays
+- Accent: Quebec-inspired colors (subtle fleur-de-lis blue #1E40AF)
+
+**Illustration Style:**
+- Modern, friendly vector illustrations (unDraw or Humaaans style)
+- Diverse representation: Different ethnicities, ages, family structures
+- Quebec context: Subtle Montreal/Quebec City landmarks where appropriate
+- Avoid overly corporate or medical imagery
+</visual_design_requirements>
+
+<specific_visual_elements_needed>
+**1. Landing Page Hero Graphics**
+```jsx
+// Replace the brain image with warm, welcoming illustration
+<div className="hero-illustration">
+  {/* Diverse family (parents + children) arriving in Quebec */}
+  {/* Subtle Quebec landmarks in background */}
+  {/* Luggage, documents, hopeful expressions */}
+  {/* Modern vector style, not photorealistic */}
+</div>
+```
+
+**2. Assessment Wizard Step Illustrations**
+```jsx
+// Each step gets a small supporting graphic
+const stepIllustrations = {
+  immigration_status: "Person with different status documents",
+  country_origin: "World map with highlighted agreement countries", 
+  ramq_application: "Person filling out RAMQ application",
+  insurance_needs: "Shield/protection icon with family"
+};
+```
+
+**3. Insurance Comparison Card Enhancements**
+```jsx
+// Add provider logos and visual coverage representations
+<div className="insurance-card">
+  <div className="provider-visual">
+    {/* Insurance company logo/icon */}
+    {/* Coverage level visualization (shields, checkmarks) */}
+  </div>
+  {/* Existing pricing and features */}
+</div>
+```
+
+**4. Quebec-Specific Visual Elements**
+- RAMQ card illustration (not actual card, but representative)
+- Quebec map showing coverage areas
+- Montreal skyline silhouette in headers/footers
+- Bilingual text bubbles (French/English) where appropriate
+- Cultural diversity: Various ethnicities common in Quebec immigration
+
+**5. Timeline/Progress Visualizations**
+```jsx
+// Visual waiting period countdown
+<div className="waiting-period-visual">
+  {/* Calendar or timeline showing 3-month progression */}
+  {/* Visual indicators for key dates */}
+  {/* Insurance coverage overlay */}
+</div>
+```
+</specific_visual_elements_needed>
+
+<technical_implementation>
+**Image Integration Requirements:**
+
+1. **Performance Optimized**
+```jsx
+// Use next/image or optimized React image components
+import Image from 'next/image';
+
+// SVG icons for scalability
+import { IconComponent } from '@/components/icons';
+
+// Lazy loading for non-critical images
+<Image 
+  src="/illustrations/hero-family.svg"
+  alt="Diverse family arriving in Quebec"
+  width={600}
+  height={400}
+  priority={false}
+  className="responsive-illustration"
+/>
+```
+
+2. **Responsive Design**
+```css
+/* Mobile-first responsive illustrations */
+.hero-illustration {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .hero-illustration {
+    max-width: 600px;
+  }
+}
+```
+
+3. **Accessibility Standards**
+- Meaningful alt text for all illustrations
+- Proper contrast ratios maintained
+- Icons supplemented with text labels
+- Cultural sensitivity in visual representations
+</technical_implementation>
+
+<specific_page_updates>
+**Landing Page:**
+- Hero: Diverse newcomer family with Quebec landmarks
+- Stats section: Icon representations of key numbers
+- Trust indicators: Visual badges/certificates
+- Call-to-action: Welcoming arrow or pathway graphic
+
+**Assessment Wizard:**
+- Progress bar: Visual step indicators with mini illustrations
+- Question headers: Relevant icons for each step
+- Country selection: Interactive map or flag representations
+- Status selection: Clear visual status indicators
+
+**Results Dashboard:**
+- Insurance cards: Provider logos and coverage visualizations
+- Timeline: Visual calendar showing waiting periods
+- Action checklist: Checkboxes with supportive icons
+- RAMQ information: Illustrated guide to application process
+
+**Resources Page:**
+- Quebec government links: Official-looking document icons
+- Settlement services: Community/people illustrations  
+- Emergency contacts: Phone/help icons
+- Language resources: French/English visual indicators
+</specific_page_updates>
+
+<cultural_inclusivity_guidelines>
+**Representation Standards:**
+- Show various ethnicities reflecting Quebec's top immigration source countries
+- Include different family structures (single parents, elderly, young professionals)
+- Avoid stereotypical cultural clothing or symbols
+- Use universal gestures and expressions
+- Include subtle accessibility representations (glasses, mobility aids)
+
+**Quebec Cultural Context:**
+- Subtle French language elements where appropriate
+- Montreal/Quebec City architectural elements in backgrounds
+- Seasonal considerations (winter clothing, etc.)
+- Professional settings reflecting Quebec workplace culture
+</cultural_inclusivity_guidelines>
+
+<illustration_sources>
+**Recommended Resources:**
+1. **unDraw.co** - Customizable color scheme, diverse characters
+2. **Humaaans.com** - Mix-and-match diverse people illustrations
+3. **Storyset by Freepik** - Healthcare and immigration themed sets
+4. **Undraw medical/healthcare** collection for insurance visuals
+5. **Custom icons** from Heroicons or Lucide (already in your stack)
+
+**Custom Illustration Specifications:**
+- SVG format for scalability
+- Consistent stroke width and style
+- Customizable colors to match brand palette
+- Modular components that can be mixed/matched
+</illustration_sources>
+
+<output_format>
+**Please implement these visual enhancements:**
+
+1. **Update the landing page hero** with a welcoming newcomer illustration
+2. **Add step indicators** to the assessment wizard with mini illustrations
+3. **Enhance insurance comparison cards** with visual elements and provider recognition
+4. **Create a visual timeline component** for waiting period display
+5. **Add Quebec-specific visual elements** throughout the interface
+6. **Implement responsive image components** with proper optimization
+
+**Show me:**
+- The updated landing page with new hero illustration
+- Assessment wizard with visual step indicators
+- Enhanced insurance cards with visual elements
+- Any Quebec-specific graphics you've added
+- How the mobile responsiveness looks
+
+**Ensure:**
+- All images have meaningful alt text
+- Visual elements support rather than replace text
+- Cultural representation is diverse and respectful
+- Performance is maintained with optimized loading
+</output_format>
+
+<constraints>
+- Use only royalty-free or open-source illustrations
+- Maintain existing functionality while adding visuals
+- Ensure all graphics are culturally sensitive and inclusive
+- Keep loading performance optimized
+- Make graphics supplement, not replace, clear text information
+- Ensure accessibility standards are met
+- Focus on Quebec-specific context and RAMQ system
+- Maintain professional healthcare application appearance
+</constraints>

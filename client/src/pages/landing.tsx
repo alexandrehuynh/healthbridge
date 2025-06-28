@@ -1,8 +1,9 @@
-import { ArrowRight, Shield, Users, Clock, Flag } from 'lucide-react';
+import { ArrowRight, Shield, Users, Clock, Flag, Heart, MapPin, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import { useLanguage } from '@/hooks/use-language';
 import CanadianFlag from '@/components/ui/canadian-flag';
+import HeroNewcomers from '@/components/illustrations/hero-newcomers';
 
 export default function Landing() {
   const [, setLocation] = useLocation();
@@ -81,15 +82,13 @@ export default function Landing() {
               </div>
             </div>
             <div className="relative">
-              <img 
-                src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400" 
-                alt="Healthcare professional helping family" 
-                className="rounded-xl shadow-2xl w-full h-auto"
-              />
-              <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg border border-success/20">
-                <div className="flex items-center space-x-3">
-                  <div className="w-3 h-3 bg-success rounded-full animate-pulse"></div>
-                  <span className="text-gray-700 font-medium">Comprehensive Coverage Available</span>
+              <div className="bg-white p-6 rounded-2xl shadow-2xl border border-blue-100">
+                <HeroNewcomers />
+              </div>
+              <div className="absolute -bottom-6 -left-6 bg-gradient-to-r from-green-500 to-emerald-500 text-white p-4 rounded-lg shadow-lg border border-green-200">
+                <div className="flex items-center space-x-2">
+                  <Shield className="w-6 h-6" />
+                  <span className="font-semibold">{t('landing.heroCardTitle')}</span>
                 </div>
               </div>
             </div>
