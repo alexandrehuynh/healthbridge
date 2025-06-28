@@ -12,17 +12,25 @@ interface ArrivalDateProps {
 }
 
 export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
-  const selectedDate = value ? new Date(value) : undefined;
+  // Fix timezone offset by creating date in local timezone
+  const selectedDate = value ? new Date(value + 'T00:00:00') : undefined;
 
   const handleDateSelect = (date: Date | undefined) => {
     if (date) {
-      onChange(format(date, 'yyyy-MM-dd'));
+      // Ensure we format in local timezone to avoid offset issues
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      onChange(`${year}-${month}-${day}`);
     }
   };
 
   const handleTodayClick = () => {
     const today = new Date();
-    onChange(format(today, 'yyyy-MM-dd'));
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    onChange(`${year}-${month}-${day}`);
   };
 
   return (

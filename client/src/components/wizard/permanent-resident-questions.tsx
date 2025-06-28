@@ -23,7 +23,8 @@ export default function PermanentResidentQuestions({
   onFamilySizeChange,
   province
 }: PermanentResidentQuestionsProps) {
-  const selectedDate = arrivalDate ? new Date(arrivalDate) : undefined;
+  // Fix timezone offset by creating date in local timezone
+  const selectedDate = arrivalDate ? new Date(arrivalDate + 'T00:00:00') : undefined;
 
   return (
     <div className="space-y-8">
@@ -67,7 +68,13 @@ export default function PermanentResidentQuestions({
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => onArrivalDateChange(format(new Date(), 'yyyy-MM-dd'))}
+                    onClick={() => {
+                      const today = new Date();
+                      const year = today.getFullYear();
+                      const month = String(today.getMonth() + 1).padStart(2, '0');
+                      const day = String(today.getDate()).padStart(2, '0');
+                      onArrivalDateChange(`${year}-${month}-${day}`);
+                    }}
                     className="w-full"
                   >
                     Today
@@ -76,7 +83,14 @@ export default function PermanentResidentQuestions({
                 <Calendar
                   mode="single"
                   selected={selectedDate}
-                  onSelect={(date) => onArrivalDateChange(date ? format(date, 'yyyy-MM-dd') : '')}
+                  onSelect={(date) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      const day = String(date.getDate()).padStart(2, '0');
+                      onArrivalDateChange(`${year}-${month}-${day}`);
+                    }
+                  }}
                   fromYear={2020}
                   toYear={2030}
                   initialFocus
