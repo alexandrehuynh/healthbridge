@@ -82,15 +82,19 @@ export function useAssessment() {
       case 3:
         // Conditional validation based on immigration status
         if (data.immigrationStatus === 'permanent_resident') {
-          return data.arrivalDate !== '';
+          return data.arrivalDate !== '' && data.familySize > 0;
         } else if (data.immigrationStatus === 'work_permit') {
-          return data.employerBenefits !== '';
+          return data.employerBenefits !== '' && 
+                 (data.employerBenefits === 'yes' || data.arrivalDate !== '');
         } else if (data.immigrationStatus === 'study_permit') {
-          return data.universityInsurance !== '';
+          return data.universityInsurance !== '' && data.coverageNeeds.length > 0;
+        } else if (data.immigrationStatus === 'visitor') {
+          return data.familySize > 0;
         }
-        return true; // For visitors, step 3 might not be needed
+        return true;
       case 4:
-        return data.familySize > 0 || data.coverageNeeds.length > 0;
+        // Only for permanent residents - final family size step
+        return data.familySize > 0;
       default:
         return false;
     }
