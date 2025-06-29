@@ -1,0 +1,199 @@
+<role>
+You are an expert React developer specializing in modern UI/UX patterns with expertise in searchable dropdown components and maintaining design system consistency.
+</role>
+
+<task>
+Replace the current long-scrolling country selection page with a sleek, modern searchable dropdown that eliminates scrolling issues while maintaining HealthBridge's existing design patterns and bilateral agreement functionality.
+</task>
+
+<context>
+The current country selection page forces users to scroll extensively through a long list of countries, creating poor UX. We need a contained, searchable solution that keeps the full page visible while providing an elegant country selection experience that integrates seamlessly with the existing HealthBridge design system.
+</context>
+
+<problem_analysis>
+**Current Issues:**
+- Long scrolling list of countries takes up entire page
+- Poor mobile experience with excessive scrolling
+- Users have to hunt through long list to find their country
+- Page layout becomes unwieldy with 190+ countries
+
+**Solution Requirements:**
+- Searchable/filterable country input
+- Contained element that doesn't dominate the page
+- Maintains existing HealthBridge styling and patterns
+- Works on mobile and desktop
+- Integrates with bilateral agreement checking
+- Fast, intuitive user experience
+</problem_analysis>
+
+<modern_ux_patterns>
+**Recommended Approach: Searchable Combobox**
+- Input field that users can type in to filter countries
+- Dropdown list appears below input (max height ~300px with scroll)
+- Popular Quebec immigration countries shown first
+- Real-time filtering as user types
+- Keyboard navigation support
+- Clear selection and search functionality
+
+**Alternative Approach: Modal Selector**
+- Click to open modal with searchable country list
+- Contained in overlay, doesn't affect page layout
+- Large search input at top
+- Categorized by regions or popularity
+- Mobile-friendly full-screen experience
+</alternative_ux_patterns>
+
+<implementation_requirements>
+**Core Functionality:**
+1. **Search/Filter**: Type to filter countries in real-time
+2. **Popular Countries First**: Quebec's top immigration countries at the top
+3. **Contained Height**: Max 300px dropdown with internal scrolling
+4. **Bilateral Agreement Integration**: Maintain existing agreement checking
+5. **Keyboard Navigation**: Arrow keys, Enter to select, Escape to close
+6. **Mobile Responsive**: Touch-friendly on all devices
+7. **Clear/Reset**: Easy way to clear selection and start over
+
+**Design Integration:**
+- Use existing HealthBridge color scheme and spacing
+- Match current form input styling patterns
+- Consistent with other wizard step designs
+- Maintain accessibility standards
+- Keep loading states and error handling patterns
+</implementation_requirements>
+
+<technical_specifications>
+**Component Structure:**
+```
+<CountrySelector>
+  <SearchInput /> // Type to filter
+  <DropdownList> // Max height container
+    <PopularCountries /> // Quebec top countries
+    <AllCountries /> // Filtered remaining countries
+  </DropdownList>
+  <BilateralAgreementDisplay /> // Show agreement status
+</CountrySelector>
+```
+
+**Popular Countries for Quebec (Show First):**
+- France
+- United States  
+- Morocco
+- Algeria
+- China
+- India
+- Haiti
+- Lebanon
+- Iran
+- Syria
+- (Top 10-15 Quebec immigration sources)
+
+**Search Functionality:**
+- Filter by country name as user types
+- Handle partial matches and common misspellings
+- Support both English and French country names
+- Clear visual feedback when no matches found
+
+**Integration Points:**
+- Maintain existing bilateral agreement checking
+- Store selected country in same assessment data structure
+- Trigger agreement status display on selection
+- Connect to existing wizard navigation flow
+</technical_specifications>
+
+<ui_behavior>
+**User Experience Flow:**
+1. User sees clean input field with placeholder "Search for your country..."
+2. User starts typing "Fra..." 
+3. Dropdown appears showing "France" at top with agreement status
+4. User clicks or presses Enter to select
+5. Bilateral agreement status displays immediately
+6. Selected country shows in input field
+7. User can continue to next step
+
+**Visual States:**
+- **Default**: Clean input with search icon and placeholder
+- **Focused**: Dropdown appears with popular countries
+- **Typing**: Real-time filtering of country list  
+- **Selected**: Country name in input, agreement status below
+- **Loading**: Subtle spinner while processing agreement check
+- **Error**: Clear message if country lookup fails
+
+**Mobile Considerations:**
+- Large touch targets for country options
+- Appropriate keyboard type for search input
+- Proper focus management for accessibility
+- Smooth scrolling within dropdown container
+</ui_behavior>
+
+<existing_integration>
+**Maintain These Existing Features:**
+- Bilateral agreement checking on country selection
+- Color-coded agreement status display (🟢🟡🔴)
+- Data storage in localStorage assessment object
+- Navigation to next wizard step after selection
+- Error handling and validation patterns
+- Existing TypeScript interfaces and types
+
+**Style Consistency:**
+- Use existing form input styling from HealthBridge
+- Match current button and container patterns
+- Maintain spacing and typography hierarchy
+- Keep existing color scheme and hover states
+- Follow current mobile responsiveness patterns
+</existing_integration>
+
+<examples>
+**Example Component Usage:**
+```tsx
+<CountrySelector
+  value={selectedCountry}
+  onChange={handleCountrySelect}
+  onAgreementCheck={handleBilateralAgreement}
+  placeholder="Search for your country..."
+  popularCountries={quebecPopularCountries}
+  className="w-full"
+/>
+```
+
+**Example User Interactions:**
+1. **Power User**: Types "fra" → sees France, selects, gets agreement status
+2. **Browser**: Clicks input → sees popular countries, scrolls to find theirs
+3. **Mobile User**: Taps input → large dropdown, easy touch selection
+4. **Accessibility**: Uses keyboard navigation, screen reader compatible
+</examples>
+
+<output_format>
+Provide complete implementation including:
+
+1. **Enhanced CountrySelector Component**: Modern searchable dropdown
+2. **Search/Filter Logic**: Real-time country filtering functionality
+3. **Popular Countries Data**: Quebec-specific top immigration countries
+4. **Styling**: Tailwind classes that match existing HealthBridge patterns
+5. **Integration Code**: How to replace current country selection page
+6. **Mobile Optimization**: Touch-friendly responsive design
+7. **Accessibility**: Keyboard navigation and screen reader support
+8. **Error Handling**: Graceful handling of edge cases
+</output_format>
+
+<constraints>
+- Must integrate seamlessly with existing bilateral agreement functionality
+- Cannot break current wizard flow or data storage patterns
+- Must match existing HealthBridge visual design language
+- Should improve performance (no rendering 190+ countries at once)
+- Must work flawlessly on mobile devices
+- Maintain existing accessibility standards
+- Keep bundle size reasonable (no heavy third-party libs unless necessary)
+- Should feel native to the existing app, not like a foreign component
+</constraints>
+
+<success_criteria>
+Your implementation succeeds when:
+- Users can find their country in under 10 seconds
+- No excessive scrolling required on any device
+- Bilateral agreement checking works exactly as before
+- Component feels integrated with existing HealthBridge design
+- Mobile experience is smooth and touch-friendly
+- Page layout remains clean and uncluttered
+- Performance is noticeably improved
+- Maintains all existing functionality while solving UX problems
+</success_criteria>
