@@ -1,0 +1,476 @@
+<role>
+You are an expert React UX developer specializing in dropdown interfaces and scroll behavior optimization.
+</role>
+
+<urgent_mission>
+🎯 **STEP 3: FIX COUNTRY SEARCH UX ISSUES**
+The bilateral agreements feature is working perfectly, but the country search dropdown has critical UX problems that make it feel buggy during demo:
+
+1. **Scroll Conflict**: Page scrolls when user wants dropdown to scroll
+2. **Footer Overlap**: Search results extend awkwardly to page bottom 
+3. **Cursor Position Sensitivity**: Dropdown behavior inconsistent based on cursor location
+4. **Input Field Locked**: Can't backspace to edit selected country - must use X button
+
+**Goal**: Make country search feel smooth and professional for demo presentation
+</urgent_mission>
+
+<current_problems>
+**🔴 Problem 1: Scroll Behavior Conflict**
+- When user scrolls inside dropdown, entire page scrolls instead
+- Inconsistent behavior based on cursor position
+- Makes country selection feel broken and unresponsive
+
+**🔴 Problem 2: Footer Overlap Issue**
+- Search results dropdown extends edge-to-edge with footer
+- Looks unprofessional and awkward
+- No proper spacing or visual boundaries
+
+**🔴 Problem 3: Inconsistent Dropdown Behavior**
+- Dropdown behavior changes based on where cursor is positioned
+- Users can't predict how scrolling will behave
+- Creates frustrating, unreliable interaction
+
+**🔴 Problem 4: Input Field Locked After Selection**
+- After selecting a country, user can't backspace to edit/delete
+- Input field becomes read-only, forcing users to use X button
+- Breaks expected text input behavior - users expect to edit what they typed
+- Makes search feel broken and unresponsive
+</current_problems>
+
+<ux_fixes_required>
+**🎯 Fix 1: Proper Scroll Event Handling**
+```javascript
+// Prevent page scroll when dropdown is open and scrolling inside dropdown
+const handleDropdownScroll = (e) => {
+  e.stopPropagation(); // Prevent event bubbling to page
+};
+
+// Add scroll event isolation to dropdown container
+<div 
+  className="dropdown-container"
+  onScroll={handleDropdownScroll}
+  style={{ maxHeight: '300px', overflowY: 'auto' }}
+>
+  {/* Country options */}
+</div>
+```
+
+**🎯 Fix 2: Proper Dropdown Positioning & Spacing**
+```css
+.country-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin-bottom: 60px; /* Prevent footer overlap */
+}
+
+/* Ensure proper spacing from footer */
+.country-search-wrapper {
+  margin-bottom: 100px; /* Give breathing room from footer */
+}
+```
+
+**🎯 Fix 3: Consistent Focus Management**
+```javascript
+// Proper focus and keyboard handling
+const handleKeyDown = (e) => {
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault(); // Prevent page scroll
+    // Handle dropdown navigation
+  }
+  if (e.key === 'Escape') {
+    closeDropdown();
+  }
+};
+```
+
+**🎯 Fix 4: Editable Input After Selection**
+```javascript
+// Allow editing after country selection
+const [inputValue, setInputValue] = useState('');
+const [selectedCountry, setSelectedCountry] = useState(null);
+
+const handleInputChange = (e) => {
+  const value = e.target.value;
+  setInputValue(value);
+  
+  // Clear selection when user starts typing
+  if (selectedCountry && value !== selectedCountry.name) {
+    setSelectedCountry(null);
+  }
+  
+  // Re-open dropdown when typing
+  if (value.length > 0) {
+    setDropdownOpen(true);
+  }
+};
+
+const handleCountrySelect = (country) => {
+  setInputValue(country.name);
+  setSelectedCountry(country);
+  setDropdownOpen(false);
+  // Trigger bilateral agreement check
+  onCountrySelect(country);
+};
+
+// Allow backspace to clear selection
+const handleKeyDown = (e) => {
+  if (e.key === 'Backspace' && selectedCountry) {
+    // If user backspaces, allow editing
+    setSelectedCountry(null);
+    setDropdownOpen(true);
+  }
+};
+```
+</ux_fixes_required>
+
+<implementation_tasks>
+**Step 1: Find Country Search Component (3 minutes)**
+1. Locate the country selection/search component
+2. Identify the dropdown implementation (likely a combobox or custom dropdown)
+3. Find scroll event handlers and positioning CSS
+
+**Step 2: Fix Scroll Event Isolation (7 minutes)**
+1. Add `onScroll` event handler to dropdown container
+2. Use `e.stopPropagation()` to prevent page scroll
+3. Ensure dropdown has proper `overflow-y: auto` and max-height
+4. Test that dropdown scrolls independently of page
+
+**Step 3: Fix Footer Overlap & Positioning (8 minutes)**
+1. Add proper margin-bottom to country search wrapper
+2. Ensure dropdown doesn't extend to page edge
+3. Add proper z-index for dropdown layering
+4. Add visual spacing and professional appearance
+
+**Step 4: Enhance Keyboard Navigation & Input Editing (10 minutes)**
+1. Add proper `onKeyDown` handlers for arrow keys
+2. Prevent default scroll behavior during dropdown navigation
+3. Add Escape key handling to close dropdown
+4. **Fix input editing**: Allow backspace to clear selection and re-enable typing
+5. **Separate input value from selected country**: Manage two different states
+6. **Re-open dropdown on typing**: When user starts typing after selection
+7. Ensure focus management is predictable
+
+**Step 5: Test All Input Behaviors (10 minutes)**
+1. Test dropdown scrolling on desktop
+2. Test page scrolling doesn't interfere with dropdown
+3. Test keyboard navigation works smoothly
+4. **Test input editing**: Select country, then backspace to edit
+5. **Test re-selection**: Clear input and select different country
+6. Test footer spacing looks professional
+7. Test on mobile for touch scrolling behavior
+</implementation_tasks>
+
+<technical_specifications>
+**Scroll Event Isolation & Editable Input:**
+```javascript
+// Component structure for proper scroll handling AND editable input
+const CountryDropdown = ({ isOpen, countries, onSelect }) => {
+  const dropdownRef = useRef(null);
+  
+  // Separate input value from selected country
+  const [inputValue, setInputValue] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  
+  // Prevent page scroll when scrolling inside dropdown
+  const handleDropdownScroll = useCallback((e) => {
+    e.stopPropagation();
+  }, []);
+  
+  // Handle input changes and allow editing after selection
+  const handleInputChange = useCallback((e) => {
+    const value = e.target.value;
+    setInputValue(value);
+    
+    // Clear selection when user starts typing different text
+    if (selectedCountry && value !== selectedCountry.name) {
+      setSelectedCountry(null);
+    }
+    
+    // Re-open dropdown when typing
+    if (value.length > 0) {
+      setDropdownOpen(true);
+    } else {
+      setDropdownOpen(false);
+    }
+  }, [selectedCountry]);
+  
+  // Handle country selection
+  const handleCountrySelect = useCallback((country) => {
+    setInputValue(country.name);
+    setSelectedCountry(country);
+    setDropdownOpen(false);
+    // Trigger bilateral agreement check
+    onSelect(country);
+  }, [onSelect]);
+  
+  // Prevent arrow key page scrolling during navigation
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!dropdownOpen) setDropdownOpen(true);
+      // Handle dropdown navigation
+    }
+    
+    if (e.key === 'Escape') {
+      setDropdownOpen(false);
+    }
+    
+    // Allow backspace to clear selection and re-enable editing
+    if (e.key === 'Backspace' && selectedCountry) {
+      setSelectedCountry(null);
+      setDropdownOpen(true);
+    }
+  }, [dropdownOpen, selectedCountry]);
+  
+  return (
+    <div className="relative country-search-wrapper">
+      <input 
+        type="text"
+        value={inputValue}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        onFocus={() => inputValue.length > 0 && setDropdownOpen(true)}
+        placeholder="Search for your country..."
+      />
+      {dropdownOpen && (
+        <div 
+          ref={dropdownRef}
+          className="country-dropdown"
+          onScroll={handleDropdownScroll}
+        >
+          {countries
+            .filter(country => 
+              country.name.toLowerCase().includes(inputValue.toLowerCase())
+            )
+            .map(country => (
+              <div 
+                key={country.id} 
+                className="country-option"
+                onClick={() => handleCountrySelect(country)}
+              >
+                {country.name}
+              </div>
+            ))
+          }
+        </div>
+      )}
+    </div>
+  );
+};
+```
+
+**CSS for Professional Dropdown:**
+```css
+.country-search-wrapper {
+  position: relative;
+  margin-bottom: 100px; /* Footer breathing room */
+}
+
+.country-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 300px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  box-shadow: 
+    0 10px 25px rgba(0, 0, 0, 0.1),
+    0 0 0 1px rgba(0, 0, 0, 0.05);
+  z-index: 1000;
+  
+  /* Smooth scrolling inside dropdown */
+  scroll-behavior: smooth;
+}
+
+.country-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+.country-dropdown::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 3px;
+}
+
+.country-option {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.15s ease;
+}
+
+.country-option:hover {
+  background-color: #f9fafb;
+}
+
+.country-option:last-child {
+  border-bottom: none;
+}
+```
+</technical_specifications>
+
+<mobile_considerations>
+**Touch Scrolling Optimization:**
+```css
+.country-dropdown {
+  /* Enable momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
+  
+  /* Prevent bounce scrolling */
+  overscroll-behavior: contain;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .country-dropdown {
+    max-height: 250px; /* Smaller on mobile */
+    margin-bottom: 20px; /* Less footer spacing needed */
+  }
+  
+  .country-option {
+    padding: 16px; /* Larger touch targets */
+  }
+}
+```
+</mobile_considerations>
+
+<testing_verification>
+**Critical UX Testing:**
+
+**Desktop Scroll Test:**
+1. Open country dropdown
+2. Use mouse wheel to scroll inside dropdown
+3. ✅ Verify: Only dropdown scrolls, page stays still
+4. ✅ Verify: Page can scroll normally when dropdown closed
+
+**Keyboard Navigation Test:**
+1. Focus on country search input
+2. Press Arrow Down to open dropdown
+3. Use Arrow Up/Down to navigate options
+4. ✅ Verify: Page doesn't scroll during dropdown navigation
+5. ✅ Verify: Escape key closes dropdown
+
+**Input Editing Test:**
+1. Type "France" and select it from dropdown
+2. Click back in input field
+3. Press Backspace to delete characters
+4. ✅ Verify: Can edit/delete the selected country text
+5. ✅ Verify: Dropdown re-opens when typing new text
+6. ✅ Verify: Can select a different country after editing
+
+**Footer Spacing Test:**
+1. Scroll to bottom of page
+2. Open country dropdown
+3. ✅ Verify: Dropdown doesn't overlap footer awkwardly
+4. ✅ Verify: Professional spacing and visual boundaries
+
+**Mobile Touch Test:**
+1. Test on mobile viewport
+2. Open dropdown and scroll with finger
+3. ✅ Verify: Touch scrolling works smoothly inside dropdown
+4. ✅ Verify: Page scrolling works normally when dropdown closed
+
+**Demo Readiness Test:**
+1. Complete country selection flow feels smooth
+2. No awkward scroll conflicts during demo
+3. Professional appearance with proper spacing
+4. Consistent, predictable behavior for judges
+</testing_verification>
+
+<success_criteria>
+**UX Transformation Success:**
+
+**Before Fix:**
+- Scroll behavior unpredictable and frustrating
+- Footer overlap looks unprofessional
+- Cursor position affects dropdown behavior
+- Country selection feels buggy
+- Input field locked after selection - can't backspace to edit
+
+**After Fix:**
+- ✅ **Smooth dropdown scrolling** independent of page scroll
+- ✅ **Professional spacing** with proper footer margins
+- ✅ **Consistent behavior** regardless of cursor position
+- ✅ **Keyboard navigation** works predictably
+- ✅ **Mobile-friendly** touch scrolling
+- ✅ **Editable input** - can backspace and edit after selection
+- ✅ **Demo-ready** with polished interactions
+
+**Demo Impact:**
+- Judges can search countries without frustration
+- Professional, polished dropdown behavior
+- No awkward scroll conflicts during presentation
+- Country selection feels smooth and reliable
+</success_criteria>
+
+<constraints>
+**Preserve Bilateral Agreements Magic:**
+- All bilateral agreement functionality must remain intact
+- Country selection must still trigger instant feedback
+- Color-coded agreement status must continue working
+- Don't break the core feature that's working perfectly
+
+**Maintain Current Design:**
+- Keep existing visual styling and colors
+- Preserve search functionality and filtering
+- Maintain mobile responsiveness
+- Don't change the overall component structure unnecessarily
+</constraints>
+
+<output_format>
+Provide after completion:
+
+1. **Scroll Behavior Fix**
+   - How scroll event isolation was implemented
+   - Testing results for page vs dropdown scrolling
+   - Keyboard navigation improvements
+
+2. **Footer Spacing Fix**
+   - CSS changes made for professional spacing
+   - Before/after visual improvement
+   - Mobile responsiveness verification
+
+3. **Consistent Behavior**
+   - Focus management improvements
+   - Cursor position independence
+   - Predictable interaction patterns
+
+4. **Demo Readiness**
+   - All scroll conflicts resolved
+   - Professional dropdown appearance
+   - Smooth country selection experience
+   - Bilateral agreements magic still working perfectly
+
+5. **Testing Results**
+   - Desktop scroll behavior verified
+   - Mobile touch interactions tested
+   - Keyboard navigation confirmed
+   - Footer spacing looks professional
+</output_format>
+
+<step3_priority>
+**Why This Fix Is Step 3 Priority:**
+- Your bilateral agreements magic is working perfectly (the hard part is done!)
+- But UX bugs make the feature feel broken during demo
+- Judges will notice scroll conflicts immediately
+- Professional dropdown behavior separates winners from prototypes
+- This fix transforms working feature into polished experience
+
+**Success Impact:**
+- Judges can focus on your innovation instead of UX frustrations
+- Country selection feels as polished as your bilateral agreements logic
+- Professional presentation without technical apologies
+- Confidence in every interaction during demo
+</step3_priority>

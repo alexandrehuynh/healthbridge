@@ -168,15 +168,20 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
     setFocusedIndex(-1);
   };
 
-  // Handle input changes
+  // Handle input changes - allow editing after selection
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const term = e.target.value;
     setSearchTerm(term);
     setIsOpen(true);
     setFocusedIndex(-1);
+    
+    // Clear selection when user starts typing different text
+    if (selectedCountry && term !== selectedCountry.name) {
+      onChange('');
+    }
   };
 
-  // Handle keyboard navigation
+  // Handle keyboard navigation with proper scroll prevention
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!isOpen) {
       if (e.key === 'Enter' || e.key === 'ArrowDown') {
@@ -184,18 +189,25 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
         setFocusedIndex(0);
         e.preventDefault();
       }
+      // Allow backspace to clear selection and enable editing
+      if (e.key === 'Backspace' && selectedCountry) {
+        onChange('');
+        setSearchTerm('');
+        setIsOpen(true);
+        e.preventDefault();
+      }
       return;
     }
 
     switch (e.key) {
       case 'ArrowDown':
-        e.preventDefault();
+        e.preventDefault(); // Prevent page scroll
         setFocusedIndex(prev => 
           prev < filteredCountries.length - 1 ? prev + 1 : prev
         );
         break;
       case 'ArrowUp':
-        e.preventDefault();
+        e.preventDefault(); // Prevent page scroll
         setFocusedIndex(prev => prev > 0 ? prev - 1 : prev);
         break;
       case 'Enter':
@@ -245,7 +257,7 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
   const agreementMessage = value ? getBilateralAgreementMessage(bilateralStatus.agreement, value) : null;
 
   return (
-    <div className={cn("relative w-full", className)} ref={dropdownRef}>
+    <div className={cn("relative w-full mb-20", className)} ref={dropdownRef}>
       {/* Input Field */}
       <div className="relative">
         <div className="relative">
@@ -255,7 +267,16 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
             type="text"
             value={selectedCountry ? selectedCountry.name : searchTerm}
             onChange={handleInputChange}
-            onFocus={() => setIsOpen(true)}
+            onFocus={() => {
+              if (searchTerm.length > 0 || !selectedCountry) {
+                setIsOpen(true);
+              }
+            }}
+            onClick={() => {
+              if (!isOpen) {
+                setIsOpen(true);
+              }
+            }}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className={cn(
@@ -325,7 +346,15 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
 
       {/* Dropdown List */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 sm:max-h-64 overflow-y-auto touch-manipulation">
+        <div 
+          className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 sm:max-h-64 overflow-y-auto touch-manipulation"
+          style={{ 
+            overscrollBehavior: 'contain',
+            WebkitOverflowScrolling: 'touch',
+            scrollBehavior: 'smooth'
+          }}
+          onScroll={(e) => e.stopPropagation()}
+        >
           {filteredCountries.length === 0 ? (
             <div className="p-4 text-center text-gray-500">
               <p>No countries found</p>
