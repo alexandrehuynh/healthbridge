@@ -20,7 +20,8 @@ export default function Results() {
   const { toast } = useToast();
 
   // Get bilateral agreement status for the selected country
-  const bilateralStatus = useBilateralAgreement(assessmentData?.countryOfOrigin || '');
+  const countryOfOrigin = assessmentData?.countryOfOrigin || '';
+  const bilateralStatus = useBilateralAgreement(countryOfOrigin);
 
   useEffect(() => {
     const savedData = localStorage.getItem('assessmentData');
@@ -82,10 +83,16 @@ export default function Results() {
 
   // Set default selection to first provider when providers load
   useEffect(() => {
-    if (insuranceProviders.length > 0 && !selectedInsurance) {
-      setSelectedInsurance(insuranceProviders[0].id);
+    if (assessmentData && !selectedInsurance) {
+      const providers = getQuebecInsuranceProviders(
+        assessmentData.familySize,
+        assessmentData.immigrationStatus
+      );
+      if (providers.length > 0) {
+        setSelectedInsurance(providers[0].id);
+      }
     }
-  }, [insuranceProviders, selectedInsurance]);
+  }, [assessmentData?.familySize, assessmentData?.immigrationStatus, selectedInsurance]);
 
   const savePlan = () => {
     if (!assessmentData || !waitingPeriodCalculation) return;

@@ -1,0 +1,236 @@
+<role>
+You are an expert React/TypeScript developer specializing in debugging infinite loop issues and useEffect dependency problems.
+</role>
+
+<urgent_mission>
+🚨 **CRITICAL BUG FIX**
+Fix a React infinite loop error that's preventing the insurance results page from loading. The page is stuck on "Loading your results..." due to maximum update depth exceeded error.
+</urgent_mission>
+
+<error_analysis>
+**Console Error:**
+"Warning: Maximum update depth exceeded. This can result in unstable component re-rendering. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render."
+
+**Problem Location:**
+- Error occurs when clicking "View Insurance Options"
+- Results page gets stuck on "Loading your results..."
+- Infinite re-rendering preventing page completion
+- Console shows errors in Results component
+
+**Root Cause:**
+This is a classic React useEffect infinite loop caused by:
+1. useEffect with missing or incorrect dependencies
+2. Objects/functions recreated on every render as dependencies
+3. setState calls inside useEffect triggering re-renders
+4. Dependency array containing unstable references
+</error_analysis>
+
+<common_causes>
+**Typical Infinite Loop Patterns to Find and Fix:**
+
+**Pattern 1: Missing Dependency Array**
+```javascript
+// BAD - triggers on every render
+useEffect(() => {
+  setSomeState(newValue);
+}); // No dependency array
+
+// GOOD - only triggers when needed
+useEffect(() => {
+  setSomeState(newValue);
+}, []); // Empty dependency array
+```
+
+**Pattern 2: Object Dependencies**
+```javascript
+// BAD - object recreated every render
+const config = { country: 'france' };
+useEffect(() => {
+  doSomething(config);
+}, [config]); // config changes every render
+
+// GOOD - stable primitive dependencies
+useEffect(() => {
+  const config = { country: 'france' };
+  doSomething(config);
+}, ['france']); // Primitive dependency
+```
+
+**Pattern 3: Function Dependencies**
+```javascript
+// BAD - function recreated every render
+const fetchData = () => { /* fetch logic */ };
+useEffect(() => {
+  fetchData();
+}, [fetchData]); // fetchData changes every render
+
+// GOOD - useCallback for stable function
+const fetchData = useCallback(() => {
+  /* fetch logic */
+}, []);
+useEffect(() => {
+  fetchData();
+}, [fetchData]); // Now stable
+```
+</common_causes>
+
+<debugging_tasks>
+**Task 1: Find the Problematic Component**
+1. **Locate Results component** (likely in `/client/src/pages/results` or similar)
+2. **Find insurance results/loading logic**
+3. **Look for useEffect hooks** in the results page
+4. **Check console stack trace** for specific component causing loop
+
+**Task 2: Identify useEffect Issues**
+1. **Find useEffect without dependency arrays**
+2. **Look for object/array dependencies** that recreate on every render
+3. **Check for setState calls** inside useEffect
+4. **Identify unstable function references** as dependencies
+
+**Task 3: Fix Dependency Arrays**
+1. **Add proper dependency arrays** to all useEffect hooks
+2. **Use primitive values** instead of objects as dependencies
+3. **Wrap functions in useCallback** if used as dependencies
+4. **Remove unnecessary dependencies** that change on every render
+
+**Task 4: Stabilize Object Dependencies**
+1. **Move static objects** outside component or use useMemo
+2. **Use useMemo for computed objects** that depend on props/state
+3. **Destructure props/state** to use primitive dependencies
+4. **Avoid inline object creation** in dependency arrays
+</debugging_tasks>
+
+<implementation_guide>
+**Step 1: Find the Results Component**
+Look for files that handle insurance results loading:
+- `/client/src/pages/results.tsx` or similar
+- `/client/src/components/Results/` directory
+- Components that show "Loading your results..."
+- Files with insurance data fetching logic
+
+**Step 2: Common Fixes for useEffect Loops**
+
+**Fix Type 1: Add Missing Dependency Array**
+```javascript
+// BEFORE (infinite loop)
+useEffect(() => {
+  setInsuranceResults(processData());
+}); // Missing dependency array
+
+// AFTER (fixed)
+useEffect(() => {
+  setInsuranceResults(processData());
+}, []); // Empty array = run once on mount
+```
+
+**Fix Type 2: Stabilize Object Dependencies**
+```javascript
+// BEFORE (infinite loop)
+const assessmentData = { country, status, dates };
+useEffect(() => {
+  calculateResults(assessmentData);
+}, [assessmentData]); // Object recreated every render
+
+// AFTER (fixed)
+useEffect(() => {
+  const assessmentData = { country, status, dates };
+  calculateResults(assessmentData);
+}, [country, status, dates]); // Primitive dependencies
+```
+
+**Fix Type 3: Use useCallback for Functions**
+```javascript
+// BEFORE (infinite loop)
+const fetchInsurance = () => {
+  // fetch logic
+};
+useEffect(() => {
+  fetchInsurance();
+}, [fetchInsurance]); // Function recreated every render
+
+// AFTER (fixed)
+const fetchInsurance = useCallback(() => {
+  // fetch logic
+}, []);
+useEffect(() => {
+  fetchInsurance();
+}, [fetchInsurance]); // Now stable
+```
+
+**Fix Type 4: Conditional setState**
+```javascript
+// BEFORE (infinite loop)
+useEffect(() => {
+  setLoading(false); // Always sets state
+}, [results]);
+
+// AFTER (fixed)
+useEffect(() => {
+  if (results && loading) {
+    setLoading(false); // Only set if needed
+  }
+}, [results, loading]);
+```
+</implementation_guide>
+
+<specific_debugging_steps>
+**Step 1: Identify the Exact Component**
+1. Look at the console stack trace in the error
+2. Find the component name causing the loop
+3. Navigate to that component file
+4. Focus on useEffect hooks in that component
+
+**Step 2: Check for These Specific Patterns**
+1. **Insurance data fetching** - Look for useEffect that fetches insurance data
+2. **Assessment data processing** - Check useEffect that processes user assessment
+3. **Results calculation** - Find useEffect that calculates insurance results
+4. **Loading state management** - Check useEffect that manages loading states
+
+**Step 3: Apply Systematic Fixes**
+1. **Add dependency arrays** to all useEffect hooks
+2. **Replace object dependencies** with primitive values
+3. **Add useCallback** to any functions used as dependencies
+4. **Add conditional checks** before setState calls
+
+**Step 4: Test the Fix**
+1. Click "View Insurance Options" 
+2. Verify results page loads without infinite loop
+3. Check console for no more maximum update depth errors
+4. Ensure insurance results display correctly
+</specific_debugging_steps>
+
+<success_criteria>
+**Fix Validation:**
+- ✅ "View Insurance Options" loads results page successfully
+- ✅ No more "Maximum update depth exceeded" console errors
+- ✅ Insurance results display correctly instead of infinite loading
+- ✅ Page navigation works smoothly without React warnings
+- ✅ Console shows clean render cycles without loops
+
+**User Experience After Fix:**
+- Click "View Insurance Options" → Quick transition to results
+- Results page loads and displays insurance options
+- No stuck loading states or broken navigation
+- Smooth, professional user experience
+
+**Demo Readiness:**
+- Judges can successfully navigate to insurance results
+- No embarrassing infinite loading or console errors
+- Professional, polished interaction flow
+- Reliable functionality for demo presentation
+</success_criteria>
+
+<priority_focus>
+**High Priority Fixes:**
+1. **Results page useEffect** - Most likely cause of the loop
+2. **Insurance data processing** - Check for object dependency issues
+3. **Loading state management** - Verify conditional setState logic
+
+**Look Specifically For:**
+- useEffect hooks without dependency arrays
+- Assessment data objects used as dependencies
+- Insurance calculation functions recreated on every render
+- Loading state setters called unconditionally
+
+**This is a demo-blocking bug that must be fixed for the insurance fallback flow to work properly.**
+</priority_focus>
