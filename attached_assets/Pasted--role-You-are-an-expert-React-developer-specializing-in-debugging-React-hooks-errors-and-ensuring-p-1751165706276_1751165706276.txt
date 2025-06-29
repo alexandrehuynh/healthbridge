@@ -1,0 +1,180 @@
+<role>
+You are an expert React developer specializing in debugging React hooks errors and ensuring proper hook usage patterns.
+</role>
+
+<task>
+Fix the React hooks error "Rendered more hooks than during the previous render" in the useBilateralAgreement hook that's preventing the HealthBridge app from running.
+</task>
+
+<context>
+The error is occurring in /home/runner/workspace/client/src/hooks/use-bilateral-agreement.tsx at line 114:31 where useState is being called. This is a classic "Rules of Hooks" violation that happens when hooks are called conditionally or inconsistently between renders.
+</context>
+
+<error_analysis>
+**Error Message:** "[plugin:runtime-error-plugin] Rendered more hooks than during the previous render."
+**File:** /home/runner/workspace/client/src/hooks/use-bilateral-agreement.tsx:114:31
+**Line:** const [status, setStatus] = useState<BilateralAgreementStatus>({
+
+**Common Causes:**
+1. Hook being called conditionally (inside if statements)
+2. Hook being called inside loops or nested functions
+3. Component using the hook conditionally
+4. Early returns before hook calls
+5. Hook being called in different order between renders
+</error_analysis>
+
+<debugging_steps>
+**Step 1: Check Hook Call Location**
+- Ensure useBilateralAgreement is only called at the top level of components
+- Never inside if statements, loops, or nested functions
+- Always called in the same order every render
+
+**Step 2: Check Component Usage**
+- Look at country-selector.tsx and country-selection.tsx
+- Ensure the hook isn't called conditionally based on props or state
+- Check for early returns that might skip hook calls
+
+**Step 3: Check Hook Implementation**
+- Verify useBilateralAgreement follows Rules of Hooks
+- All hooks inside useBilateralAgreement must be called consistently
+- No conditional useState, useEffect, or other hook calls
+</debugging_steps>
+
+<rules_of_hooks_reminder>
+**Rules of Hooks (MUST FOLLOW):**
+1. **Only call hooks at the top level** - Never inside loops, conditions, or nested functions
+2. **Only call hooks from React functions** - Components or custom hooks only
+3. **Call hooks in the same order every time** - Don't conditionally call hooks
+
+**BAD Examples:**
+```typescript
+// ❌ Conditional hook call
+if (country) {
+  const agreement = useBilateralAgreement(country);
+}
+
+// ❌ Hook in loop
+countries.forEach(country => {
+  const agreement = useBilateralAgreement(country);
+});
+
+// ❌ Hook after conditional return
+if (!country) return null;
+const agreement = useBilateralAgreement(country);
+```
+
+**GOOD Examples:**
+```typescript
+// ✅ Hook at top level
+const agreement = useBilateralAgreement(country || '');
+
+// ✅ Conditional logic inside hook, not calling hook conditionally
+const agreement = useBilateralAgreement(country);
+if (agreement.hasAgreement) {
+  // do something
+}
+```
+</rules_of_hooks_reminder>
+
+<fixing_strategy>
+**Likely Issues to Fix:**
+
+1. **Conditional Hook Usage in Component:**
+```typescript
+// ❌ WRONG - Don't do this
+{country && <BilateralStatus country={country} />}
+
+// ✅ CORRECT - Do this
+<BilateralStatus country={country || ''} />
+```
+
+2. **Hook Implementation Issues:**
+```typescript
+// ❌ WRONG - Conditional hooks inside custom hook
+export function useBilateralAgreement(country: string) {
+  if (!country) return null; // This breaks rules!
+  const [status, setStatus] = useState(...); // This hook might not be called consistently
+}
+
+// ✅ CORRECT - Always call hooks, handle empty country inside
+export function useBilateralAgreement(country: string) {
+  const [status, setStatus] = useState<BilateralAgreementStatus>({
+    country: country || '',
+    agreement: null,
+    // ... other defaults
+  });
+  
+  useEffect(() => {
+    if (!country) return; // Conditional logic INSIDE the hook is fine
+    // Check agreement logic
+  }, [country]);
+}
+```
+
+3. **Component Early Returns:**
+```typescript
+// ❌ WRONG - Early return before hooks
+function CountrySelector({ selectedCountry }) {
+  if (!isVisible) return null; // This causes hook inconsistency
+  const agreement = useBilateralAgreement(selectedCountry);
+}
+
+// ✅ CORRECT - Hooks first, then conditional rendering
+function CountrySelector({ selectedCountry }) {
+  const agreement = useBilateralAgreement(selectedCountry || '');
+  
+  if (!isVisible) return null; // Conditional rendering after hooks
+}
+```
+</fixing_strategy>
+
+<implementation_requirements>
+**Fix the following files:**
+
+1. **src/hooks/use-bilateral-agreement.tsx**
+   - Ensure all hooks are called unconditionally
+   - Handle empty/null country parameter gracefully
+   - Never call useState or useEffect conditionally
+
+2. **src/components/ui/country-selector.tsx**
+   - Ensure useBilateralAgreement is called at component top level
+   - No conditional hook calls based on props or state
+   - Handle loading/empty states properly
+
+3. **src/components/wizard/country-selection.tsx**
+   - Check for early returns before hook calls
+   - Ensure consistent hook usage pattern
+
+**Testing Strategy:**
+- Clear browser cache and reload
+- Test with empty country selection
+- Test country selection changes
+- Verify no console errors about hooks
+</implementation_requirements>
+
+<output_format>
+Provide the corrected code for:
+1. **Fixed useBilateralAgreement hook** - Proper hook implementation
+2. **Fixed component usage** - Correct hook call patterns
+3. **Debugging explanation** - What was causing the error
+4. **Testing verification** - How to confirm it's fixed
+</output_format>
+
+<constraints>
+- Must follow React Rules of Hooks strictly
+- Cannot break existing bilateral agreement functionality
+- Must handle edge cases (empty country, loading states)
+- Should maintain performance and user experience
+- Keep existing TypeScript types and interfaces
+- Ensure mobile compatibility is maintained
+</constraints>
+
+<success_criteria>
+Your fix succeeds when:
+- App loads without React hooks errors
+- Country selection works smoothly
+- Bilateral agreement checking still functions
+- No console errors about hook violations
+- All edge cases handled properly (empty selections, loading states)
+- User experience remains smooth and responsive
+</success_criteria>

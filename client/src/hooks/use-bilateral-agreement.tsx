@@ -16,7 +16,7 @@ export interface BilateralAgreementStatus {
 }
 
 // Type-safe bilateral agreements database
-const bilateralAgreementsData: Record<string, BilateralAgreement> = {
+export const bilateralAgreementsData: Record<string, BilateralAgreement> = {
   "France": {
     hasAgreement: true,
     type: "full",

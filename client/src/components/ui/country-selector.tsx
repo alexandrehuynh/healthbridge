@@ -328,9 +328,9 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
               )}
               
               {filteredCountries.map((country, index) => {
-                const countryAgreement = useBilateralAgreement(country.id);
-                const hasFullAgreement = countryAgreement.agreement?.type === 'full' && countryAgreement.agreement?.waitingPeriodWaived;
-                const hasPartialAgreement = countryAgreement.agreement?.type === 'partial';
+                // Simple lookup for agreement status without hooks
+                const hasFullAgreement = ['France', 'Belgium', 'Denmark', 'Finland', 'Greece', 'Luxembourg', 'Norway', 'Portugal', 'Sweden', 'Austria'].includes(country.id);
+                const hasPartialAgreement = ['Germany', 'Netherlands', 'Italy'].includes(country.id);
                 const isPopularSection = !searchTerm && country.isPopular;
                 const isOtherSection = !searchTerm && !country.isPopular && index === quebecPopularCountries.length;
 
