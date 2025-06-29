@@ -146,6 +146,15 @@ HealthBridge is a comprehensive healthcare navigation web application designed t
   - Fixed infinite loop in Results component that caused "Maximum update depth exceeded" error
   - Resolved navigation issue from bilateral success to Results page with complete assessment data population
   - Updated broken RAMQ coverage link to working URL (https://www.ramq.gouv.qc.ca/en/citizens/health-insurance)
+- June 29, 2025: Implemented comprehensive immigration status-specific user flows and UX fixes
+  - Fixed cost estimator for visitors/students to update dynamically when selecting different insurance plans
+  - Implemented auto-close calendar functionality across all user flows (PR, work permit, visitors, students)
+  - Added immigration status-specific messaging and action steps in Results page
+  - Visitors and international students now see "not eligible for RAMQ" with insurance-focused guidance
+  - Work permit holders get conditional RAMQ eligibility messaging with insurance recommendations
+  - Hidden RAMQ timeline visualization for non-eligible statuses, showing insurance-focused content instead
+  - Corrected bilateral agreement logic: only permanent residents get bilateral magic redirect (work permits are always conditional)
+  - Enhanced cost estimation with status-appropriate pricing and coverage period messaging
 
 ## User Preferences
 
