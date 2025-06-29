@@ -1,0 +1,221 @@
+{
+  "agreements": {
+    "France": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["French social security certificate", "Proof of coverage from France"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Belgium": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Belgian social security certificate", "Proof of coverage from Belgium"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Denmark": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Danish social security certificate", "Proof of coverage from Denmark"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Finland": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Finnish social security certificate", "Proof of coverage from Finland"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Greece": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Greek social security certificate", "Proof of coverage from Greece"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Luxembourg": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Luxembourg social security certificate", "Proof of coverage from Luxembourg"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Norway": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Norwegian social security certificate", "Proof of coverage from Norway"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Portugal": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Portuguese social security certificate", "Proof of coverage from Portugal"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Sweden": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Swedish social security certificate", "Proof of coverage from Sweden"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Austria": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Austrian social security certificate", "Proof of coverage from Austria"],
+      "notes": "Full social security agreement - no waiting period with proper documentation"
+    },
+    "Germany": {
+      "hasAgreement": true,
+      "type": "partial",
+      "waitingPeriodWaived": false,
+      "documentsRequired": ["German social security forms", "Specific coverage documentation"],
+      "notes": "Partial agreement - case by case evaluation required"
+    },
+    "Netherlands": {
+      "hasAgreement": true,
+      "type": "partial",
+      "waitingPeriodWaived": false,
+      "documentsRequired": ["Dutch social security certificate", "Specific coverage documentation"],
+      "notes": "Partial agreement - case by case evaluation required"
+    },
+    "Italy": {
+      "hasAgreement": true,
+      "type": "partial",
+      "waitingPeriodWaived": false,
+      "documentsRequired": ["Italian social security certificate", "Specific coverage documentation"],
+      "notes": "Partial agreement - case by case evaluation required"
+    },
+    "United States": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "United Kingdom": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "India": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "China": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Philippines": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Brazil": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Mexico": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Morocco": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Algeria": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Haiti": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Iran": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Nigeria": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Colombia": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Ukraine": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "South Korea": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Japan": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Australia": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    },
+    "Russia": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period applies"
+    }
+  }
+}

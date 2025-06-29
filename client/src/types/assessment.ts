@@ -16,6 +16,15 @@ export interface AssessmentData {
   includeVision: boolean;
   includePrescription: boolean;
   includeEmergencyTravel: boolean;
+  // Bilateral agreement status
+  bilateralAgreement?: {
+    country: string;
+    hasAgreement: boolean;
+    waitingPeriodWaived: boolean;
+    type: 'full' | 'partial' | 'none';
+    notes: string;
+    documentsRequired: string[];
+  };
 }
 
 export interface ImmigrationStatus {
