@@ -154,15 +154,15 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12">
         
         {/* Results Header */}
-        <div className="text-center mb-12 fade-in">
-          <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="text-success w-10 h-10" />
+        <div className="text-center mb-8 sm:mb-12 fade-in px-2">
+          <div className="w-16 h-16 sm:w-20 sm:h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+            <CheckCircle className="text-success w-8 h-8 sm:w-10 sm:h-10" />
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Your Personalized Healthcare Plan</h1>
-          <p className="text-xl text-gray-600">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">Your Personalized Healthcare Plan</h1>
+          <p className="text-lg sm:text-xl text-gray-600 leading-relaxed">
             Based on your arrival in Quebec as a {assessmentData.immigrationStatus === 'permanent_resident' ? 'Permanent Resident' : 'Newcomer'}
           </p>
         </div>

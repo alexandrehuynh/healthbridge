@@ -285,23 +285,36 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
           </div>
         </div>
 
+        {/* Loading State */}
+        {value && bilateralStatus.isLoading && !isOpen && (
+          <div className="mt-2">
+            <div className="flex items-center space-x-3 p-4 rounded-lg border-2 border-gray-200 bg-gray-50 animate-pulse">
+              <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
+              <div className="flex-1">
+                <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Bilateral Agreement Status */}
-        {value && agreementMessage && !isOpen && (
+        {value && agreementMessage && !bilateralStatus.isLoading && !isOpen && (
           <div className="mt-2">
             <div className={cn(
-              "flex items-start space-x-2 p-3 rounded-lg text-sm",
-              agreementMessage.type === 'success' && "bg-green-50 text-green-800 border border-green-200",
-              agreementMessage.type === 'warning' && "bg-yellow-50 text-yellow-800 border border-yellow-200",
-              agreementMessage.type === 'error' && "bg-blue-50 text-blue-800 border border-blue-200"
+              "flex items-start space-x-3 p-4 rounded-lg text-sm border-2 transition-all duration-300",
+              agreementMessage.type === 'success' && "bg-green-50 text-green-900 border-green-300 shadow-sm",
+              agreementMessage.type === 'warning' && "bg-yellow-50 text-yellow-900 border-yellow-300 shadow-sm",
+              agreementMessage.type === 'error' && "bg-blue-50 text-blue-900 border-blue-300 shadow-sm"
             )}>
-              <span className="text-base mt-0.5">{agreementMessage.icon}</span>
-              <div className="flex-1">
-                <p className="font-medium mb-1">
-                  {agreementMessage.type === 'success' ? 'Social Security Agreement' :
-                   agreementMessage.type === 'warning' ? 'Partial Agreement' :
-                   'Standard Waiting Period'}
+              <span className="text-lg mt-0.5 flex-shrink-0">{agreementMessage.icon}</span>
+              <div className="flex-1 min-w-0">
+                <p className="font-semibold mb-1 text-base">
+                  {agreementMessage.type === 'success' ? '🟢 No Waiting Period!' :
+                   agreementMessage.type === 'warning' ? '🟡 Partial Agreement' :
+                   '🔴 Standard 3-Month Wait'}
                 </p>
-                <p className="text-xs opacity-90">
+                <p className="text-sm leading-relaxed">
                   {bilateralStatus.agreement?.notes || agreementMessage.message}
                 </p>
               </div>
