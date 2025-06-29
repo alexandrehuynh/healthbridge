@@ -325,7 +325,7 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
 
       {/* Dropdown List */}
       {isOpen && (
-        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 overflow-y-auto">
+        <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 sm:max-h-64 overflow-y-auto touch-manipulation">
           {filteredCountries.length === 0 ? (
             <div className="p-4 text-center text-gray-500">
               <p>No countries found</p>
