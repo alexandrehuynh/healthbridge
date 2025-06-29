@@ -75,11 +75,20 @@ export function useAssessment() {
       case 2:
         return data.countryOfOrigin !== '';
       case 3:
-        // RAMQ questions validation - require arrival date and other fields
-        return data.arrivalDate !== '' &&
-               data.ramqApplicationSubmitted !== '' && 
-               data.insuranceWithin5Days !== '' &&
-               (data.ramqApplicationSubmitted !== 'yes' || data.ramqSubmissionDate !== '');
+        // Different validation based on immigration status
+        if (data.immigrationStatus === 'work_permit') {
+          // Work permit holders only need arrival date
+          return data.arrivalDate !== '';
+        } else if (data.immigrationStatus === 'study_permit') {
+          // Students need arrival date and university insurance status
+          return data.arrivalDate !== '' && data.universityInsurance !== '';
+        } else {
+          // Permanent residents need RAMQ questions completed
+          return data.arrivalDate !== '' &&
+                 data.ramqApplicationSubmitted !== '' && 
+                 data.insuranceWithin5Days !== '' &&
+                 (data.ramqApplicationSubmitted !== 'yes' || data.ramqSubmissionDate !== '');
+        }
       case 4:
         // Family size and coverage preferences
         return data.familySize > 0;

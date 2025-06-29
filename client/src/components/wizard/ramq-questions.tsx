@@ -99,6 +99,22 @@ export default function RAMQQuestions({
                   initialFocus
                   className="rounded-md"
                 />
+                <div className="p-3 border-t">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      const today = new Date();
+                      const year = today.getFullYear();
+                      const month = String(today.getMonth() + 1).padStart(2, '0');
+                      const day = String(today.getDate()).padStart(2, '0');
+                      onArrivalDateChange(`${year}-${month}-${day}`);
+                    }}
+                    className="w-full"
+                  >
+                    Today
+                  </Button>
+                </div>
               </PopoverContent>
             </Popover>
           </div>

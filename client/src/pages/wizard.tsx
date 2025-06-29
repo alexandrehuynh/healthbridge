@@ -7,6 +7,8 @@ import { WizardProgressIllustration } from '@/components/illustrations/step-icon
 import ImmigrationStatusSelection from '@/components/wizard/immigration-status';
 import CountrySelection from '@/components/wizard/country-selection';
 import RAMQQuestions from '@/components/wizard/ramq-questions';
+import WorkPermitInfo from '@/components/wizard/work-permit-info';
+import StudentInfo from '@/components/wizard/student-info';
 import FamilySize from '@/components/wizard/family-size';
 
 export default function Wizard() {
@@ -49,21 +51,41 @@ export default function Wizard() {
           />
         );
       case 3:
-        return (
-          <RAMQQuestions
-            ramqApplicationSubmitted={data.ramqApplicationSubmitted}
-            ramqSubmissionDate={data.ramqSubmissionDate}
-            ramqCardReceived={data.ramqCardReceived}
-            insuranceWithin5Days={data.insuranceWithin5Days}
-            arrivalDate={data.arrivalDate}
-            onRAMQApplicationChange={(ramqApplicationSubmitted) => updateData({ ramqApplicationSubmitted })}
-            onRAMQSubmissionDateChange={(ramqSubmissionDate) => updateData({ ramqSubmissionDate })}
-            onRAMQCardReceivedChange={(ramqCardReceived) => updateData({ ramqCardReceived })}
-            onInsuranceWithin5DaysChange={(insuranceWithin5Days) => updateData({ insuranceWithin5Days })}
-            onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
-            countryOfOrigin={data.countryOfOrigin}
-          />
-        );
+        // Route to different components based on immigration status
+        if (data.immigrationStatus === 'work_permit') {
+          return (
+            <WorkPermitInfo
+              arrivalDate={data.arrivalDate}
+              onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
+            />
+          );
+        } else if (data.immigrationStatus === 'study_permit') {
+          return (
+            <StudentInfo
+              arrivalDate={data.arrivalDate}
+              universityInsurance={data.universityInsurance}
+              onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
+              onUniversityInsuranceChange={(universityInsurance) => updateData({ universityInsurance })}
+            />
+          );
+        } else {
+          // Permanent residents and citizens get RAMQ questions
+          return (
+            <RAMQQuestions
+              ramqApplicationSubmitted={data.ramqApplicationSubmitted}
+              ramqSubmissionDate={data.ramqSubmissionDate}
+              ramqCardReceived={data.ramqCardReceived}
+              insuranceWithin5Days={data.insuranceWithin5Days}
+              arrivalDate={data.arrivalDate}
+              onRAMQApplicationChange={(ramqApplicationSubmitted) => updateData({ ramqApplicationSubmitted })}
+              onRAMQSubmissionDateChange={(ramqSubmissionDate) => updateData({ ramqSubmissionDate })}
+              onRAMQCardReceivedChange={(ramqCardReceived) => updateData({ ramqCardReceived })}
+              onInsuranceWithin5DaysChange={(insuranceWithin5Days) => updateData({ insuranceWithin5Days })}
+              onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
+              countryOfOrigin={data.countryOfOrigin}
+            />
+          );
+        }
       case 4:
         return (
           <FamilySize
