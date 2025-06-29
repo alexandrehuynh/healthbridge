@@ -2,15 +2,29 @@ import { InsuranceProvider } from '@/types/assessment';
 import quebecInsuranceData from '@/data/quebec-insurance-providers.json';
 
 export function getQuebecInsuranceProviders(familySize: number, immigrationStatus: string): InsuranceProvider[] {
+  // Optimal 3-plan selection for hackathon demo
+  const optimizedPlans = [
+    'sun-life-quebec',      // Budget at $65
+    'desjardins-visitor',   // Recommended at $75  
+    'blue-cross-quebec'     // Comprehensive at $85
+  ];
+
   return quebecInsuranceData
-    .filter(provider => provider.targetStatuses.includes(immigrationStatus))
+    .filter(provider => 
+      provider.targetStatuses.includes(immigrationStatus) &&
+      optimizedPlans.includes(provider.id)
+    )
     .map(provider => ({
       ...provider,
       monthlyPrice: calculatePrice(provider.monthlyPrice, familySize),
       provinces: ['quebec'], // Ensure provinces array exists
       insuranceType: provider.insuranceType as 'primary' | 'supplementary' | 'gap' | 'travel'
     }))
-    .sort((a, b) => a.monthlyPrice - b.monthlyPrice);
+    .sort((a, b) => {
+      // Custom sort order: Sun Life -> Desjardins -> Blue Cross
+      const order = ['sun-life-quebec', 'desjardins-visitor', 'blue-cross-quebec'];
+      return order.indexOf(a.id) - order.indexOf(b.id);
+    });
 }
 
 function calculatePrice(basePrice: number, familySize: number): number {

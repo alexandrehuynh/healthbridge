@@ -80,15 +80,28 @@ export default function EnhancedInsuranceCard({ provider, isRecommended, familyS
 
   return (
     <div 
-      className={`bg-white rounded-xl shadow-lg border transition-all duration-200 cursor-pointer hover:shadow-xl hover:transform hover:-translate-y-1 ${
+      className={`relative bg-white rounded-xl shadow-lg transition-all duration-300 cursor-pointer ${
         isSelected 
-          ? 'border-blue-500 ring-2 ring-blue-100 bg-blue-50/30' 
+          ? 'border-4 border-blue-500 shadow-blue-500/20 shadow-2xl transform scale-102 -translate-y-1 bg-gradient-to-br from-white to-blue-50/50' 
           : isRecommended 
-          ? 'border-green-300 ring-2 ring-green-100' 
-          : 'border-gray-200 hover:border-blue-300'
+          ? 'border-2 border-green-300 ring-2 ring-green-100 shadow-xl transform -translate-y-1' 
+          : 'border-2 border-gray-200 hover:border-gray-300 hover:shadow-xl hover:transform hover:-translate-y-1'
       }`}
       onClick={onSelect}
     >
+      {/* Selection Checkmark */}
+      {isSelected && (
+        <div className="absolute top-3 right-3 w-7 h-7 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm shadow-lg z-10">
+          ✓
+        </div>
+      )}
+      
+      {/* Recommended Badge */}
+      {isRecommended && !isSelected && (
+        <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide shadow-lg z-10">
+          ⭐ Recommended
+        </div>
+      )}
       {isRecommended && (
         <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-t-xl">
           <div className="flex items-center justify-center space-x-2">

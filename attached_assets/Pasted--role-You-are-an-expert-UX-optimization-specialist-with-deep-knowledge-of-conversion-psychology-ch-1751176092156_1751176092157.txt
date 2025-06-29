@@ -1,0 +1,393 @@
+<role>
+You are an expert UX optimization specialist with deep knowledge of conversion psychology, choice architecture, and professional demo presentation design.
+</role>
+
+<optimization_mission>
+🎯 **UX OPTIMIZATION FOR MAXIMUM IMPACT** 🎯
+Transform the insurance selection interface from good to exceptional using research-backed UX principles:
+
+1. **Reduce Choice Paralysis** - Cut from 5 plans to optimal 3 plans
+2. **Center Recommended Option** - Leverage F-pattern reading for better conversion
+3. **Enhance Selection Highlighting** - Make selection state unmistakably obvious
+
+**Goal:** Create a professional, streamlined interface that impresses hackathon judges with sophisticated UX thinking
+</optimization_mission>
+
+<ux_research_foundation>
+**Why These Changes Work:**
+
+**🧠 Hick's Law**: Decision time increases logarithmically with options
+- 5 options = choice paralysis
+- 3 options = sweet spot for comparison
+
+**👁️ F-Pattern Reading**: Users scan left-to-right, pause at center
+- Center position = maximum attention
+- Perfect for "recommended" placement
+
+**🎯 Selection Feedback**: Current 2px border barely visible
+- Need obvious visual confirmation
+- Accessibility requires clear selection states
+</ux_research_foundation>
+
+<optimization_1_reduce_plans>
+**🔄 TASK 1: Filter to Top 3 Strategic Plans**
+
+**Current 5 Plans** (overwhelming):
+- Sun Life Essential ($65) - Budget
+- Desjardins Visitor ($75) - Most Popular
+- Manulife CoverMe ($78) - Similar to Desjardins
+- Blue Cross Quebec ($85) - Comprehensive
+- Guard.me Student ($45) - Niche student option
+
+**Optimized Top 3** (strategic coverage):
+1. **Sun Life Essential** ($65) - "Budget Option" 
+2. **Desjardins Visitor** ($75) - "⭐ Recommended"
+3. **Blue Cross Quebec** ($85) - "Comprehensive"
+
+**Implementation:**
+```javascript
+// Filter insurance data to show only these 3 IDs
+const optimizedPlans = [
+  'sun-life-quebec',      // Budget at $65
+  'desjardins-visitor',   // Recommended at $75  
+  'blue-cross-quebec'     // Comprehensive at $85
+];
+
+const filteredInsurance = allInsurancePlans.filter(
+  plan => optimizedPlans.includes(plan.id)
+);
+```
+
+**Why These 3:**
+- **Price Spread**: $20 difference gives clear value tiers
+- **Use Case Coverage**: Budget → Recommended → Premium
+- **Brand Recognition**: All major Quebec insurers
+- **Demo Clarity**: Easy to explain and compare
+</optimization_1_reduce_plans>
+
+<optimization_2_center_layout>
+**🎨 TASK 2: Center Recommended Plan Layout**
+
+**Strategic Positioning:**
+```
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│  Sun Life   │  │ Desjardins  │  │ Blue Cross  │
+│  $65/month  │  │ $75/month   │  │ $85/month   │
+│   Budget    │  │⭐RECOMMENDED⭐│  │Comprehensive│
+└─────────────┘  └─────────────┘  └─────────────┘
+      ↑               ↑               ↑
+   Good Value    BEST CHOICE     Full Coverage
+```
+
+**Visual Hierarchy Implementation:**
+```css
+.insurance-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr; /* Center card slightly larger */
+  gap: 1.5rem;
+}
+
+.recommended-card {
+  position: relative;
+  /* Slightly elevated by default */
+  transform: translateY(-4px);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+```
+
+**Card Order & Default Selection:**
+1. **Set Desjardins as pre-selected** (center, recommended)
+2. **Reorder display**: Sun Life → Desjardins → Blue Cross
+3. **Enhanced center styling** for recommended prominence
+</optimization_2_center_layout>
+
+<optimization_3_selection_highlighting>
+**✨ TASK 3: Enhanced Selection State Design**
+
+**Current Problem:**
+```css
+/* Too subtle - barely noticeable */
+.selected { border: 2px solid #3b82f6; }
+```
+
+**Enhanced Selection Styling:**
+```css
+.insurance-card {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  border-radius: 12px;
+}
+
+.insurance-card.selected {
+  /* Thicker, more obvious border */
+  border: 4px solid #3b82f6;
+  
+  /* Prominent shadow for depth */
+  box-shadow: 
+    0 8px 25px rgba(59, 130, 246, 0.15),
+    0 0 0 3px rgba(59, 130, 246, 0.1);
+  
+  /* Subtle scale for attention */
+  transform: scale(1.02) translateY(-2px);
+  
+  /* Subtle background shift */
+  background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+}
+
+/* Checkmark indicator */
+.insurance-card.selected::after {
+  content: "✓";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 16px;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.insurance-card:hover:not(.selected) {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  border-color: #e5e7eb;
+}
+```
+
+**Selection Features:**
+- **4px border** (vs 2px) - highly visible
+- **Drop shadow** - creates depth and focus
+- **Subtle scale** (1.02x) - draws eye attention
+- **Checkmark icon** - unmistakable selection indicator
+- **Background gradient** - reinforces selected state
+- **Smooth animations** - professional polish
+</optimization_3_selection_highlighting>
+
+<implementation_tasks>
+**Step-by-Step Implementation:**
+
+**Step 1: Filter Insurance Data (5 minutes)**
+1. Locate insurance data source (JSON file or component)
+2. Filter to show only the 3 optimized plans
+3. Verify all plan data is intact for filtered set
+4. Update any hardcoded references to removed plans
+
+**Step 2: Reorder & Center Layout (8 minutes)**
+1. Arrange cards in optimal order: Sun Life → Desjardins → Blue Cross
+2. Add CSS grid layout with center prominence
+3. Add "Recommended" badge to Desjardins card
+4. Set Desjardins as default selected plan
+
+**Step 3: Enhanced Selection Styling (10 minutes)**
+1. Replace subtle selection border with enhanced styling
+2. Add checkmark icon for selected state
+3. Implement smooth hover transitions
+4. Add drop shadows and scale effects
+
+**Step 4: Update Cost Calculations (5 minutes)**
+1. Verify cost calculations work with 3 plans
+2. Set default cost to Desjardins ($75 × 3 = $225)
+3. Test cost updates when switching between 3 options
+
+**Step 5: Testing & Polish (7 minutes)**
+1. Test selection states on all 3 cards
+2. Verify recommended badge appears correctly
+3. Confirm cost calculations update properly
+4. Test responsive behavior on mobile
+</implementation_tasks>
+
+<mobile_optimization>
+**📱 Mobile Responsive Considerations:**
+
+**Layout Adaptation:**
+```css
+@media (max-width: 768px) {
+  .insurance-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  /* On mobile, recommended appears first */
+  .recommended-card {
+    order: -1;
+  }
+  
+  .insurance-card.selected {
+    /* Reduce scale on mobile for better fit */
+    transform: scale(1.01) translateY(-1px);
+  }
+}
+```
+
+**Touch Interactions:**
+- Larger touch targets for cards
+- Obvious selection feedback on tap
+- Smooth transitions optimized for mobile
+- Checkmark clearly visible on small screens
+</mobile_optimization>
+
+<cost_calculation_updates>
+**💰 Updated Cost Calculations:**
+
+```javascript
+const optimizedPricing = {
+  'sun-life-quebec': 65,      // Budget option
+  'desjardins-visitor': 75,   // Recommended (default)
+  'blue-cross-quebec': 85     // Comprehensive
+};
+
+// Set default to recommended plan
+const [selectedInsurance, setSelectedInsurance] = useState('desjardins-visitor');
+const [costEstimate, setCostEstimate] = useState(225); // 75 × 3 months
+
+// Calculate for 89-day period (≈3 months)
+const calculateOptimizedCost = (planId) => {
+  const monthlyRate = optimizedPricing[planId];
+  return Math.round(monthlyRate * 3);
+};
+```
+
+**Cost Display:**
+- Default: "$225 for 89 days" (Desjardins recommended)
+- Range: $195 (Sun Life) to $255 (Blue Cross)
+- Updates smoothly when switching selections
+</cost_calculation_updates>
+
+<testing_verification>
+**🧪 Critical UX Testing:**
+
+**Choice Architecture Test:**
+1. ✅ Only 3 plans display (not overwhelming)
+2. ✅ Desjardins appears in center with recommended badge
+3. ✅ Clear price progression: $65 → $75 → $85
+
+**Selection Highlighting Test:**
+1. Click each card
+2. ✅ Selected card has thick blue border (4px)
+3. ✅ Checkmark icon appears in top-right
+4. ✅ Subtle scaling and shadow effects visible
+5. ✅ Previous selection properly deselects
+
+**Layout & Hierarchy Test:**
+1. ✅ Center card (Desjardins) draws most attention
+2. ✅ Recommended badge clearly visible
+3. ✅ Left-to-right flow: Budget → Recommended → Premium
+4. ✅ Visual hierarchy supports recommended choice
+
+**Cost Calculation Test:**
+1. ✅ Default shows $225 (Desjardins)
+2. ✅ Sun Life selection → $195
+3. ✅ Blue Cross selection → $255
+4. ✅ Smooth transitions between cost updates
+
+**Demo Presentation Test:**
+1. ✅ Interface looks professional and polished
+2. ✅ Selection states unmistakably clear
+3. ✅ Recommended option obviously highlighted
+4. ✅ Quick, confident decision-making flow
+</testing_verification>
+
+<success_criteria>
+**🏆 UX Optimization Success:**
+
+**Before Optimization:**
+- 5 options creating choice paralysis
+- Recommended option buried on left
+- Subtle selection barely visible
+- Decision fatigue for users
+
+**After Optimization:**
+- ✅ **3 strategic options** - optimal choice architecture
+- ✅ **Recommended centered** - leverages visual attention
+- ✅ **Obvious selection** - thick borders, checkmarks, scaling
+- ✅ **Professional polish** - smooth animations, hierarchy
+
+**Demo Impact:**
+- **Judges decide quickly** with clear 3-option comparison
+- **Recommended choice prominent** - guides to optimal selection
+- **Professional UX** demonstrates sophisticated design thinking
+- **Confident presentation** - no apologies for overwhelming interface
+
+**Conversion Psychology Applied:**
+- Choice architecture reduces decision time
+- Visual hierarchy guides to recommended option
+- Clear feedback confirms user actions
+- Professional polish builds trust and confidence
+</success_criteria>
+
+<constraints>
+**Preserve Core Functionality:**
+- All quote links must continue working correctly
+- Cost calculations remain accurate
+- Mobile responsiveness maintained
+- Existing routing and navigation intact
+- Insurance data integrity preserved
+
+**Design Consistency:**
+- Match existing color scheme and typography
+- Maintain current spacing and layout patterns
+- Keep consistent with overall app design language
+- Ensure accessibility standards met
+</constraints>
+
+<output_format>
+Provide completion report:
+
+1. **Plan Filtering Results**
+   - Which plans removed and why
+   - Verification that 3 plans display correctly
+   - Cost calculation updates
+
+2. **Layout Optimization**
+   - Card reordering implementation
+   - Center prominence for recommended plan
+   - Recommended badge placement
+
+3. **Selection Enhancement**
+   - New selection styling implementation
+   - Checkmark icon functionality
+   - Hover and transition effects
+
+4. **Testing Verification**
+   - All 3 cards selectable with clear feedback
+   - Cost updates working for reduced plan set
+   - Mobile responsiveness confirmed
+   - Demo-ready confirmation
+
+5. **UX Impact Assessment**
+   - Before/after comparison
+   - Professional presentation readiness
+   - Judge interaction confidence level
+</output_format>
+
+<hackathon_excellence>
+**Why This Optimization Wins:**
+- **Demonstrates UX sophistication** beyond basic functionality
+- **Shows understanding** of conversion psychology and choice architecture  
+- **Creates professional impression** that separates your team from competitors
+- **Enables confident demo** with streamlined, obvious interactions
+- **Proves attention to detail** that judges recognize as product-ready thinking
+
+**This optimization transforms your insurance selection from functional to exceptional - the kind of UX polish that wins hackathons.**
+</hackathon_excellence>

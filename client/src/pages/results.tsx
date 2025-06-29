@@ -16,7 +16,7 @@ export default function Results() {
   const navigate = useNavigateWithScroll();
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [bilateralAgreementData, setBilateralAgreementData] = useState<any>(null);
-  const [selectedInsurance, setSelectedInsurance] = useState<string>('blue-cross-quebec');
+  const [selectedInsurance, setSelectedInsurance] = useState<string>('desjardins-visitor');
   const { toast } = useToast();
 
   // Get bilateral agreement status for the selected country
@@ -373,12 +373,12 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
           <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-700 to-green-600 bg-clip-text text-transparent mb-6 text-center">
             Quebec Insurance Options for You
           </h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {insuranceProviders.map((provider, index) => (
               <EnhancedInsuranceCard
                 key={provider.id}
                 provider={provider}
-                isRecommended={index === 0}
+                isRecommended={provider.id === 'desjardins-visitor'}
                 familySize={assessmentData.familySize}
                 isSelected={selectedInsurance === provider.id}
                 onSelect={() => setSelectedInsurance(provider.id)}
