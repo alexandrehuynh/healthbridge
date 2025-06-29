@@ -68,7 +68,7 @@ export default function Results() {
     ? calculateWaitingPeriod(assessmentData.ramqSubmissionDate, waitingPeriodDays)
     : assessmentData?.arrivalDate 
     ? calculateWaitingPeriod(assessmentData.arrivalDate, waitingPeriodDays) 
-    : null;
+    : calculateWaitingPeriod(new Date().toISOString().split('T')[0], waitingPeriodDays); // Fallback to today's date
 
   console.log('Assessment data for calculation:', {
     ramqSubmissionDate: assessmentData?.ramqSubmissionDate,
@@ -151,7 +151,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
     navigate('/');
   };
 
-  if (!assessmentData || !waitingPeriodCalculation) {
+  if (!assessmentData) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">

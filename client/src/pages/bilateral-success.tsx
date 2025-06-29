@@ -197,7 +197,31 @@ export default function BilateralSuccess() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Button 
               variant="outline" 
-              onClick={() => navigate('/results')}
+              onClick={() => {
+                // Ensure complete assessment data exists for Results component
+                const currentData = localStorage.getItem('assessmentData');
+                if (currentData) {
+                  const parsedData = JSON.parse(currentData);
+                  // Add missing fields that Results component expects
+                  const completeData = {
+                    ...parsedData,
+                    arrivalDate: parsedData.arrivalDate || new Date().toISOString().split('T')[0],
+                    ramqApplicationSubmitted: parsedData.ramqApplicationSubmitted || 'no',
+                    ramqSubmissionDate: parsedData.ramqSubmissionDate || '',
+                    ramqCardReceived: parsedData.ramqCardReceived || '',
+                    insuranceWithin5Days: parsedData.insuranceWithin5Days || 'no',
+                    universityInsurance: parsedData.universityInsurance || '',
+                    employerBenefits: parsedData.employerBenefits || '',
+                    coverageNeeds: parsedData.coverageNeeds || [],
+                    includeDental: parsedData.includeDental || false,
+                    includeVision: parsedData.includeVision || false,
+                    includePrescription: parsedData.includePrescription || false,
+                    includeEmergencyTravel: parsedData.includeEmergencyTravel || false
+                  };
+                  localStorage.setItem('assessmentData', JSON.stringify(completeData));
+                }
+                navigate('/results');
+              }}
               className="h-12 px-6 text-base font-semibold border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
             >
               View Insurance Options
