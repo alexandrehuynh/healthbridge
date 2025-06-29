@@ -56,6 +56,55 @@ export default function RAMQQuestions({
         </p>
       </div>
 
+      {/* Arrival Date */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <CalendarIcon className="w-5 h-5 text-primary" />
+            <span>When did you arrive in Quebec?</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <p className="text-sm text-gray-600">
+              Your arrival date helps us calculate your waiting period timeline and insurance needs.
+            </p>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal",
+                    !selectedArrivalDate && "text-muted-foreground"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {selectedArrivalDate ? format(selectedArrivalDate, "PPP") : "Select arrival date"}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={selectedArrivalDate}
+                  onSelect={(date) => {
+                    if (date) {
+                      const year = date.getFullYear();
+                      const month = String(date.getMonth() + 1).padStart(2, '0');
+                      const day = String(date.getDate()).padStart(2, '0');
+                      onArrivalDateChange(`${year}-${month}-${day}`);
+                    }
+                  }}
+                  fromYear={2020}
+                  toYear={2030}
+                  initialFocus
+                  className="rounded-md"
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* RAMQ Application Submitted */}
       <Card>
         <CardHeader>
