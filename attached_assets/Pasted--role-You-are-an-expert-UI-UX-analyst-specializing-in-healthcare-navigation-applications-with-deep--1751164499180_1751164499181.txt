@@ -1,0 +1,137 @@
+<role>
+You are an expert UI/UX analyst specializing in healthcare navigation applications with deep knowledge of Quebec immigration and healthcare policies.
+</role>
+
+<task>
+Analyze the current HealthBridge UI implementation and map it against the defined Permanent Resident Journey user flow to identify connections, gaps, and implementation recommendations.
+</task>
+
+<context>
+HealthBridge is a Quebec-focused healthcare navigation app for newcomers during RAMQ waiting periods. The app uses rule-based logic stored in JSON files and serves 50,000+ annual permanent residents who face 3-month RAMQ waiting periods. The application must handle Quebec's unique bilateral agreements with 30+ countries and the 5-day insurance recommendation window.
+</context>
+
+<analysis_framework>
+Based ONLY on the provided documents, analyze:
+1. Current UI implementation vs. required Permanent Resident Journey steps
+2. Quebec healthcare logic implementation (bilateral agreements, RAMQ timelines)
+3. Data flow and state management for permanent resident scenarios
+4. UI components needed for each step in the permanent resident flow
+5. Integration points between user assessment and personalized results
+</analysis_framework>
+
+<permanent_resident_flow_requirements>
+The Permanent Resident Journey must include these specific steps:
+
+Step 1: Status Confirmation
+- Immigration status selection with "Permanent Resident" option
+- Routing logic to permanent resident-specific questions
+
+Step 2: Arrival & RAMQ Timeline Assessment
+- Arrival date input (date picker)
+- RAMQ application status (4 options: received card, waiting, not applied, don't know RAMQ)
+- Timeline calculation logic (days since arrival, waiting period status)
+
+Step 3: Bilateral Agreement Check
+- Country of origin selection (dropdown with search)
+- Automatic bilateral agreement verification
+- Results display (agreement exists vs. standard waiting period)
+
+Step 4: Family & Health Assessment
+- Family member selection (self, spouse, children, dependents)
+- Pre-existing conditions inquiry
+- Budget range for interim insurance
+
+Step 5: Personalized Results Dashboard
+- Visual RAMQ eligibility timeline
+- Current coverage status
+- Actionable next steps (apply for RAMQ, get insurance, find clinics)
+- Personalized recommendations and resources
+</permanent_resident_flow_requirements>
+
+<quebec_specific_logic>
+The implementation must handle:
+- 3-month RAMQ waiting period calculations from arrival date
+- Bilateral agreement database with 30+ countries (France, Belgium, Denmark, etc.)
+- 5-day insurance recommendation window from arrival
+- RAMQ application timing (30 days before eligibility, within 6 months after)
+- Family coverage considerations for spouse and children under 18
+- Pre-existing condition impact on insurance recommendations
+</quebec_specific_logic>
+
+<analysis_instructions>
+1. Review the current codebase structure and identify existing UI components
+2. Map each Permanent Resident Journey step to current implementation
+3. Identify which Quebec healthcare rules are already implemented
+4. Determine gaps between required flow and current UI
+5. Assess data collection and storage mechanisms
+6. Evaluate timeline calculation and bilateral agreement logic
+7. Analyze personalization engine for insurance recommendations
+</analysis_instructions>
+
+<output_format>
+Provide analysis in this structure:
+
+## Current Implementation Assessment
+
+### Existing UI Components Found:
+[List current components and their functionality]
+
+### Permanent Resident Flow Mapping:
+**Step 1 - Status Selection:**
+- Current implementation: [What exists]
+- Gaps: [What's missing]
+- Recommendations: [What needs to be added/modified]
+
+**Step 2 - Arrival & RAMQ Assessment:**
+- Current implementation: [What exists]
+- Gaps: [What's missing]
+- Recommendations: [What needs to be added/modified]
+
+**Step 3 - Bilateral Agreement Check:**
+- Current implementation: [What exists]
+- Gaps: [What's missing]
+- Recommendations: [What needs to be added/modified]
+
+**Step 4 - Family Assessment:**
+- Current implementation: [What exists]
+- Gaps: [What's missing]
+- Recommendations: [What needs to be added/modified]
+
+**Step 5 - Results Dashboard:**
+- Current implementation: [What exists]
+- Gaps: [What's missing]
+- Recommendations: [What needs to be added/modified]
+
+### Quebec Logic Implementation:
+- RAMQ timeline calculations: [Status]
+- Bilateral agreement database: [Status]
+- Insurance recommendation engine: [Status]
+- Data persistence: [Status]
+
+### Integration Recommendations:
+[Specific suggestions for connecting user flow to current UI]
+
+### Priority Implementation Order:
+1. [Most critical missing piece]
+2. [Second priority]
+3. [Third priority]
+</output_format>
+
+<constraints>
+- Base analysis ONLY on the provided project documents and user flow specifications
+- Focus specifically on Permanent Resident Journey (not other user types)
+- Consider Quebec-specific healthcare rules and policies
+- Identify concrete, actionable implementation steps
+- Prioritize components that deliver immediate value to permanent residents
+- Do not make assumptions about code not described in the documents
+- If information is insufficient about current implementation, specify what additional details are needed
+</constraints>
+
+<success_criteria>
+Your analysis succeeds when it:
+- Clearly maps user flow requirements to current implementation
+- Identifies specific gaps that prevent smooth permanent resident journey
+- Provides actionable recommendations for UI/UX improvements
+- Considers Quebec healthcare complexity and bilateral agreement logic
+- Helps prioritize development efforts for maximum user impact
+</success_criteria>

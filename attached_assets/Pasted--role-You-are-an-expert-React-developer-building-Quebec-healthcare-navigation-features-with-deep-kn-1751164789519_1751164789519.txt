@@ -1,0 +1,176 @@
+<role>
+You are an expert React developer building Quebec healthcare navigation features with deep knowledge of Quebec's social security bilateral agreements and RAMQ eligibility rules.
+</role>
+
+<task>
+Implement the "bilateral agreement magic" feature that automatically checks if a permanent resident's country of origin has a social security agreement with Quebec that waives the 3-month RAMQ waiting period.
+</task>
+
+<context>
+This is HealthBridge's key competitive advantage - no other Quebec healthcare app automatically checks bilateral agreements. When users select their country, the app should instantly tell them if they can skip the waiting period or need to wait 3 months.
+</context>
+
+<quebec_bilateral_agreement_rules>
+Quebec has social security agreements with these countries that waive the 3-month RAMQ waiting period for permanent residents:
+
+**Full Agreement Countries (No Waiting Period):**
+- France
+- Belgium  
+- Denmark
+- Finland
+- Greece
+- Luxembourg
+- Norway
+- Portugal
+- Sweden
+- Austria
+
+**Partial Agreement Countries (Case-by-case):**
+- Germany (certain conditions)
+- Netherlands (certain conditions)
+- Italy (certain conditions)
+
+**No Agreement (Standard 3-month wait):**
+- All other countries including USA, UK, India, China, etc.
+
+**Requirements for Agreement Countries:**
+- Must be permanent resident
+- Must provide proof of social security coverage from home country
+- Must apply for RAMQ with proper documentation
+</quebec_bilateral_agreement_rules>
+
+<implementation_requirements>
+1. **Create Bilateral Agreement Database**: JSON file with country agreement data
+2. **Enhance Country Selection**: Add automatic agreement checking when country is selected
+3. **Visual Feedback**: Show immediate results when user picks their country
+4. **Integration**: Connect to existing country-selection.tsx component
+5. **Data Storage**: Save agreement status in user assessment data
+6. **Error Handling**: Handle countries not in database gracefully
+</implementation_requirements>
+
+<technical_specifications>
+**File Structure Needed:**
+- `src/data/bilateral-agreements.json` - Agreement database
+- Enhance `src/components/country-selection.tsx` - Add agreement checking
+- Create `src/hooks/use-bilateral-agreement.tsx` - Agreement logic hook
+- Update `src/types/assessment.ts` - Add agreement status to user data
+
+**User Experience Flow:**
+1. User opens country dropdown
+2. User types/selects "France"
+3. Instant feedback appears: "🟢 Great news! France has an agreement with Quebec - you may skip the 3-month waiting period"
+4. User selects "United States"  
+5. Feedback appears: "🔴 Standard 3-month waiting period applies"
+6. Agreement status saved for results page
+</technical_specifications>
+
+<data_structure>
+**bilateral-agreements.json structure:**
+```json
+{
+  "agreements": {
+    "France": {
+      "hasAgreement": true,
+      "type": "full",
+      "waitingPeriodWaived": true,
+      "documentsRequired": ["Social security certificate", "Proof of coverage"],
+      "notes": "Full social security agreement - no waiting period"
+    },
+    "Germany": {
+      "hasAgreement": true,
+      "type": "partial", 
+      "waitingPeriodWaived": false,
+      "documentsRequired": ["Specific German social security forms"],
+      "notes": "Partial agreement - case by case evaluation"
+    },
+    "United States": {
+      "hasAgreement": false,
+      "type": "none",
+      "waitingPeriodWaived": false,
+      "documentsRequired": [],
+      "notes": "No agreement - standard 3-month waiting period"
+    }
+  }
+}
+```
+
+**User Assessment Data Addition:**
+```typescript
+interface AssessmentData {
+  // existing fields...
+  bilateralAgreement?: {
+    country: string;
+    hasAgreement: boolean;
+    waitingPeriodWaived: boolean;
+    type: 'full' | 'partial' | 'none';
+    notes: string;
+  };
+}
+```
+</data_structure>
+
+<ui_behavior>
+**Immediate Feedback Display:**
+- 🟢 **Green message** for agreement countries: "Excellent! [Country] has an agreement with Quebec. You may be able to skip the waiting period."
+- 🟡 **Yellow message** for partial agreements: "[Country] has a partial agreement. Your situation will need individual assessment."
+- 🔴 **Red message** for no agreement: "Standard 3-month RAMQ waiting period applies for [Country] residents."
+
+**Visual Elements:**
+- Color-coded status indicator
+- Clear, simple language
+- Brief explanation of what this means
+- Link to "Learn more about bilateral agreements"
+
+**Integration Points:**
+- Show in country selection component immediately
+- Display on results dashboard  
+- Use in RAMQ timeline calculations
+- Include in next steps recommendations
+</ui_behavior>
+
+<examples>
+**Example User Scenarios:**
+
+**Scenario 1 - France (Full Agreement):**
+User selects "France" → Immediate display:
+"🟢 Excellent! France has a social security agreement with Quebec. You may be able to skip the 3-month waiting period. You'll need to provide your French social security certificate when applying for RAMQ."
+
+**Scenario 2 - USA (No Agreement):**
+User selects "United States" → Immediate display:
+"🔴 The United States does not have a social security agreement with Quebec. The standard 3-month waiting period will apply to your RAMQ coverage."
+
+**Scenario 3 - Germany (Partial Agreement):**
+User selects "Germany" → Immediate display:
+"🟡 Germany has a partial agreement with Quebec. Your eligibility for reduced waiting period will depend on your specific German social security coverage. Individual assessment required."
+</examples>
+
+<output_format>
+Provide complete implementation including:
+1. **bilateral-agreements.json** - Complete database with all countries mentioned
+2. **Enhanced country-selection.tsx** - Component with agreement checking
+3. **use-bilateral-agreement.tsx** - Custom hook for agreement logic
+4. **Updated types** - TypeScript interfaces for agreement data
+5. **CSS/Tailwind classes** - Styling for status indicators
+6. **Integration code** - How to connect to existing assessment flow
+</output_format>
+
+<constraints>
+- Use existing HealthBridge code patterns and styling
+- Integrate seamlessly with current country selection component
+- Store data in localStorage with existing assessment data
+- Handle edge cases (country not found, API errors)
+- Use Quebec government official bilateral agreement information only
+- Make it fast - instant feedback when country is selected
+- Keep messaging simple and user-friendly
+- Ensure mobile responsiveness
+</constraints>
+
+<success_criteria>
+Your implementation succeeds when:
+- Users get instant feedback about bilateral agreements when selecting their country
+- Agreement status is properly stored and used throughout the app
+- Visual feedback is clear and color-coded appropriately
+- Integration doesn't break existing country selection functionality
+- Code follows HealthBridge patterns and is maintainable
+- Feature provides clear competitive advantage over other Quebec healthcare apps
+</success_criteria>
