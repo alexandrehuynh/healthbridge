@@ -19,6 +19,8 @@ const initialData: AssessmentData = {
   includeVision: false,
   includePrescription: false,
   includeEmergencyTravel: false,
+  // Bilateral agreement status
+  bilateralAgreement: undefined,
 };
 
 export function useAssessment() {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { CheckCircle, Bookmark, Share, RotateCcw } from 'lucide-react';
+import { CheckCircle, Bookmark, Share, RotateCcw, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useLocation } from 'wouter';
@@ -10,11 +10,16 @@ import VisualTimeline from '@/components/dashboard/visual-timeline';
 import EnhancedInsuranceCard from '@/components/dashboard/enhanced-insurance-card';
 import ActionChecklist from '@/components/dashboard/action-checklist';
 import { useToast } from '@/hooks/use-toast';
+import { useBilateralAgreement, getWaitingPeriodDays } from '@/hooks/use-bilateral-agreement';
 
 export default function Results() {
   const [, setLocation] = useLocation();
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
+  const [bilateralAgreementData, setBilateralAgreementData] = useState<any>(null);
   const { toast } = useToast();
+
+  // Get bilateral agreement status for the selected country
+  const bilateralStatus = useBilateralAgreement(assessmentData?.countryOfOrigin || '');
 
   useEffect(() => {
     const savedData = localStorage.getItem('assessmentData');
@@ -27,6 +32,12 @@ export default function Results() {
       console.log('No assessment data found, redirecting to wizard');
       // Redirect to wizard if no data found
       setLocation('/wizard');
+    }
+
+    // Load bilateral agreement data
+    const savedBilateralData = localStorage.getItem('bilateralAgreementStatus');
+    if (savedBilateralData) {
+      setBilateralAgreementData(JSON.parse(savedBilateralData));
     }
   }, [setLocation]);
 
@@ -41,11 +52,20 @@ export default function Results() {
     hasWaitingPeriod: true
   };
 
-  // Quebec-specific waiting period calculation
+  // Enhanced waiting period calculation using bilateral agreement data
+  const getWaitingPeriod = () => {
+    if (bilateralStatus.agreement) {
+      return getWaitingPeriodDays(bilateralStatus.agreement);
+    }
+    return 90; // Default 3-month waiting period
+  };
+
+  const waitingPeriodDays = getWaitingPeriod();
+  
   const waitingPeriodCalculation = assessmentData?.ramqSubmissionDate 
-    ? calculateWaitingPeriod(assessmentData.ramqSubmissionDate, 90) // 90 days for Quebec
+    ? calculateWaitingPeriod(assessmentData.ramqSubmissionDate, waitingPeriodDays)
     : assessmentData?.arrivalDate 
-    ? calculateWaitingPeriod(assessmentData.arrivalDate, 90) 
+    ? calculateWaitingPeriod(assessmentData.arrivalDate, waitingPeriodDays) 
     : null;
 
   console.log('Assessment data for calculation:', {
@@ -146,6 +166,91 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
             Based on your arrival in Quebec as a {assessmentData.immigrationStatus === 'permanent_resident' ? 'Permanent Resident' : 'Newcomer'}
           </p>
         </div>
+
+        {/* Bilateral Agreement Status */}
+        {bilateralStatus.agreement && assessmentData?.countryOfOrigin && (
+          <div className="max-w-4xl mx-auto mb-8">
+            <Alert className={`border-l-4 ${
+              bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived
+                ? 'bg-green-50 border-green-500'
+                : bilateralStatus.agreement.type === 'partial'
+                ? 'bg-yellow-50 border-yellow-500'
+                : 'bg-blue-50 border-blue-500'
+            }`}>
+              <AlertDescription>
+                <div className="flex items-start space-x-3">
+                  <span className="text-xl mt-1">
+                    {bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived ? '🟢' :
+                     bilateralStatus.agreement.type === 'partial' ? '🟡' : '🔴'}
+                  </span>
+                  <div className="flex-1">
+                    <h3 className={`text-lg font-semibold mb-2 ${
+                      bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived
+                        ? 'text-green-900'
+                        : bilateralStatus.agreement.type === 'partial'
+                        ? 'text-yellow-900'
+                        : 'text-blue-900'
+                    }`}>
+                      Quebec-{assessmentData.countryOfOrigin} Social Security Agreement
+                    </h3>
+                    <p className={`mb-3 ${
+                      bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived
+                        ? 'text-green-800'
+                        : bilateralStatus.agreement.type === 'partial'
+                        ? 'text-yellow-800'
+                        : 'text-blue-800'
+                    }`}>
+                      {bilateralStatus.agreement.notes}
+                    </p>
+                    
+                    {bilateralStatus.agreement.documentsRequired.length > 0 && (
+                      <div className="mt-3">
+                        <p className={`font-medium text-sm mb-2 ${
+                          bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived
+                            ? 'text-green-900'
+                            : bilateralStatus.agreement.type === 'partial'
+                            ? 'text-yellow-900'
+                            : 'text-blue-900'
+                        }`}>
+                          Required documents for RAMQ application:
+                        </p>
+                        <ul className={`list-disc list-inside text-sm space-y-1 ${
+                          bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived
+                            ? 'text-green-800'
+                            : bilateralStatus.agreement.type === 'partial'
+                            ? 'text-yellow-800'
+                            : 'text-blue-800'
+                        }`}>
+                          {bilateralStatus.agreement.documentsRequired.map((doc, index) => (
+                            <li key={index}>{doc}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    
+                    <div className="mt-4">
+                      <a
+                        href="https://www.ramq.gouv.qc.ca/en/citizens/temporary-stays-outside-quebec/agreements-with-other-countries"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`inline-flex items-center text-sm hover:underline ${
+                          bilateralStatus.agreement.type === 'full' && bilateralStatus.agreement.waitingPeriodWaived
+                            ? 'text-green-700'
+                            : bilateralStatus.agreement.type === 'partial'
+                            ? 'text-yellow-700'
+                            : 'text-blue-700'
+                        }`}
+                      >
+                        Learn more about bilateral agreements
+                        <ExternalLink className="w-3 h-3 ml-1" />
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </AlertDescription>
+            </Alert>
+          </div>
+        )}
 
         {/* Waiting Period Alert */}
         <div className="max-w-4xl mx-auto mb-12">
