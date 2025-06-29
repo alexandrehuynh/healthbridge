@@ -138,6 +138,14 @@ HealthBridge is a comprehensive healthcare navigation web application designed t
   - Added color-coded status indicators (green for full, yellow for partial, red for none)
   - Stored agreement data in localStorage for persistence across navigation
   - Added official RAMQ bilateral agreements documentation links
+- June 29, 2025: Enhanced bilateral agreement UX and fixed critical navigation issues
+  - Fixed premature auto-redirect to allow controlled user flow (users can review country selection before Next button)
+  - Enhanced country selector with comprehensive coverage badges ("✅ Immediate Coverage", "🟡 Partial Agreement", "⏱️ Insurance Recommended")
+  - Improved Start Over button styling for professional visibility and accessibility
+  - Cleaned up button icons for professional appearance (removed left icons, kept right arrows)
+  - Fixed infinite loop in Results component that caused "Maximum update depth exceeded" error
+  - Resolved navigation issue from bilateral success to Results page with complete assessment data population
+  - Updated broken RAMQ coverage link to working URL (https://www.ramq.gouv.qc.ca/en/citizens/health-insurance)
 
 ## User Preferences
 

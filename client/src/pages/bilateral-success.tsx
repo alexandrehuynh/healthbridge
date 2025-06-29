@@ -144,7 +144,7 @@ export default function BilateralSuccess() {
               asChild
             >
               <a 
-                href="https://www.ramq.gouv.qc.ca/en/citizens/temporary-stays-outside-quebec/agreements-with-other-countries" 
+                href="https://www.ramq.gouv.qc.ca/en/citizens/health-insurance" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex items-center justify-center"

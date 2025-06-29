@@ -275,77 +275,211 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
           </div>
         )}
 
-        {/* Waiting Period Alert */}
+        {/* Status-based Alert */}
         <div className="max-w-4xl mx-auto mb-12">
-          <Alert className="bg-warning/10 border-l-4 border-warning">
-            <AlertDescription className="flex items-center">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {daysRemaining > 0 
-                    ? `${daysRemaining} days until your RAMQ coverage begins`
-                    : `Your RAMQ coverage is now active!`
-                  }
-                </h3>
-                <p className="text-gray-700">
-                  {daysRemaining > 0 ? (
-                    <>
-                      Your provincial health coverage starts on <strong>{formatDate(waitingPeriodCalculation.coverageStartDate)}</strong>. 
-                      Until then, you need private health insurance to avoid unexpected medical bills.
-                    </>
-                  ) : (
-                    'Congratulations! You are now eligible for provincial health coverage.'
-                  )}
-                </p>
-              </div>
-            </AlertDescription>
-          </Alert>
+          {assessmentData.immigrationStatus === 'visitor' ? (
+            <Alert className="bg-blue-50 border-l-4 border-blue-500">
+              <AlertDescription>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    Visitors are not eligible for RAMQ coverage
+                  </h3>
+                  <p className="text-gray-700">
+                    As a visitor to Quebec, you need private health insurance for the duration of your stay. 
+                    We recommend comprehensive coverage that includes emergency medical, hospital care, and prescription drugs.
+                  </p>
+                </div>
+              </AlertDescription>
+            </Alert>
+          ) : assessmentData.immigrationStatus === 'study_permit' ? (
+            <Alert className="bg-blue-50 border-l-4 border-blue-500">
+              <AlertDescription>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    International students are not eligible for RAMQ coverage
+                  </h3>
+                  <p className="text-gray-700">
+                    As an international student, you need private health insurance for your studies in Quebec. 
+                    Check if your educational institution offers a student health plan, or choose from our recommended options below.
+                  </p>
+                </div>
+              </AlertDescription>
+            </Alert>
+          ) : assessmentData.immigrationStatus === 'work_permit' ? (
+            <Alert className="bg-yellow-50 border-l-4 border-yellow-500">
+              <AlertDescription>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    Work permit holders have conditional RAMQ eligibility
+                  </h3>
+                  <p className="text-gray-700">
+                    Your RAMQ eligibility depends on your work permit type and employment situation. 
+                    Contact RAMQ directly to verify your status. Meanwhile, private insurance ensures you're covered.
+                  </p>
+                </div>
+              </AlertDescription>
+            </Alert>
+          ) : (
+            <Alert className="bg-warning/10 border-l-4 border-warning">
+              <AlertDescription className="flex items-center">
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                    {daysRemaining > 0 
+                      ? `${daysRemaining} days until your RAMQ coverage begins`
+                      : `Your RAMQ coverage is now active!`
+                    }
+                  </h3>
+                  <p className="text-gray-700">
+                    {daysRemaining > 0 ? (
+                      <>
+                        Your provincial health coverage starts on <strong>{formatDate(waitingPeriodCalculation.coverageStartDate)}</strong>. 
+                        Until then, you need private health insurance to avoid unexpected medical bills.
+                      </>
+                    ) : (
+                      'Congratulations! You are now eligible for provincial health coverage.'
+                    )}
+                  </p>
+                </div>
+              </AlertDescription>
+            </Alert>
+          )}
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
           
-          {/* Timeline Visualization */}
-          <div className="lg:col-span-2">
-            <VisualTimeline 
-              calculation={waitingPeriodCalculation}
-              healthPlanName="RAMQ"
-            />
-          </div>
+          {/* Timeline Visualization - Only for RAMQ-eligible statuses */}
+          {assessmentData.immigrationStatus !== 'visitor' && assessmentData.immigrationStatus !== 'study_permit' && (
+            <div className="lg:col-span-2">
+              <VisualTimeline 
+                calculation={waitingPeriodCalculation}
+                healthPlanName="RAMQ"
+              />
+            </div>
+          )}
+          
+          {/* Insurance Focus Section for Non-RAMQ Eligible */}
+          {(assessmentData.immigrationStatus === 'visitor' || assessmentData.immigrationStatus === 'study_permit') && (
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                  {assessmentData.immigrationStatus === 'visitor' ? 'Visitor' : 'Student'} Health Insurance Options
+                </h2>
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+                      <span className="text-blue-600 font-bold text-sm">1</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">Choose Your Coverage</h3>
+                      <p className="text-gray-600">Select from comprehensive insurance plans designed for {assessmentData.immigrationStatus === 'visitor' ? 'visitors' : 'international students'} to Quebec.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+                      <span className="text-blue-600 font-bold text-sm">2</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">Get Instant Coverage</h3>
+                      <p className="text-gray-600">Most plans offer immediate coverage or coverage starting within 24-48 hours of application.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3">
+                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mt-1">
+                      <span className="text-blue-600 font-bold text-sm">3</span>
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 mb-1">Access Healthcare</h3>
+                      <p className="text-gray-600">Use your insurance card at hospitals, clinics, and pharmacies throughout Quebec.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Quick Actions */}
           <div className="space-y-6">
-            {/* Urgent Actions */}
+            {/* Immediate Actions - Status-specific */}
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Immediate Actions</h3>
               <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-warning/20 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-warning font-bold text-xs">1</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Get Private Insurance</p>
-                    <p className="text-sm text-gray-600 mt-1">
-                      Essential for next {daysRemaining} days
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-primary font-bold text-xs">2</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Apply for RAMQ</p>
-                    <p className="text-sm text-gray-600 mt-1">Start application process now</p>
-                  </div>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-6 h-6 bg-success/20 rounded-full flex items-center justify-center mt-0.5">
-                    <span className="text-success font-bold text-xs">3</span>
-                  </div>
-                  <div>
-                    <p className="font-medium text-gray-900">Find Healthcare Provider</p>
-                    <p className="text-sm text-gray-600 mt-1">Locate nearby clinics</p>
-                  </div>
-                </div>
+                {assessmentData.immigrationStatus === 'visitor' || assessmentData.immigrationStatus === 'study_permit' ? (
+                  // Actions for non-RAMQ eligible statuses
+                  <>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-blue-600 font-bold text-xs">1</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Choose Health Insurance</p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          Select coverage from options below
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-blue-600 font-bold text-xs">2</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Apply Online</p>
+                        <p className="text-sm text-gray-600 mt-1">Get coverage within 24-48 hours</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-blue-500/20 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-blue-600 font-bold text-xs">3</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Find Healthcare Provider</p>
+                        <p className="text-sm text-gray-600 mt-1">Locate clinics that accept your insurance</p>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  // Actions for RAMQ-eligible statuses
+                  <>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-warning/20 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-warning font-bold text-xs">1</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Get Private Insurance</p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {assessmentData.immigrationStatus === 'work_permit' 
+                            ? 'Recommended while verifying RAMQ eligibility'
+                            : `Essential for next ${daysRemaining} days`
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-primary font-bold text-xs">2</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">
+                          {assessmentData.immigrationStatus === 'work_permit' ? 'Check RAMQ Eligibility' : 'Apply for RAMQ'}
+                        </p>
+                        <p className="text-sm text-gray-600 mt-1">
+                          {assessmentData.immigrationStatus === 'work_permit' 
+                            ? 'Contact RAMQ to verify your status'
+                            : 'Start application process now'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start space-x-3">
+                      <div className="w-6 h-6 bg-success/20 rounded-full flex items-center justify-center mt-0.5">
+                        <span className="text-success font-bold text-xs">3</span>
+                      </div>
+                      <div>
+                        <p className="font-medium text-gray-900">Find Healthcare Provider</p>
+                        <p className="text-sm text-gray-600 mt-1">Locate nearby clinics</p>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
 
@@ -353,22 +487,50 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
             <div className="bg-white p-6 rounded-xl shadow-sm">
               <h3 className="text-xl font-bold text-gray-900 mb-4">Cost Estimate</h3>
               <div className="space-y-3">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Private insurance ({daysRemaining} days)</span>
-                  <span className="font-semibold text-gray-900">${estimatedCost}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">RAMQ application</span>
-                  <span className="font-semibold text-success">Free</span>
-                </div>
-                <div className="border-t pt-3 flex justify-between">
-                  <span className="font-semibold text-gray-900">Total Coverage Cost</span>
-                  <span className="font-bold text-lg text-gray-900">${estimatedCost}</span>
-                </div>
+                {assessmentData.immigrationStatus === 'visitor' || assessmentData.immigrationStatus === 'study_permit' ? (
+                  // Cost for non-RAMQ eligible statuses
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Monthly insurance premium</span>
+                      <span className="font-semibold text-gray-900">${insuranceProviders[0]?.monthlyPrice || 85}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Coverage period</span>
+                      <span className="font-semibold text-gray-900">
+                        {assessmentData.immigrationStatus === 'visitor' ? 'Duration of stay' : 'Academic year'}
+                      </span>
+                    </div>
+                    <div className="border-t pt-3 flex justify-between">
+                      <span className="font-semibold text-gray-900">Monthly Cost</span>
+                      <span className="font-bold text-lg text-gray-900">${insuranceProviders[0]?.monthlyPrice || 85}</span>
+                    </div>
+                  </>
+                ) : (
+                  // Cost for RAMQ-eligible statuses
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">
+                        Private insurance ({assessmentData.immigrationStatus === 'work_permit' ? 'while verifying status' : `${daysRemaining} days`})
+                      </span>
+                      <span className="font-semibold text-gray-900">${estimatedCost}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">RAMQ application</span>
+                      <span className="font-semibold text-success">Free</span>
+                    </div>
+                    <div className="border-t pt-3 flex justify-between">
+                      <span className="font-semibold text-gray-900">Total Coverage Cost</span>
+                      <span className="font-bold text-lg text-gray-900">${estimatedCost}</span>
+                    </div>
+                  </>
+                )}
               </div>
               <div className="mt-4 p-3 bg-success/10 rounded-lg">
                 <p className="text-sm text-success font-medium">
-                  Savings: ${5200 - estimatedCost} vs. average uninsured medical bill
+                  {assessmentData.immigrationStatus === 'visitor' || assessmentData.immigrationStatus === 'study_permit' 
+                    ? `Coverage protects against $5,200+ average medical emergency costs`
+                    : `Savings: $${5200 - estimatedCost} vs. average uninsured medical bill`
+                  }
                 </p>
               </div>
             </div>

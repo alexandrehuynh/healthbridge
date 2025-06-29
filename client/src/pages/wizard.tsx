@@ -36,7 +36,8 @@ export default function Wizard() {
       
       const hasBilateralAgreement = bilateralCountries.includes(data.countryOfOrigin);
       
-      if (hasBilateralAgreement) {
+      // Only bilateral magic for RAMQ-eligible statuses (permanent residents)
+      if (hasBilateralAgreement && data.immigrationStatus === 'permanent_resident') {
         // Store basic assessment data for bilateral success page
         const assessmentData = {
           countryOfOrigin: data.countryOfOrigin,
@@ -56,8 +57,17 @@ export default function Wizard() {
       // Store assessment data
       localStorage.setItem('assessmentData', JSON.stringify(data));
       
-      // Route to insurance options for non-bilateral countries
-      setLocation('/results');
+      // Smart routing based on immigration status
+      if (data.immigrationStatus === 'visitor' || data.immigrationStatus === 'study_permit') {
+        // Visitors and students go directly to insurance options (not RAMQ eligible)
+        setLocation('/results');
+      } else if (data.immigrationStatus === 'work_permit') {
+        // Work permit holders may be conditionally eligible - show both RAMQ info and insurance
+        setLocation('/results');
+      } else {
+        // Permanent residents go to full results with RAMQ timeline
+        setLocation('/results');
+      }
     } else {
       nextStep();
       // Scroll to top for next step
