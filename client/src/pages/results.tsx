@@ -80,6 +80,13 @@ export default function Results() {
     assessmentData.immigrationStatus
   ) : [];
 
+  // Set default selection to first provider when providers load
+  useEffect(() => {
+    if (insuranceProviders.length > 0 && !selectedInsurance) {
+      setSelectedInsurance(insuranceProviders[0].id);
+    }
+  }, [insuranceProviders, selectedInsurance]);
+
   const savePlan = () => {
     if (!assessmentData || !waitingPeriodCalculation) return;
     
