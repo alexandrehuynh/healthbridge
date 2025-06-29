@@ -18,9 +18,13 @@ export default function Results() {
 
   useEffect(() => {
     const savedData = localStorage.getItem('assessmentData');
+    console.log('Saved assessment data:', savedData);
     if (savedData) {
-      setAssessmentData(JSON.parse(savedData));
+      const parsedData = JSON.parse(savedData);
+      console.log('Parsed assessment data:', parsedData);
+      setAssessmentData(parsedData);
     } else {
+      console.log('No assessment data found, redirecting to wizard');
       // Redirect to wizard if no data found
       setLocation('/wizard');
     }
@@ -43,6 +47,12 @@ export default function Results() {
     : assessmentData?.arrivalDate 
     ? calculateWaitingPeriod(assessmentData.arrivalDate, 90) 
     : null;
+
+  console.log('Assessment data for calculation:', {
+    ramqSubmissionDate: assessmentData?.ramqSubmissionDate,
+    arrivalDate: assessmentData?.arrivalDate,
+    waitingPeriodCalculation
+  });
 
   const insuranceProviders = assessmentData ? getQuebecInsuranceProviders(
     assessmentData.familySize,

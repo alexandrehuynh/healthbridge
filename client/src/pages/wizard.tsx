@@ -55,10 +55,12 @@ export default function Wizard() {
             ramqSubmissionDate={data.ramqSubmissionDate}
             ramqCardReceived={data.ramqCardReceived}
             insuranceWithin5Days={data.insuranceWithin5Days}
+            arrivalDate={data.arrivalDate}
             onRAMQApplicationChange={(ramqApplicationSubmitted) => updateData({ ramqApplicationSubmitted })}
             onRAMQSubmissionDateChange={(ramqSubmissionDate) => updateData({ ramqSubmissionDate })}
             onRAMQCardReceivedChange={(ramqCardReceived) => updateData({ ramqCardReceived })}
             onInsuranceWithin5DaysChange={(insuranceWithin5Days) => updateData({ insuranceWithin5Days })}
+            onArrivalDateChange={(arrivalDate) => updateData({ arrivalDate })}
             countryOfOrigin={data.countryOfOrigin}
           />
         );

@@ -13,10 +13,12 @@ interface RAMQQuestionsProps {
   ramqSubmissionDate: string;
   ramqCardReceived: string;
   insuranceWithin5Days: string;
+  arrivalDate: string;
   onRAMQApplicationChange: (value: string) => void;
   onRAMQSubmissionDateChange: (value: string) => void;
   onRAMQCardReceivedChange: (value: string) => void;
   onInsuranceWithin5DaysChange: (value: string) => void;
+  onArrivalDateChange: (value: string) => void;
   countryOfOrigin: string;
 }
 
@@ -25,13 +27,16 @@ export default function RAMQQuestions({
   ramqSubmissionDate,
   ramqCardReceived,
   insuranceWithin5Days,
+  arrivalDate,
   onRAMQApplicationChange,
   onRAMQSubmissionDateChange,
   onRAMQCardReceivedChange,
   onInsuranceWithin5DaysChange,
+  onArrivalDateChange,
   countryOfOrigin
 }: RAMQQuestionsProps) {
   const selectedDate = ramqSubmissionDate ? new Date(ramqSubmissionDate + 'T00:00:00') : undefined;
+  const selectedArrivalDate = arrivalDate ? new Date(arrivalDate + 'T00:00:00') : undefined;
 
   // Check if country has social security agreement
   const socialSecurityCountries = [
