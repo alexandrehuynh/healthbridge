@@ -1,0 +1,194 @@
+<role>
+You are an expert React/TypeScript developer specializing in user flow optimization for maximum demo impact in hackathon applications.
+</role>
+
+<urgent_mission>
+🎯 **HACKATHON CRITICAL UX FIX**
+Implement immediate redirect logic for bilateral agreement countries to create instant "magic moment" during demo. This is the core differentiator that wins the hackathon.
+</urgent_mission>
+
+<current_problem>
+**Broken User Flow Logic:**
+- Users from bilateral agreement countries (France, etc.) have IMMEDIATE healthcare coverage
+- Current app forces them through irrelevant questions about arrival dates and RAMQ applications
+- This dilutes the "magic moment" and wastes demo time
+- Should redirect IMMEDIATELY after country selection for bilateral countries
+
+**Flow Issue:**
+Select France → "When did you arrive?" ← WRONG (irrelevant for immediate coverage)
+Select France → "RAMQ status?" ← WRONG (irrelevant for immediate coverage)
+Select France → Finally magic ← TOO LATE for demo impact
+</current_problem>
+
+<required_solution>
+**Perfect User Flow:**
+- **Bilateral Countries**: Country Selection → IMMEDIATE redirect to success page (skip all wizard steps)
+- **Non-Bilateral Countries**: Country Selection → Full wizard flow (arrival dates, RAMQ questions, insurance)
+
+**Demo Impact:**
+- Select France → BOOM! Instant magic in 2 clicks
+- Judge reaction: "Wait, that's it? They just get immediate coverage?"
+- Maximizes the "wow factor" of bilateral agreements feature
+</required_solution>
+
+<bilateral_countries_list>
+**Countries with Quebec Bilateral Healthcare Agreements (Immediate Coverage):**
+- france
+- belgium  
+- denmark
+- finland
+- greece
+- italy
+- luxembourg
+- netherlands
+- norway
+- portugal
+- sweden
+- romania
+
+**All other countries:** Continue through normal wizard flow with insurance recommendations
+</bilateral_countries_list>
+
+<implementation_tasks>
+**Task 1: Update Country Selection Logic**
+1. **Find the country selection component** (likely in wizard flow)
+2. **Add bilateral country detection** on country selection
+3. **Implement immediate redirect** for bilateral countries
+4. **Preserve existing flow** for non-bilateral countries
+
+**Task 2: Create Bilateral Success Page**
+1. **Create new page component** (e.g., `/pages/bilateral-success` or `/components/BilateralSuccess`)
+2. **Celebratory design** with success messaging
+3. **Country-specific content** (e.g., "France-Quebec Bilateral Agreement")
+4. **Next action buttons** for healthcare access
+
+**Task 3: Update Routing Logic**
+1. **Bypass all wizard steps** for bilateral countries
+2. **Maintain existing wizard flow** for non-bilateral countries
+3. **Handle navigation state** properly for both flows
+4. **Ensure back button** works correctly
+</implementation_tasks>
+
+<code_implementation_guide>
+**Country Selection Handler Update:**
+```javascript
+// In country selection component
+const handleCountrySelect = (selectedCountry) => {
+  // Define bilateral agreement countries
+  const bilateralCountries = [
+    'france', 'belgium', 'denmark', 'finland', 'greece', 
+    'italy', 'luxembourg', 'netherlands', 'norway', 
+    'portugal', 'sweden', 'romania'
+  ];
+  
+  // Store selected country
+  setSelectedCountry(selectedCountry);
+  
+  // Route based on bilateral agreement status
+  if (bilateralCountries.includes(selectedCountry.toLowerCase())) {
+    // IMMEDIATE redirect to success page - skip all wizard steps
+    router.push('/bilateral-success?country=' + selectedCountry);
+  } else {
+    // Continue to normal wizard flow (arrival date questions)
+    router.push('/wizard/arrival-date'); // or whatever the next step is
+  }
+};
+```
+
+**Bilateral Success Page Content:**
+```jsx
+// /pages/bilateral-success.tsx or similar
+export default function BilateralSuccess() {
+  const router = useRouter();
+  const { country } = router.query;
+  
+  return (
+    <div className="success-page">
+      <div className="celebration-header">
+        <h1>🎉 Excellent News!</h1>
+        <h2>Thanks to the {country}-Quebec bilateral agreement, your healthcare coverage is active immediately!</h2>
+      </div>
+      
+      <div className="benefits-list">
+        <div className="benefit">✅ No 3-month waiting period</div>
+        <div className="benefit">✅ No temporary insurance required</div>
+        <div className="benefit">✅ Start using Quebec healthcare today</div>
+        <div className="benefit">✅ Save $225+ on insurance costs</div>
+      </div>
+      
+      <div className="action-buttons">
+        <button className="primary-button">Find Healthcare Providers</button>
+        <button className="secondary-button">View Coverage Details</button>
+      </div>
+    </div>
+  );
+}
+```
+</code_implementation_guide>
+
+<files_to_search>
+**Look for these files/patterns:**
+- Country selection component (search for "country" or "select country")
+- Wizard flow components (search for "wizard" or "step")
+- Router/navigation logic (search for "router.push" or "navigate")
+- Page components directory (likely `/pages/` or `/src/pages/`)
+
+**Likely file locations:**
+- `/client/src/pages/wizard/` - Wizard step components
+- `/client/src/components/` - Country selection component  
+- `/client/src/` - Main routing logic
+- Look for files with "country", "wizard", "step" in the name
+</files_to_search>
+
+<success_criteria>
+**User Experience After Fix:**
+1. **User selects France** → Immediate redirect to success page (no additional questions)
+2. **User selects USA** → Continues through wizard (arrival date, RAMQ questions, insurance)
+3. **Success page shows** country-specific bilateral agreement messaging
+4. **Navigation works** correctly for both flows
+
+**Demo Impact:**
+- **Bilateral demo**: 2 clicks total (country → success)
+- **Magic moment**: Happens immediately, not after 4-5 screens
+- **Judge reaction**: "Wow, that bilateral agreement feature is actually powerful!"
+- **Competitive advantage**: Clear differentiation from other apps
+
+**Technical Validation:**
+- ✅ Bilateral countries bypass all wizard steps
+- ✅ Non-bilateral countries follow existing flow
+- ✅ Success page renders with correct country data
+- ✅ Navigation and routing work properly
+- ✅ No broken links or dead ends
+</success_criteria>
+
+<testing_steps>
+**Test Bilateral Flow:**
+1. Go to country selection
+2. Select "France" 
+3. Should immediately redirect to bilateral success page
+4. Success page should show "France-Quebec bilateral agreement"
+5. Action buttons should be functional
+
+**Test Non-Bilateral Flow:**
+1. Go to country selection  
+2. Select "United States"
+3. Should continue to arrival date questions
+4. Complete normal wizard flow
+5. Should reach insurance recommendations page
+
+**Test Navigation:**
+1. Verify back buttons work in both flows
+2. Verify success page doesn't break app navigation
+3. Test mobile responsiveness for demo
+</testing_steps>
+
+<critical_requirements>
+- **Conservative approach**: Don't break existing functionality
+- **Preserve wizard flow**: Keep intact for non-bilateral countries
+- **Mobile responsive**: Must work on mobile for demo
+- **Fast implementation**: This is hackathon-critical timing
+- **Clean routing**: No broken navigation or dead ends
+- **Error handling**: Graceful fallback if country detection fails
+
+**URGENT PRIORITY: This creates the "magic moment" that differentiates HealthBridge from every other hackathon project. Focus on immediate bilateral redirect above all else.**
+</critical_requirements>

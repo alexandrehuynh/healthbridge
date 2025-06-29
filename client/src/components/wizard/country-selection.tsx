@@ -2,6 +2,7 @@ import { MapPin, ExternalLink } from 'lucide-react';
 import { useEffect } from 'react';
 import CountrySelector from '@/components/ui/country-selector';
 import { useBilateralAgreement } from '@/hooks/use-bilateral-agreement';
+import { useLocation } from 'wouter';
 
 interface CountrySelectionProps {
   value: string;
@@ -9,7 +10,50 @@ interface CountrySelectionProps {
 }
 
 export default function CountrySelection({ value, onChange }: CountrySelectionProps) {
+  const [, setLocation] = useLocation();
   const bilateralStatus = useBilateralAgreement(value);
+  
+  // Bilateral agreement countries with immediate coverage
+  const bilateralCountries = [
+    'France', 'Belgium', 'Denmark', 'Finland', 'Greece', 
+    'Italy', 'Luxembourg', 'Netherlands', 'Norway', 
+    'Portugal', 'Sweden', 'Romania', 'Austria'
+  ];
+  
+  // Handle country selection with immediate routing for bilateral countries
+  const handleCountryChange = (selectedCountry: string) => {
+    onChange(selectedCountry);
+    
+    // IMMEDIATE redirect for bilateral agreement countries - the magic moment!
+    if (bilateralCountries.includes(selectedCountry)) {
+      // Store basic assessment data for bilateral success page
+      const assessmentData = {
+        countryOfOrigin: selectedCountry,
+        immigrationStatus: 'permanent_resident', // Default for bilateral flow
+        familySize: 1, // Default, can be updated later if needed
+        bilateralAgreement: true
+      };
+      localStorage.setItem('assessmentData', JSON.stringify(assessmentData));
+      
+      // Store bilateral agreement data
+      if (bilateralStatus.agreement) {
+        const agreementData = {
+          country: selectedCountry,
+          hasAgreement: bilateralStatus.agreement.hasAgreement,
+          waitingPeriodWaived: bilateralStatus.agreement.waitingPeriodWaived,
+          type: bilateralStatus.agreement.type,
+          notes: bilateralStatus.agreement.notes,
+          documentsRequired: bilateralStatus.agreement.documentsRequired
+        };
+        localStorage.setItem('bilateralAgreementStatus', JSON.stringify(agreementData));
+      }
+      
+      // BOOM! Instant magic - skip all wizard steps
+      setTimeout(() => {
+        setLocation('/bilateral-success');
+      }, 500); // Small delay for smooth UX
+    }
+  };
   
   // Update assessment data with bilateral agreement status when country changes
   useEffect(() => {
@@ -46,7 +90,7 @@ export default function CountrySelection({ value, onChange }: CountrySelectionPr
       <div className="max-w-2xl mx-auto px-4">
         <CountrySelector
           value={value}
-          onChange={onChange}
+          onChange={handleCountryChange}
           placeholder="Search for your country..."
           className="w-full"
         />

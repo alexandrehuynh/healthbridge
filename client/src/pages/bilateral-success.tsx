@@ -15,9 +15,9 @@ export default function BilateralSuccess() {
     const assessmentData = localStorage.getItem('assessmentData');
     const bilateralData = localStorage.getItem('bilateralAgreementStatus');
     
-    if (assessmentData && bilateralData) {
+    if (assessmentData) {
       const assessment = JSON.parse(assessmentData);
-      const bilateral = JSON.parse(bilateralData);
+      const bilateral = bilateralData ? JSON.parse(bilateralData) : null;
       setCountryData({ assessment, bilateral });
       
       // Calculate savings based on family size
