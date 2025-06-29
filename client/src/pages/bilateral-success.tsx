@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigateWithScroll } from '@/hooks/use-scroll-reset';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { CheckCircle, ExternalLink, Download, MapPin, Heart, DollarSign } from 'lucide-react';
+import { CheckCircle, ExternalLink, Heart, DollarSign } from 'lucide-react';
 import { useBilateralAgreement } from '@/hooks/use-bilateral-agreement';
 
 export default function BilateralSuccess() {
@@ -132,7 +132,6 @@ export default function BilateralSuccess() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center"
               >
-                <MapPin className="w-5 h-5 mr-2" />
                 Find Healthcare Providers
                 <ExternalLink className="w-4 h-4 ml-2" />
               </a>
@@ -150,7 +149,6 @@ export default function BilateralSuccess() {
                 rel="noopener noreferrer"
                 className="flex items-center justify-center"
               >
-                <Download className="w-5 h-5 mr-2" />
                 Learn About Your Coverage
                 <ExternalLink className="w-4 h-4 ml-2" />
               </a>
@@ -196,19 +194,22 @@ export default function BilateralSuccess() {
           <p className="text-gray-600 mb-4">
             Need insurance information for family members from other countries?
           </p>
-          <Button 
-            variant="outline" 
-            onClick={() => navigate('/results')}
-            className="mr-4"
-          >
-            View Insurance Options
-          </Button>
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate('/')}
-          >
-            Start Over
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <Button 
+              variant="outline" 
+              onClick={() => navigate('/results')}
+              className="h-12 px-6 text-base font-semibold border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
+            >
+              View Insurance Options
+            </Button>
+            <Button 
+              variant="outline"
+              onClick={() => navigate('/')}
+              className="h-12 px-6 text-base font-semibold border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400"
+            >
+              Start Over
+            </Button>
+          </div>
         </div>
       </div>
     </div>

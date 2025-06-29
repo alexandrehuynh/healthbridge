@@ -1,0 +1,230 @@
+<role>
+You are an expert React/TypeScript developer specializing in user experience optimization and interface polish for professional demo applications.
+</role>
+
+<urgent_mission>
+🎯 **UX POLISH FOR DEMO READINESS**
+Fix THREE critical UX issues with the bilateral agreement flow that make the app feel unpolished and unprofessional during hackathon demo.
+</urgent_mission>
+
+<current_ux_problems>
+**Problem 1: Premature Auto-Redirect (Critical UX Flaw)**
+- Currently: Selecting any bilateral agreement country immediately redirects before user presses "Next"
+- Issue: Users might select wrong country by accident and get stuck
+- Bad UX: No opportunity to review or change selection
+- Demo Impact: Looks buggy and uncontrolled
+
+**Problem 2: Invisible "Start Over" Button (Poor Accessibility)**
+- Currently: "Start Over" button barely visible until hover
+- Issue: Users can't find the button when they need it
+- Bad UX: Critical action hidden from users
+- Demo Impact: Judges might think navigation is broken
+
+**Problem 3: Icon Clutter (Poor Visual Design)**
+- Currently: Buttons have both left AND right icons
+- Issue: Creates visual noise and looks unprofessional  
+- Bad UX: Cluttered, inconsistent design language
+- Demo Impact: App looks amateurish to judges
+</current_ux_problems>
+
+<required_fixes>
+**Fix 1: Wait for "Next" Button Press**
+- **Current Behavior**: Auto-redirect on country selection
+- **Required Behavior**: Wait for user to press "Next" button
+- **Logic**: Store bilateral country status, redirect only when Next is clicked
+- **Benefit**: Users can review and change selection if needed
+
+**Fix 2: Make "Start Over" Button Prominent**
+- **Current Style**: Barely visible, hover-only styling
+- **Required Style**: Clear, professional button matching "View Insurance Options"
+- **Design**: Similar visual weight and styling as primary actions
+- **Benefit**: Users can easily restart the flow
+
+**Fix 3: Remove Left Icons, Keep Right Icons Only**
+- **Current Design**: Multiple icons per button (cluttered)
+- **Required Design**: Single right icon per button (clean)
+- **Icons to Remove**: All left icons (location pin, download, etc.)
+- **Icons to Keep**: All right icons (external link arrows)
+- **Benefit**: Clean, professional button design
+</required_fixes>
+
+<implementation_tasks>
+**Task 1: Fix Premature Auto-Redirect**
+1. **Find country selection logic** that currently auto-redirects
+2. **Remove immediate redirect** on country selection
+3. **Add bilateral country detection** to "Next" button logic
+4. **Implement conditional routing** when Next is pressed:
+   - Bilateral country + Next button → Success page
+   - Non-bilateral country + Next button → Wizard flow
+
+**Task 2: Improve "Start Over" Button Styling**
+1. **Find "Start Over" button component**
+2. **Update styling** to match "View Insurance Options" button
+3. **Ensure consistent visual hierarchy** with other action buttons
+4. **Test visibility** without hover requirement
+
+**Task 3: Clean Up Button Icons**
+1. **Find all buttons** with multiple icons
+2. **Remove left icons** (location pins, download icons, etc.)
+3. **Keep right icons** (external link arrows, navigation arrows)
+4. **Ensure consistent icon usage** across all buttons
+</implementation_tasks>
+
+<code_implementation_guide>
+**Fix 1: Updated Country Selection + Next Button Logic**
+```javascript
+// In country selection component
+const [selectedCountry, setSelectedCountry] = useState('');
+const [isBilateralCountry, setIsBilateralCountry] = useState(false);
+
+const bilateralCountries = [
+  'france', 'belgium', 'denmark', 'finland', 'greece', 
+  'italy', 'luxembourg', 'netherlands', 'norway', 
+  'portugal', 'sweden', 'romania'
+];
+
+// Handle country selection (NO auto-redirect)
+const handleCountrySelect = (country) => {
+  setSelectedCountry(country);
+  setIsBilateralCountry(bilateralCountries.includes(country.toLowerCase()));
+  // DO NOT redirect here - wait for Next button
+};
+
+// Handle Next button press (WITH conditional routing)
+const handleNext = () => {
+  if (isBilateralCountry) {
+    // Redirect to bilateral success page
+    router.push(`/bilateral-success?country=${selectedCountry}`);
+  } else {
+    // Continue to normal wizard flow
+    router.push('/wizard/arrival-date');
+  }
+};
+```
+
+**Fix 2: Start Over Button Styling**
+```css
+/* Update Start Over button to match View Insurance Options */
+.start-over-button {
+  /* Remove current invisible/hover-only styling */
+  /* Add consistent button styling */
+  background: white;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.start-over-button:hover {
+  border-color: #9ca3af;
+  background: #f9fafb;
+}
+
+/* Make it as prominent as View Insurance Options */
+.action-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.action-buttons button {
+  /* Ensure consistent sizing and styling */
+  min-height: 48px;
+  font-size: 16px;
+}
+```
+
+**Fix 3: Clean Button Icons**
+```jsx
+// BEFORE (cluttered with multiple icons)
+<button>
+  <LocationIcon /> {/* REMOVE THIS */}
+  Find Healthcare Providers
+  <ExternalLinkIcon /> {/* KEEP THIS */}
+</button>
+
+<button>
+  <DownloadIcon /> {/* REMOVE THIS */}
+  Learn About Your Coverage  
+  <ExternalLinkIcon /> {/* KEEP THIS */}
+</button>
+
+// AFTER (clean with single icons)
+<button>
+  Find Healthcare Providers
+  <ExternalLinkIcon />
+</button>
+
+<button>
+  Learn About Your Coverage
+  <ExternalLinkIcon />
+</button>
+```
+</code_implementation_guide>
+
+<success_criteria>
+**User Experience After Fixes:**
+1. **Country Selection**: User can select country, review choice, then press Next
+2. **Bilateral Flow**: Next button intelligently routes based on country type
+3. **Start Over Button**: Clearly visible and accessible to users
+4. **Button Design**: Clean, professional icons without visual clutter
+
+**Demo Impact:**
+- **Controlled Flow**: Judges see deliberate, user-controlled navigation
+- **Professional Polish**: Buttons look clean and well-designed
+- **Accessible Actions**: All navigation options clearly visible
+- **Confident Demo**: No accidental redirects or hidden buttons
+
+**Technical Validation:**
+- ✅ No auto-redirect on country selection
+- ✅ Next button correctly routes bilateral vs non-bilateral
+- ✅ Start Over button clearly visible without hover
+- ✅ All buttons have single, consistent icon placement
+- ✅ User can change country selection before proceeding
+</success_criteria>
+
+<testing_steps>
+**Test Country Selection Flow:**
+1. Select bilateral country (France/Belgium/etc.) → Should NOT auto-redirect
+2. Change to USA → Should allow country change
+3. Change back to bilateral country → Should allow multiple changes
+4. Press Next → Should redirect to bilateral success page
+
+**Test Button Visibility:**
+1. Check Start Over button visibility without hover
+2. Verify button matches styling of other action buttons
+3. Test button accessibility and click targets
+
+**Test Icon Cleanup:**
+1. Verify buttons have only right icons
+2. Check for consistent icon usage across app
+3. Ensure clean, uncluttered button appearance
+
+**Test Non-Bilateral Flow:**
+1. Select USA → No auto-redirect
+2. Press Next → Should continue to wizard
+3. Complete normal flow → Should reach insurance page
+</testing_steps>
+
+<critical_requirements>
+**Priority Order:**
+1. **Fix auto-redirect** (highest priority - affects core user control)
+2. **Fix Start Over styling** (medium priority - affects navigation)  
+3. **Clean up icons** (low priority - affects visual polish)
+
+**Quality Standards:**
+- **User Control**: Users must have control over their actions
+- **Visual Consistency**: All buttons should follow same design pattern
+- **Accessibility**: All actions must be clearly visible and accessible
+- **Demo Ready**: Flow must feel controlled and professional
+
+**Don't Break:**
+- **Existing bilateral logic** (keep the smart routing)
+- **Insurance flow** (preserve for non-bilateral countries)
+- **Navigation state** (ensure proper routing works)
+
+**These fixes transform the app from feeling buggy/unpolished to professional and demo-ready.**
+</critical_requirements>

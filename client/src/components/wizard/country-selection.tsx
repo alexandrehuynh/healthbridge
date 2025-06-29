@@ -20,38 +20,21 @@ export default function CountrySelection({ value, onChange }: CountrySelectionPr
     'Portugal', 'Sweden', 'Romania', 'Austria'
   ];
   
-  // Handle country selection with immediate routing for bilateral countries
+  // Handle country selection - NO auto-redirect, wait for Next button
   const handleCountryChange = (selectedCountry: string) => {
     onChange(selectedCountry);
     
-    // IMMEDIATE redirect for bilateral agreement countries - the magic moment!
-    if (bilateralCountries.includes(selectedCountry)) {
-      // Store basic assessment data for bilateral success page
-      const assessmentData = {
-        countryOfOrigin: selectedCountry,
-        immigrationStatus: 'permanent_resident', // Default for bilateral flow
-        familySize: 1, // Default, can be updated later if needed
-        bilateralAgreement: true
+    // Store bilateral agreement data but DON'T redirect yet
+    if (bilateralStatus.agreement) {
+      const agreementData = {
+        country: selectedCountry,
+        hasAgreement: bilateralStatus.agreement.hasAgreement,
+        waitingPeriodWaived: bilateralStatus.agreement.waitingPeriodWaived,
+        type: bilateralStatus.agreement.type,
+        notes: bilateralStatus.agreement.notes,
+        documentsRequired: bilateralStatus.agreement.documentsRequired
       };
-      localStorage.setItem('assessmentData', JSON.stringify(assessmentData));
-      
-      // Store bilateral agreement data
-      if (bilateralStatus.agreement) {
-        const agreementData = {
-          country: selectedCountry,
-          hasAgreement: bilateralStatus.agreement.hasAgreement,
-          waitingPeriodWaived: bilateralStatus.agreement.waitingPeriodWaived,
-          type: bilateralStatus.agreement.type,
-          notes: bilateralStatus.agreement.notes,
-          documentsRequired: bilateralStatus.agreement.documentsRequired
-        };
-        localStorage.setItem('bilateralAgreementStatus', JSON.stringify(agreementData));
-      }
-      
-      // BOOM! Instant magic - skip all wizard steps
-      setTimeout(() => {
-        setLocation('/bilateral-success');
-      }, 500); // Small delay for smooth UX
+      localStorage.setItem('bilateralAgreementStatus', JSON.stringify(agreementData));
     }
   };
   

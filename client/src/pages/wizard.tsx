@@ -26,26 +26,38 @@ export default function Wizard() {
   } = useAssessment();
 
   const handleNext = () => {
+    // Check for bilateral agreement magic moment after country selection (step 2)
+    if (currentStep === 2 && data.countryOfOrigin) {
+      const bilateralCountries = [
+        'France', 'Belgium', 'Denmark', 'Finland', 'Greece', 
+        'Italy', 'Luxembourg', 'Netherlands', 'Norway', 
+        'Portugal', 'Sweden', 'Romania', 'Austria'
+      ];
+      
+      const hasBilateralAgreement = bilateralCountries.includes(data.countryOfOrigin);
+      
+      if (hasBilateralAgreement) {
+        // Store basic assessment data for bilateral success page
+        const assessmentData = {
+          countryOfOrigin: data.countryOfOrigin,
+          immigrationStatus: data.immigrationStatus,
+          familySize: 1, // Default for bilateral flow
+          bilateralAgreement: true
+        };
+        localStorage.setItem('assessmentData', JSON.stringify(assessmentData));
+        
+        // BOOM! Instant magic - route to bilateral success page
+        setLocation('/bilateral-success');
+        return;
+      }
+    }
+    
     if (currentStep === totalSteps) {
       // Store assessment data
       localStorage.setItem('assessmentData', JSON.stringify(data));
       
-      // Smart routing based on bilateral agreements
-      const bilateralCountries = [
-        'France', 'Belgium', 'Denmark', 'Finland', 'Greece', 
-        'Luxembourg', 'Norway', 'Portugal', 'Sweden', 'Austria'
-      ];
-      
-      const userCountry = data.countryOfOrigin;
-      const hasBilateralAgreement = bilateralCountries.includes(userCountry);
-      
-      if (hasBilateralAgreement) {
-        // Route to bilateral success page - the magic moment!
-        setLocation('/bilateral-success');
-      } else {
-        // Route to insurance options for non-bilateral countries
-        setLocation('/results');
-      }
+      // Route to insurance options for non-bilateral countries
+      setLocation('/results');
     } else {
       nextStep();
       // Scroll to top for next step
