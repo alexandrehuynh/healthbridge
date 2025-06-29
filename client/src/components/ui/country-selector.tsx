@@ -395,7 +395,7 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
                         value === country.id && "bg-primary/20"
                       )}
                     >
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center space-x-3 flex-1">
                         <span className="font-medium text-gray-900">
                           {country.name}
                         </span>
@@ -406,13 +406,18 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
                       
                       <div className="flex items-center space-x-2">
                         {hasFullAgreement && (
-                          <Badge variant="secondary" className="bg-green-100 text-green-800 border-green-200 text-xs">
-                            No wait
+                          <Badge className="bg-green-100 text-green-800 border-green-300 text-xs font-semibold px-2 py-1">
+                            ✅ Immediate Coverage
                           </Badge>
                         )}
                         {hasPartialAgreement && (
-                          <Badge variant="secondary" className="bg-yellow-100 text-yellow-800 border-yellow-200 text-xs">
-                            Partial
+                          <Badge className="bg-yellow-100 text-yellow-800 border-yellow-300 text-xs font-semibold px-2 py-1">
+                            🟡 Partial Agreement
+                          </Badge>
+                        )}
+                        {!hasFullAgreement && !hasPartialAgreement && (
+                          <Badge className="bg-blue-100 text-blue-800 border-blue-300 text-xs font-semibold px-2 py-1">
+                            ⏱️ Insurance Recommended
                           </Badge>
                         )}
                       </div>

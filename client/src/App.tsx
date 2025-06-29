@@ -12,6 +12,7 @@ import Wizard from "@/pages/wizard";
 import Results from "@/pages/results";
 import Resources from "@/pages/resources";
 import Help from "@/pages/help";
+import BilateralSuccess from "@/pages/bilateral-success";
 import Header from "@/components/shared/header";
 import Footer from "@/components/shared/footer";
 
@@ -37,6 +38,11 @@ function Router() {
             <Route path="/results">
               <ErrorBoundary>
                 <Results />
+              </ErrorBoundary>
+            </Route>
+            <Route path="/bilateral-success">
+              <ErrorBoundary>
+                <BilateralSuccess />
               </ErrorBoundary>
             </Route>
             <Route path="/resources" component={Resources} />

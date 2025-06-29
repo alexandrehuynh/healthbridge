@@ -27,9 +27,25 @@ export default function Wizard() {
 
   const handleNext = () => {
     if (currentStep === totalSteps) {
-      // Store assessment data and navigate to results
+      // Store assessment data
       localStorage.setItem('assessmentData', JSON.stringify(data));
-      setLocation('/results');
+      
+      // Smart routing based on bilateral agreements
+      const bilateralCountries = [
+        'France', 'Belgium', 'Denmark', 'Finland', 'Greece', 
+        'Luxembourg', 'Norway', 'Portugal', 'Sweden', 'Austria'
+      ];
+      
+      const userCountry = data.countryOfOrigin;
+      const hasBilateralAgreement = bilateralCountries.includes(userCountry);
+      
+      if (hasBilateralAgreement) {
+        // Route to bilateral success page - the magic moment!
+        setLocation('/bilateral-success');
+      } else {
+        // Route to insurance options for non-bilateral countries
+        setLocation('/results');
+      }
     } else {
       nextStep();
       // Scroll to top for next step
