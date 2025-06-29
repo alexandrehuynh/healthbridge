@@ -7,6 +7,7 @@ import { CalendarIcon, FileText, Shield, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
 import { cn } from '@/lib/utils';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useState } from 'react';
 
 interface RAMQQuestionsProps {
   ramqApplicationSubmitted: string;
@@ -35,6 +36,8 @@ export default function RAMQQuestions({
   onArrivalDateChange,
   countryOfOrigin
 }: RAMQQuestionsProps) {
+  const [arrivalCalendarOpen, setArrivalCalendarOpen] = useState(false);
+  const [submissionCalendarOpen, setSubmissionCalendarOpen] = useState(false);
   const selectedDate = ramqSubmissionDate ? new Date(ramqSubmissionDate + 'T00:00:00') : undefined;
   const selectedArrivalDate = arrivalDate ? new Date(arrivalDate + 'T00:00:00') : undefined;
 
@@ -69,7 +72,7 @@ export default function RAMQQuestions({
             <p className="text-sm text-gray-600">
               Your arrival date helps us calculate your waiting period timeline and insurance needs.
             </p>
-            <Popover>
+            <Popover open={arrivalCalendarOpen} onOpenChange={setArrivalCalendarOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant="outline"
@@ -92,6 +95,7 @@ export default function RAMQQuestions({
                       const month = String(date.getMonth() + 1).padStart(2, '0');
                       const day = String(date.getDate()).padStart(2, '0');
                       onArrivalDateChange(`${year}-${month}-${day}`);
+                      setArrivalCalendarOpen(false);
                     }
                   }}
                   fromYear={2020}
@@ -109,6 +113,7 @@ export default function RAMQQuestions({
                       const month = String(today.getMonth() + 1).padStart(2, '0');
                       const day = String(today.getDate()).padStart(2, '0');
                       onArrivalDateChange(`${year}-${month}-${day}`);
+                      setArrivalCalendarOpen(false);
                     }}
                     className="w-full"
                   >
@@ -166,7 +171,7 @@ export default function RAMQQuestions({
               <p className="text-sm text-gray-600">
                 This date determines when your 3-month waiting period ends and RAMQ coverage begins.
               </p>
-              <Popover>
+              <Popover open={submissionCalendarOpen} onOpenChange={setSubmissionCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
@@ -189,6 +194,7 @@ export default function RAMQQuestions({
                         const month = String(date.getMonth() + 1).padStart(2, '0');
                         const day = String(date.getDate()).padStart(2, '0');
                         onRAMQSubmissionDateChange(`${year}-${month}-${day}`);
+                        setSubmissionCalendarOpen(false);
                       }
                     }}
                     fromYear={2020}
@@ -197,18 +203,21 @@ export default function RAMQQuestions({
                     className="rounded-md"
                   />
                   <div className="p-3 border-t">
-                    <button
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => {
                         const today = new Date();
                         const year = today.getFullYear();
                         const month = String(today.getMonth() + 1).padStart(2, '0');
                         const day = String(today.getDate()).padStart(2, '0');
                         onRAMQSubmissionDateChange(`${year}-${month}-${day}`);
+                        setSubmissionCalendarOpen(false);
                       }}
-                      className="text-primary hover:text-primary/80 underline text-sm font-medium"
+                      className="w-full"
                     >
                       Today
-                    </button>
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>

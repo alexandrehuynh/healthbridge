@@ -1,0 +1,245 @@
+<role>
+You are an expert React developer and UX problem solver specializing in critical demo fixes for hackathon presentations.
+</role>
+
+<urgent_mission>
+🚨 **HACKATHON DEMO EMERGENCY** 🚨
+Fix TWO critical demo-breaking issues in HealthBridge that will cause embarrassment during judge presentation:
+1. **Blue Cross insurance link STILL broken** (404 error during demo testing)
+2. **Calendar UX completely broken** (users can't close calendars after selecting dates)
+
+These fixes are URGENT - demo is imminent and these issues will overshadow the innovative bilateral agreements feature.
+</urgent_mission>
+
+<critical_issue_1>
+**🔗 BROKEN BLUE CROSS LINK FIX**
+
+**Problem:** Blue Cross insurance link returns 404 error when judges click during demo
+**Impact:** Instant credibility loss, demo failure
+**File:** `client/src/data/quebec-insurance-providers.json`
+
+**Exact Fix Required:**
+- **Find object with:** `"id": "blue-cross-quebec"`
+- **Current broken URL:** `"quoteUrl": "https://www.qc.bluecross.ca/"`
+- **Replace with working URL:** `"quoteUrl": "https://qc.bluecross.ca/travel-insurance"`
+
+**CRITICAL:** Only change this ONE quoteUrl field, leave all other data unchanged
+</critical_issue_1>
+
+<critical_issue_2>
+**📅 CALENDAR UX DISASTER FIX**
+
+**Problem:** Two date picker calendars have terrible UX that will confuse judges
+- Calendar 1: "When did you arrive in Quebec?" date picker
+- Calendar 2: "When did you submit your RAMQ application?" date picker
+
+**Current Broken Behavior:**
+- Calendars don't auto-close when user selects a date
+- No submit/enter button for users to close calendar
+- Users must guess to click outside to close
+- Inconsistent formatting between calendars
+- Unprofessional and confusing during demo
+
+**Required Fix:**
+- **Auto-close calendars** immediately when user selects a date
+- **Consistent styling** between both calendar instances
+- **Smooth user experience** - click date, calendar closes, date appears in input
+</critical_issue_2>
+
+<implementation_strategy>
+**Step 1: Fix Blue Cross Link (2 minutes)**
+1. Open `client/src/data/quebec-insurance-providers.json`
+2. Find the Blue Cross Quebec provider object
+3. Replace the broken quoteUrl with working URL
+4. Save file and verify JSON syntax is valid
+
+**Step 2: Find Calendar Components (5 minutes)**
+Search these locations for date picker components:
+- `client/src/components/` (look for DatePicker, Calendar components)
+- `client/src/pages/wizard/` (wizard step components)
+- `client/src/hooks/` (date-related hooks)
+- Search for files containing: "arrive", "RAMQ", "date", "calendar"
+
+**Step 3: Fix Calendar Auto-Close Behavior (10 minutes)**
+Look for patterns like:
+```javascript
+// Current broken pattern
+<DatePicker 
+  selected={date}
+  onChange={setDate} // No auto-close
+/>
+
+// Fix with auto-close
+<DatePicker
+  selected={date} 
+  onChange={(date) => {
+    setDate(date);
+    setCalendarOpen(false); // Auto-close
+  }}
+  shouldCloseOnSelect={true}
+/>
+```
+</implementation_strategy>
+
+<technical_requirements>
+**Calendar Fix Specifications:**
+
+**Auto-Close Behavior:**
+- User clicks calendar → calendar opens
+- User selects date → calendar IMMEDIATELY closes
+- Selected date appears in input field
+- No manual closing required
+
+**Consistency Requirements:**
+- Both calendars work identically
+- Same styling and behavior
+- Same auto-close functionality
+- Professional appearance
+
+**Common Calendar Libraries to Look For:**
+- react-datepicker
+- @mui/x-date-pickers
+- react-day-picker
+- Custom date components
+
+**Typical Auto-Close Implementation:**
+```javascript
+const handleDateSelect = (selectedDate) => {
+  setDate(selectedDate);
+  setIsCalendarOpen(false); // Critical: auto-close
+  // Update parent component if needed
+  if (onDateChange) onDateChange(selectedDate);
+};
+```
+</technical_requirements>
+
+<file_search_strategy>
+**Find Calendar Components by Searching For:**
+
+**Text Content:**
+- "When did you arrive in Quebec"
+- "When did you submit your RAMQ application"
+- "arrival date"
+- "RAMQ application date"
+
+**Component Patterns:**
+- `<DatePicker`
+- `<Calendar`
+- `useState` with date values
+- `onChange` handlers for dates
+- Calendar open/close state management
+
+**File Extensions to Check:**
+- `.tsx` (TypeScript React components)
+- `.jsx` (JavaScript React components)
+- `.ts` (TypeScript hooks/utilities)
+</file_search_strategy>
+
+<testing_verification>
+**Critical Testing After Fixes:**
+
+**Blue Cross Link Test:**
+1. Navigate to insurance recommendations page
+2. Click Blue Cross "Get Quote" button
+3. ✅ Verify: Opens working insurance page (not 404)
+4. ✅ Verify: Page loads Blue Cross travel insurance content
+
+**Calendar UX Test:**
+1. Navigate to arrival date question
+2. Click calendar icon → calendar opens
+3. Click any date → ✅ calendar IMMEDIATELY closes
+4. ✅ Verify: Selected date appears in input field
+5. Repeat for RAMQ application date calendar
+6. ✅ Verify: Both calendars behave identically
+
+**Demo Readiness Test:**
+- Complete entire wizard flow smoothly
+- All date selections work without confusion
+- No broken links when clicking insurance providers
+- Professional, polished user experience
+</testing_verification>
+
+<success_criteria>
+**Fix Succeeds When:**
+
+**Blue Cross Fix:**
+- ✅ Blue Cross link opens working insurance page
+- ✅ No 404 errors during demo
+- ✅ JSON file syntax remains valid
+- ✅ All other insurance links still work
+
+**Calendar Fix:**
+- ✅ Both calendars auto-close on date selection
+- ✅ Selected dates appear in input fields immediately
+- ✅ Consistent styling between both calendars
+- ✅ Intuitive user experience - no guessing required
+- ✅ Professional appearance during demo
+
+**Overall Demo Readiness:**
+- ✅ Judges can interact smoothly with all features
+- ✅ No embarrassing UX failures
+- ✅ Focus stays on bilateral agreements innovation
+- ✅ Confidence during presentation instead of apologies
+</success_criteria>
+
+<conservative_approach>
+**IMPORTANT: Don't Break Anything**
+- Only fix the specific broken functionality
+- Don't redesign or add new features
+- Preserve all existing data and styling
+- Don't modify any working components
+- Maintain current component structure
+- Focus on fixing, not improving
+
+**If Calendar Components Are Complex:**
+- Start with minimal changes for auto-close
+- Don't rewrite entire calendar systems
+- Add `shouldCloseOnSelect={true}` if available
+- Or add simple `setOpen(false)` in onChange handlers
+</conservative_approach>
+
+<output_format>
+Provide after completion:
+
+1. **Blue Cross Fix Confirmation**
+   - Old URL vs New URL
+   - JSON validation status
+   - Link testing result
+
+2. **Calendar Fix Details**
+   - Which files were modified
+   - What changes were made for auto-close
+   - Testing results for both calendars
+
+3. **Demo Readiness Report**
+   - All fixes tested and working
+   - Any remaining issues or limitations
+   - Confidence level for demo presentation
+
+4. **File Change Summary**
+   - List of all files modified
+   - Specific changes made to each file
+</output_format>
+
+<constraints>
+- Must complete both fixes within 15 minutes
+- Cannot break any existing functionality
+- Must maintain professional appearance
+- Cannot introduce new dependencies
+- Focus on working over perfect
+- Demo-ready is the only success metric that matters
+</constraints>
+
+<hackathon_context>
+**Why This Is Make-or-Break:**
+- Broken insurance links = judges lose confidence immediately
+- Confusing calendar UX = judges struggle to use app
+- Basic interaction failures overshadow brilliant innovation
+- Bilateral agreements feature can't shine if foundation is broken
+
+**Success Impact:**
+- Professional, polished demo experience
+- Judges focus on innovation instead of bugs
+- Confidence throughout presentation
+- Winning hackathon impression
+</hackathon_context>
