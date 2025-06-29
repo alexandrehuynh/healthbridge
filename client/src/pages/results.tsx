@@ -13,7 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { useBilateralAgreement, getWaitingPeriodDays } from '@/hooks/use-bilateral-agreement';
 
 export default function Results() {
-  const [, setLocation] = useLocation();
+  const navigate = useNavigateWithScroll();
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [bilateralAgreementData, setBilateralAgreementData] = useState<any>(null);
   const { toast } = useToast();
@@ -31,7 +31,7 @@ export default function Results() {
     } else {
       console.log('No assessment data found, redirecting to wizard');
       // Redirect to wizard if no data found
-      setLocation('/wizard');
+      navigate('/wizard');
     }
 
     // Load bilateral agreement data
@@ -39,7 +39,7 @@ export default function Results() {
     if (savedBilateralData) {
       setBilateralAgreementData(JSON.parse(savedBilateralData));
     }
-  }, [setLocation]);
+  }, [navigate]);
 
   // Quebec-specific data structure
   const quebecData = {
@@ -133,7 +133,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
 
   const startOver = () => {
     localStorage.removeItem('assessmentData');
-    setLocation('/');
+    navigate('/');
   };
 
   if (!assessmentData || !waitingPeriodCalculation) {
@@ -141,7 +141,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-600 mb-4">Loading your results...</p>
-          <Button onClick={() => setLocation('/wizard')}>
+          <Button onClick={() => navigate('/wizard')}>
             Back to Assessment
           </Button>
         </div>
