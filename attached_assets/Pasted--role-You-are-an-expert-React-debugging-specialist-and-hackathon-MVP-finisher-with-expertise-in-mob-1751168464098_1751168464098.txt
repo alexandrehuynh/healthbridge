@@ -1,0 +1,222 @@
+<role>
+You are an expert React debugging specialist and hackathon MVP finisher with expertise in mobile-responsive design, error handling, and demo-ready polish. Your mission is to identify and fix demo-breaking issues that could cost us the hackathon win.
+</role>
+
+<urgent_context>
+🏆 **HACKATHON CRITICAL MISSION** 🏆
+- Project: HealthBridge - Quebec healthcare navigation for newcomers
+- Current Status: 74% complete with winning innovation
+- Timeline: URGENT - Demo presentation imminent
+- Goal: Fix Priority 1 demo-breaking issues to secure hackathon victory
+- Core Innovation: Bilateral agreements system (instant country → healthcare waiting period guidance)
+</urgent_context>
+
+<technical_stack>
+- **Frontend**: React 18 + TypeScript, shadcn/ui components, Tailwind CSS
+- **Routing**: Wouter (lightweight routing)
+- **State**: localStorage for assessment data persistence
+- **Architecture**: Client-side app with JSON data files, no backend complexity
+- **Key Feature**: Quebec bilateral agreement checker (our competitive advantage)
+</technical_stack>
+
+<priority_1_demo_breaking_issues>
+**🚨 MUST FIX - These Will Break Our Demo:**
+
+1. **Error Handling Gaps**
+   - App crashes on unknown countries or missing data
+   - No graceful fallbacks when bilateral agreement data missing
+   - Console errors visible during demo
+   - Files: `client/src/hooks/use-bilateral-agreement.tsx`, error boundaries needed
+
+2. **Mobile Responsiveness Failures**
+   - Judges WILL test on phones - this must be flawless
+   - Country selector not touch-friendly
+   - Results page not properly responsive
+   - Text too small or buttons too small for mobile
+   - Files: All wizard components, results page layout
+
+3. **Insurance Provider Links Broken**
+   - External links in `client/src/data/quebec-insurance-providers.json` may be dead
+   - Broken links during demo = instant credibility loss
+   - Need verification and fallback handling
+   - File: `client/src/data/quebec-insurance-providers.json`
+
+4. **Bilateral Agreement Integration Issues**
+   - Country selection not triggering instant feedback
+   - Agreement status not displaying correctly
+   - Missing visual indicators (🟢🟡🔴) for agreement types
+   - Our "magic moment" must be bulletproof
+   - Files: `client/src/components/wizard/country-selection.tsx`, `client/src/pages/results.tsx`
+
+5. **Missing Loading States**
+   - App feels unpolished without loading indicators
+   - Instant transitions feel broken to users
+   - Need loading states for country selection, agreement checking
+   - Files: All components that process data
+
+6. **Edge Case Handling**
+   - Unknown countries break the flow
+   - Empty selections cause errors
+   - Invalid data crashes components
+   - Demo scenarios must handle ALL edge cases gracefully
+</priority_1_demo_breaking_issues>
+
+<critical_test_scenarios>
+**Demo-Critical Countries for Testing:**
+- **France**: Full agreement → 🟢 "No waiting period" (must work perfectly)
+- **USA**: No agreement → 🔴 "3-month waiting period" (must be clear)
+- **Germany**: Partial agreement → 🟡 "Case-by-case evaluation" (must handle complexity)
+- **Unknown/Typo**: Edge case → Must not crash, graceful fallback
+
+**Mobile Testing Requirements:**
+- iPhone/Android portrait and landscape
+- Touch-friendly country selection
+- Readable text without zooming
+- Easy navigation between wizard steps
+- Results page must scroll properly on mobile
+</critical_test_scenarios>
+
+<implementation_strategy>
+**Fix Order (Complete Each Before Moving to Next):**
+
+**Step 1: Error Handling Foundation**
+- Add try-catch blocks in bilateral agreement hook
+- Implement error boundaries for critical components
+- Add fallback UI for missing data scenarios
+- Test with invalid countries and empty selections
+
+**Step 2: Mobile Responsiveness Audit**
+- Test entire app on mobile viewport (375px width)
+- Fix touch targets, font sizes, spacing
+- Ensure wizard flows smoothly on mobile
+- Verify results page is fully usable on phones
+
+**Step 3: Link Verification & Fixes**
+- Check all insurance provider URLs in JSON file
+- Replace broken links with working alternatives
+- Add error handling for external link failures
+- Test link opening behavior on mobile
+
+**Step 4: Bilateral Agreement Polish**
+- Ensure instant visual feedback on country selection
+- Verify agreement status colors and messages
+- Test the "magic moment" with all critical countries
+- Add loading states during agreement checking
+
+**Step 5: Loading States & Polish**
+- Add loading spinners for data processing
+- Smooth transitions between wizard steps
+- Professional loading states that enhance UX
+- Remove any jarring instant state changes
+</implementation_strategy>
+
+<critical_files_focus>
+**Priority Files to Debug & Fix:**
+
+1. **`client/src/hooks/use-bilateral-agreement.tsx`**
+   - Core bilateral agreement logic
+   - Add error handling and fallbacks
+   - Ensure consistent hook behavior
+
+2. **`client/src/components/wizard/country-selection.tsx`**
+   - Country selection trigger point
+   - Mobile responsiveness critical
+   - Must handle unknown countries gracefully
+
+3. **`client/src/pages/results.tsx`**
+   - Where bilateral agreement status displays
+   - Mobile layout must be perfect
+   - Loading states needed
+
+4. **`client/src/data/quebec-insurance-providers.json`**
+   - Verify all external links work
+   - Replace broken links
+   - Add fallback provider data
+
+5. **All Wizard Components**
+   - Mobile responsiveness across the flow
+   - Error handling consistency
+   - Loading state implementation
+</critical_files_focus>
+
+<success_verification>
+**Demo Readiness Checklist (Test These Exact Scenarios):**
+
+✅ **Error Handling Test:**
+- Type random country name → No crashes, graceful fallback
+- Leave country empty → Clear error message, app continues
+- Broken internet → Offline message, no app failure
+
+✅ **Mobile Perfect Test:**
+- Complete entire wizard on 375px mobile viewport
+- All text readable without zooming
+- All buttons easily tappable
+- Results page scrolls smoothly
+
+✅ **Bilateral Agreement Magic Test:**
+- Select "France" → Instant 🟢 "No waiting period" feedback
+- Select "USA" → Instant 🔴 "3-month waiting" feedback  
+- Select "Germany" → Instant 🟡 "Case-by-case" feedback
+- Visual feedback appears immediately, no delays
+
+✅ **Insurance Links Test:**
+- Click 3-5 insurance provider links → All open properly
+- No broken links in demo
+- Mobile-friendly link opening
+
+✅ **Loading States Test:**
+- Smooth transitions between steps
+- Loading indicators where appropriate
+- No jarring instant changes
+
+✅ **Edge Cases Test:**
+- Unknown country handling
+- Empty form submissions
+- Back/forward navigation
+- Browser refresh maintains state
+</success_verification>
+
+<demo_focus_boundaries>
+**STAY FOCUSED - Do NOT Work On:**
+- Complex new features
+- Major UI redesigns  
+- Backend integrations
+- Advanced analytics
+- Non-critical optimizations
+- Scope creep features
+
+**ONLY Fix Priority 1 Issues That Could Break Demo**
+</demo_focus_boundaries>
+
+<output_requirements>
+For each fix, provide:
+1. **Problem Identified**: Specific issue found
+2. **Fix Implemented**: Exact changes made
+3. **Test Verification**: How to verify it works
+4. **Mobile Check**: Confirmed mobile compatibility
+5. **Error Handling**: Edge cases now handled
+
+**Final Deliverable**: Demo-ready app that works flawlessly on mobile with bulletproof bilateral agreement feature and no broken links or crashes.
+</output_requirements>
+
+<constraints>
+- Must maintain existing functionality while fixing issues
+- Cannot break current bilateral agreement system
+- Must work on mobile devices (judges will test this)
+- Cannot introduce new dependencies or complexity
+- Must handle all edge cases gracefully
+- Every fix must be tested and verified
+- Focus only on demo-breaking issues, ignore nice-to-haves
+</constraints>
+
+<hackathon_winning_criteria>
+Your fixes succeed when:
+- ✅ Judges can use app on mobile without any issues
+- ✅ Bilateral agreement "magic moment" works perfectly every time
+- ✅ No crashes, errors, or broken links during demo
+- ✅ Professional loading states and error handling
+- ✅ Edge cases handled gracefully without confusion
+- ✅ App feels polished and demo-ready, not like a buggy prototype
+
+**Remember: We're 74% to a winning hackathon project. These fixes are the final 26% that secure victory! 🏆**
+</hackathon_winning_criteria>

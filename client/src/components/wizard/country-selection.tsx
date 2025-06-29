@@ -31,19 +31,19 @@ export default function CountrySelection({ value, onChange }: CountrySelectionPr
 
   return (
     <div className="fade-in">
-      <div className="text-center mb-8">
-        <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-          <MapPin className="text-primary text-2xl" />
+      <div className="text-center mb-6 sm:mb-8 px-4">
+        <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+          <MapPin className="text-primary text-xl sm:text-2xl" />
         </div>
-        <h2 className="text-3xl font-bold text-gray-900 mb-4">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 leading-tight">
           What country are you from?
         </h2>
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
           Quebec has bilateral social security agreements with several countries that can eliminate your waiting period.
         </p>
       </div>
       
-      <div className="max-w-2xl mx-auto">
+      <div className="max-w-2xl mx-auto px-4">
         <CountrySelector
           value={value}
           onChange={onChange}

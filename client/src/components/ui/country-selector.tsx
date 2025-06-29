@@ -259,7 +259,7 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className={cn(
-              "pl-10 pr-10 h-12 text-base",
+              "pl-10 pr-12 h-12 sm:h-11 text-base sm:text-sm touch-manipulation",
               value && "bg-primary/5 border-primary"
             )}
             autoComplete="off"
@@ -269,8 +269,9 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
               <button
                 type="button"
                 onClick={handleClear}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
+                className="text-gray-400 hover:text-gray-600 transition-colors p-1 touch-manipulation"
                 tabIndex={-1}
+                aria-label="Clear selection"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -347,7 +348,7 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
                       type="button"
                       onClick={() => handleSelect(country.id)}
                       className={cn(
-                        "w-full px-4 py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors flex items-center justify-between group",
+                        "w-full px-4 py-4 sm:py-3 text-left hover:bg-gray-50 focus:bg-gray-50 focus:outline-none transition-colors flex items-center justify-between group touch-manipulation min-h-[48px]",
                         focusedIndex === index && "bg-primary/10",
                         value === country.id && "bg-primary/20"
                       )}
