@@ -3,7 +3,7 @@ import { CheckCircle, Bookmark, Share, RotateCcw, ExternalLink } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useNavigateWithScroll } from '@/hooks/use-scroll-reset';
-import { AssessmentData } from '@/types/assessment';
+import { AssessmentData, InsuranceProvider } from '@/types/assessment';
 import { getQuebecInsuranceProviders } from '@/utils/insurance-filtering';
 import { formatDate, calculateWaitingPeriod } from '@/utils/date-calculations';
 import VisualTimeline from '@/components/dashboard/visual-timeline';
@@ -17,6 +17,7 @@ export default function Results() {
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [bilateralAgreementData, setBilateralAgreementData] = useState<any>(null);
   const [selectedInsurance, setSelectedInsurance] = useState<string>('desjardins-visitor');
+  const [selectedProvider, setSelectedProvider] = useState<InsuranceProvider | null>(null);
   const { toast } = useToast();
 
   // Get bilateral agreement status for the selected country
@@ -90,9 +91,20 @@ export default function Results() {
       );
       if (providers.length > 0) {
         setSelectedInsurance(providers[0].id);
+        setSelectedProvider(providers[0]);
       }
     }
   }, [assessmentData?.familySize, assessmentData?.immigrationStatus, selectedInsurance]);
+
+  // Update selected provider when selection changes
+  useEffect(() => {
+    if (selectedInsurance && insuranceProviders.length > 0) {
+      const provider = insuranceProviders.find(p => p.id === selectedInsurance);
+      if (provider) {
+        setSelectedProvider(provider);
+      }
+    }
+  }, [selectedInsurance, insuranceProviders]);
 
   const savePlan = () => {
     if (!assessmentData || !waitingPeriodCalculation) return;
