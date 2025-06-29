@@ -1,0 +1,324 @@
+<role>
+You are an expert React UX developer specializing in interactive card interfaces and state management for professional demo presentations.
+</role>
+
+<urgent_mission>
+🚨 **HACKATHON UX EMERGENCY** 🚨
+Fix FOUR MAJOR UX problems with the insurance selection interface that make the app feel unfinished and unprofessional during demo:
+
+1. **Button text overcrowded** - "Get Quote from Blue Cross Quebec Plan" is 47 characters!
+2. **Cards look clickable but don't respond** - Static cards with no interaction feedback
+3. **Cost estimate never updates** - Shows same "$193" regardless of plan selected  
+4. **No selection state** - Users can't tell which plan they're choosing
+
+**Impact:** Interface feels like a static mockup instead of real interactive app
+</urgent_mission>
+
+<current_problems>
+**🔴 Problem 1: Congested Button Text**
+- Current: "Get Quote from Blue Cross Quebec Plan" (too long!)
+- Issue: Takes excessive space, looks unprofessional
+- Fix: Change to simple "Get Quote"
+
+**🔴 Problem 2: Non-Interactive Cards**  
+- Current: Cards look clickable but nothing happens when clicked
+- Issue: Users expect selection but get no feedback
+- Fix: Make cards selectable with visual highlights
+
+**🔴 Problem 3: Static Cost Estimate**
+- Current: Always shows "$193" regardless of plan
+- Issue: Should update based on selected plan's monthly price
+- Fix: Dynamic calculation that updates with selection
+
+**🔴 Problem 4: No Selection Feedback**
+- Current: No way to tell which plan is "selected"
+- Issue: Users don't know which plan they're about to quote
+- Fix: Clear visual indication of selected plan
+</current_problems>
+
+<implementation_requirements>
+**Required UX Transformations:**
+
+**🎯 Task 1: Make Cards Interactive**
+```javascript
+// Add selection state management
+const [selectedInsurance, setSelectedInsurance] = useState('blue-cross-quebec');
+
+// Add click handler for cards
+const handleCardClick = (planId) => {
+  setSelectedInsurance(planId);
+};
+
+// Add visual selection state
+<div 
+  className={`insurance-card ${selectedInsurance === plan.id ? 'selected' : ''}`}
+  onClick={() => handleCardClick(plan.id)}
+>
+```
+
+**🎯 Task 2: Dynamic Cost Calculation**
+```javascript
+// Cost calculation based on 89-day period (~3 months)
+const calculateCost = (planId) => {
+  const selectedPlan = insurancePlans.find(plan => plan.id === planId);
+  const monthlyCost = selectedPlan.monthlyPrice || selectedPlan.cost;
+  return Math.round(monthlyCost * 3); // 3 months approximation
+};
+
+// Update cost when selection changes
+useEffect(() => {
+  const newCost = calculateCost(selectedInsurance);
+  setCostEstimate(newCost);
+}, [selectedInsurance]);
+```
+
+**🎯 Task 3: Clean Button Text**
+```javascript
+// Change from this:
+"Get Quote from Blue Cross Quebec Plan"
+
+// To this:
+"Get Quote"
+```
+
+**🎯 Task 4: Selection Visual States**
+```css
+.insurance-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.insurance-card.selected {
+  border: 2px solid #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+.insurance-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+```
+</implementation_requirements>
+
+<file_search_strategy>
+**Find Insurance Card Components:**
+
+**Search for these files/patterns:**
+- Insurance results/selection page
+- Card components for insurance plans  
+- Cost estimate/calculation components
+- Button components with quote functionality
+
+**Look for text content:**
+- "Get Quote from"
+- Insurance provider names (Blue Cross, Desjardins, etc.)
+- Cost estimates or pricing displays
+- Monthly cost or pricing information
+
+**Common file locations:**
+- `client/src/pages/results.tsx` (likely main results page)
+- `client/src/components/insurance/` (insurance-specific components)
+- `client/src/components/ui/` (card and button components)
+- Files containing "insurance", "quote", "plan", "cost"
+
+**Component patterns to find:**
+- Card components displaying insurance plans
+- Button components with "Get Quote" functionality
+- Cost calculation or display logic
+- State management for plan selection
+</file_search_strategy>
+
+<implementation_steps>
+**Step 1: Locate Insurance Card Components (3 minutes)**
+1. Find the main insurance results/selection page
+2. Identify card components displaying insurance plans
+3. Locate cost estimate display logic
+4. Find button components with quote functionality
+
+**Step 2: Add Selection State Management (5 minutes)**
+1. Add `useState` for selected insurance plan
+2. Set default selection to most popular plan (Blue Cross or Desjardins)
+3. Create click handler for card selection
+4. Add conditional styling for selected state
+
+**Step 3: Implement Dynamic Cost Calculation (5 minutes)**
+1. Create cost calculation function based on monthly pricing
+2. Add `useEffect` to update cost when selection changes
+3. Connect cost estimate display to calculated value
+4. Test with different plan selections
+
+**Step 4: Simplify Button Text & Add Visual Polish (5 minutes)**
+1. Change button text from long form to simple "Get Quote"
+2. Add CSS for selection states and hover effects
+3. Ensure consistent styling across all cards
+4. Test interactive behavior on all cards
+
+**Step 5: Testing & Verification (5 minutes)**
+1. Test card selection on all insurance plans
+2. Verify cost estimate updates with selection
+3. Confirm button functionality still works
+4. Test on mobile viewport for responsiveness
+</implementation_steps>
+
+<cost_calculation_logic>
+**Insurance Plan Monthly Costs (for calculation):**
+Based on typical Quebec newcomer insurance pricing:
+
+```javascript
+const insurancePricing = {
+  'blue-cross-quebec': 85,     // $85/month
+  'desjardins-visitor': 75,    // $75/month  
+  'sun-life-quebec': 65,       // $65/month
+  'manulife-quebec': 78,       // $78/month
+  'guard-me-quebec': 45        // $45/month (student rate)
+};
+
+// Calculate 89-day estimate (approximately 3 months)
+const calculateEstimate = (planId) => {
+  const monthlyRate = insurancePricing[planId] || 75; // Default fallback
+  return Math.round(monthlyRate * 3);
+};
+```
+
+**Display Format:**
+- Show calculated cost: "$255 for 89 days"
+- Or: "$255 (3 months)"
+- Update immediately when selection changes
+</cost_calculation_logic>
+
+<visual_design_requirements>
+**Selection State Indicators:**
+- **Selected card:** Blue border + subtle background tint
+- **Unselected cards:** Transparent border
+- **Hover state:** Slight elevation + shadow
+- **All cards:** Maintain consistent spacing and typography
+
+**Interactive Feedback:**
+- Cursor changes to pointer on hover
+- Smooth transitions for all state changes
+- Clear visual hierarchy with selected card emphasized
+- Professional appearance suitable for demo
+
+**Button Improvements:**
+- Clean, consistent button styling
+- Clear call-to-action text
+- Proper spacing and alignment
+- Maintain existing link functionality
+</visual_design_requirements>
+
+<testing_verification>
+**Critical UX Testing:**
+
+**Interactive Card Test:**
+1. Click on each insurance card
+2. ✅ Verify: Card highlights immediately upon click
+3. ✅ Verify: Previously selected card un-highlights
+4. ✅ Verify: Hover effects work on all cards
+
+**Dynamic Cost Test:**
+1. Select Blue Cross card
+2. ✅ Verify: Cost updates to ~$255 (85 × 3 months)
+3. Select Guard.me card  
+4. ✅ Verify: Cost updates to ~$135 (45 × 3 months)
+5. ✅ Verify: Cost changes are immediate and smooth
+
+**Button Functionality Test:**
+1. Select each insurance plan
+2. Click "Get Quote" button
+3. ✅ Verify: Opens correct insurance provider website
+4. ✅ Verify: All quote links still work properly
+
+**Demo Readiness Test:**
+1. Complete user flow feels intuitive and responsive
+2. Interface looks professional and polished
+3. All interactions work smoothly for judge testing
+4. No static or unresponsive elements remain
+</testing_verification>
+
+<success_criteria>
+**UX Transformation Success:**
+
+**Before Fix:**
+- Static cards that don't respond to clicks
+- Same cost estimate regardless of plan
+- Overcrowded button text
+- No visual feedback for user actions
+
+**After Fix:**
+- ✅ Interactive cards with immediate selection feedback
+- ✅ Dynamic cost estimates that update with selection
+- ✅ Clean, professional button text ("Get Quote")
+- ✅ Clear visual indicators for selected plan
+- ✅ Smooth hover effects and transitions
+- ✅ Professional, demo-ready appearance
+
+**Demo Impact:**
+- Judges can interact naturally with the interface
+- App feels like a real, polished application
+- Professional attention to UX detail impresses evaluators
+- No awkward explanations needed about unresponsive elements
+</success_criteria>
+
+<constraints>
+**Preserve Existing Functionality:**
+- All quote links must continue working
+- Insurance plan data must remain intact
+- Page routing and navigation unchanged
+- Existing component structure maintained where possible
+
+**Default Behavior:**
+- Pre-select most popular plan (Blue Cross or Desjardins)
+- Cost estimate should show selected plan's pricing initially
+- First card should appear selected on page load
+
+**Mobile Compatibility:**
+- Touch interactions must work on mobile devices
+- Cards remain properly sized on small screens
+- Selection states visible on mobile viewports
+- Responsive design maintained
+</constraints>
+
+<output_format>
+Provide after completion:
+
+1. **Interactive Cards Implementation**
+   - Which files were modified for card selection
+   - How selection state is managed
+   - Visual styling changes made
+
+2. **Dynamic Cost Calculation**
+   - Cost calculation logic implemented
+   - How costs update with selection changes
+   - Default pricing and fallback handling
+
+3. **Button Text Simplification**
+   - Old vs new button text
+   - Files modified for button changes
+   - Verification that links still work
+
+4. **Testing Results**
+   - All card interactions tested and working
+   - Cost calculations verified for each plan
+   - Demo-ready confirmation with smooth UX
+
+5. **Files Modified Summary**
+   - Complete list of files changed
+   - Specific changes made to each file
+   - Any potential issues or limitations
+</output_format>
+
+<hackathon_urgency>
+**Why This Fix Is Critical:**
+- Static interfaces make apps look like mockups, not real products
+- Judges expect interactive elements to actually work
+- Poor UX overshadows brilliant backend innovation
+- Professional polish separates winning apps from prototypes
+
+**Success Impact:**
+- Transforms interface from static to dynamic
+- Judges can interact naturally without confusion
+- Demonstrates attention to user experience detail
+- Builds confidence in overall app quality and professionalism
+</hackathon_urgency>

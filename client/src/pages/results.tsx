@@ -16,6 +16,7 @@ export default function Results() {
   const navigate = useNavigateWithScroll();
   const [assessmentData, setAssessmentData] = useState<AssessmentData | null>(null);
   const [bilateralAgreementData, setBilateralAgreementData] = useState<any>(null);
+  const [selectedInsurance, setSelectedInsurance] = useState<string>('blue-cross-quebec');
   const { toast } = useToast();
 
   // Get bilateral agreement status for the selected country
@@ -150,7 +151,15 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
   }
 
   const { daysRemaining } = waitingPeriodCalculation;
-  const estimatedCost = Math.round((daysRemaining / 30) * (insuranceProviders[0]?.monthlyPrice || 85));
+  
+  // Dynamic cost calculation based on selected insurance
+  const calculateEstimatedCost = () => {
+    const selectedProvider = insuranceProviders.find(provider => provider.id === selectedInsurance);
+    const monthlyPrice = selectedProvider?.monthlyPrice || 85;
+    return Math.round((daysRemaining / 30) * monthlyPrice);
+  };
+  
+  const estimatedCost = calculateEstimatedCost();
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -364,6 +373,8 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
                 provider={provider}
                 isRecommended={index === 0}
                 familySize={assessmentData.familySize}
+                isSelected={selectedInsurance === provider.id}
+                onSelect={() => setSelectedInsurance(provider.id)}
               />
             ))}
           </div>

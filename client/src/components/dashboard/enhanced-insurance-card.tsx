@@ -7,9 +7,11 @@ interface EnhancedInsuranceCardProps {
   provider: InsuranceProvider;
   isRecommended?: boolean;
   familySize: number;
+  isSelected?: boolean;
+  onSelect?: () => void;
 }
 
-export default function EnhancedInsuranceCard({ provider, isRecommended, familySize }: EnhancedInsuranceCardProps) {
+export default function EnhancedInsuranceCard({ provider, isRecommended, familySize, isSelected, onSelect }: EnhancedInsuranceCardProps) {
   const getProviderLogo = (providerName: string) => {
     // Quebec-focused provider visual representations
     const logoMap: Record<string, JSX.Element> = {
@@ -77,11 +79,16 @@ export default function EnhancedInsuranceCard({ provider, isRecommended, familyS
   };
 
   return (
-    <div className={`bg-white rounded-xl shadow-lg border transition-all duration-200 hover:shadow-xl ${
-      isRecommended 
-        ? 'border-green-300 ring-2 ring-green-100' 
-        : 'border-gray-200 hover:border-blue-300'
-    }`}>
+    <div 
+      className={`bg-white rounded-xl shadow-lg border transition-all duration-200 cursor-pointer hover:shadow-xl hover:transform hover:-translate-y-1 ${
+        isSelected 
+          ? 'border-blue-500 ring-2 ring-blue-100 bg-blue-50/30' 
+          : isRecommended 
+          ? 'border-green-300 ring-2 ring-green-100' 
+          : 'border-gray-200 hover:border-blue-300'
+      }`}
+      onClick={onSelect}
+    >
       {isRecommended && (
         <div className="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-t-xl">
           <div className="flex items-center justify-center space-x-2">
@@ -176,9 +183,12 @@ export default function EnhancedInsuranceCard({ provider, isRecommended, familyS
         {/* Action Button */}
         <Button 
           className="w-full bg-gradient-to-r from-blue-600 to-green-600 hover:from-blue-700 hover:to-green-700 text-white"
-          onClick={() => window.open(provider.quoteUrl, '_blank')}
+          onClick={(e) => {
+            e.stopPropagation();
+            window.open(provider.quoteUrl, '_blank');
+          }}
         >
-          <span>Get Quote from {provider.name}</span>
+          <span>Get Quote</span>
           <ExternalLink className="w-4 h-4 ml-2" />
         </Button>
 
