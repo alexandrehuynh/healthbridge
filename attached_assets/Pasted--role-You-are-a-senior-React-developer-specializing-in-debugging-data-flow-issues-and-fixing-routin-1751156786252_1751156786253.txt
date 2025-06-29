@@ -1,0 +1,200 @@
+<role>
+You are a senior React developer specializing in debugging data flow issues and fixing routing problems in healthcare applications. You have expertise in diagnosing where data is getting stuck and implementing Quebec-specific data structures.
+</role>
+
+<task>
+Fix the critical data flow issues causing the results page to get stuck on "Loading your results..." and the assessment routing to show 404 errors. The app was converted from multi-province to Quebec-only but still has dependencies on old province data structures.
+</task>
+
+<context>
+After pivoting to Quebec-only, the app is experiencing two critical issues:
+1. **Results page stuck loading** - Users complete the assessment but get stuck on "Loading your results..." 
+2. **Assessment 404 error** - When clicking "Back to Assessment", users get "404 Page Not Found"
+
+This suggests the app is still trying to access provinceData that no longer exists or is improperly structured for Quebec-only operations.
+</context>
+
+<debugging_steps>
+**First, diagnose the exact issues:**
+
+1. **Check the browser console** for JavaScript errors
+   - Open DevTools → Console tab
+   - Look for errors related to "provinceData", "undefined", or data structure issues
+   - Report what specific errors you see
+
+2. **Examine the data flow** from assessment to results
+   - Check what data is being passed from the wizard to results page
+   - Verify if Quebec data is properly structured
+   - Confirm assessment data is being stored correctly
+
+3. **Verify routing configuration**
+   - Check if `/assessment` route is properly defined
+   - Ensure `/results` route is correctly set up
+   - Confirm navigation paths are working
+
+4. **Inspect Quebec data structure**
+   - Verify Quebec province data exists and is properly formatted
+   - Check if insurance provider data is Quebec-specific
+   - Confirm waiting period calculations work for Quebec's 3-month rule
+</debugging_steps>
+
+<specific_fixes_needed>
+**1. Fix Results Page Data Loading**
+
+The results page is likely failing because of this pattern:
+```javascript
+// BROKEN - Looking for provinceData that doesn't exist
+if (!assessmentData || !waitingPeriodCalculation || !provinceData) {
+  return <LoadingScreen />;
+}
+
+// FIXED - Quebec-only version
+if (!assessmentData || !waitingPeriodCalculation) {
+  return <LoadingScreen />;
+}
+
+// Add Quebec data directly
+const quebecData = {
+  name: "Quebec",
+  waitingPeriod: 90, // 3 months
+  healthPlan: "RAMQ",
+  applicationUrl: "https://www.ramq.gouv.qc.ca/",
+  // ... other Quebec-specific data
+};
+```
+
+**2. Fix Assessment Routing**
+
+Check if the assessment route exists:
+```javascript
+// In your router configuration, ensure this exists:
+{
+  path: "/assessment",
+  component: AssessmentWizard // or whatever your component is called
+}
+
+// Also check for relative vs absolute paths in navigation
+// This might be broken:
+navigate('/assessment') 
+// vs this:
+navigate('/assessment', { replace: true })
+```
+
+**3. Update Quebec Data Structure**
+
+Create a proper Quebec data object:
+```javascript
+const quebecHealthcareData = {
+  province: {
+    id: "QC",
+    name: "Quebec", 
+    frenchName: "Québec",
+    healthPlan: "RAMQ",
+    waitingPeriod: 90,
+    applicationUrl: "https://www.ramq.gouv.qc.ca/",
+    emergencyNumber: "811",
+    settlementServices: [
+      {
+        name: "Services Québec",
+        url: "https://www.quebec.ca/",
+        phone: "1-877-644-4545"
+      }
+    ]
+  },
+  insuranceProviders: [
+    {
+      id: "desjardins_qc",
+      name: "Desjardins Visitor Insurance",
+      price: 75,
+      coverage: "$1M emergency medical",
+      quoteUrl: "https://www.desjardins.com/ca/personal/insurance/travel/visitors-canada/"
+    },
+    // ... more Quebec-specific providers
+  ],
+  socialSecurityAgreements: [
+    "France", "Belgium", "Denmark", "Finland", "Luxembourg",
+    "Norway", "Portugal", "Sweden", "Greece", "United States"
+    // ... full list of countries with Quebec agreements
+  ]
+};
+```
+</specific_fixes_needed>
+
+<implementation_checklist>
+**Please fix these issues in order:**
+
+1. **Diagnose the exact errors**
+   - Check browser console for specific error messages
+   - Report what errors you see when trying to load results
+   - Check network tab for any failed API calls
+
+2. **Fix results page data loading**
+   - Remove provinceData dependency from results page conditional
+   - Add hardcoded Quebec data where provinceData was used
+   - Test that results page loads with sample assessment data
+
+3. **Fix assessment routing**
+   - Verify `/assessment` route exists in router configuration
+   - Fix navigation calls to use correct path
+   - Test that "Back to Assessment" button works
+
+4. **Update data structures**
+   - Create Quebec-specific data object with all needed information
+   - Update waiting period calculation to use Quebec's 3-month rule
+   - Ensure insurance providers are Quebec-focused
+
+5. **Test complete user flow**
+   - Go through entire assessment from start to results
+   - Verify all navigation works correctly
+   - Confirm insurance recommendations display properly
+</implementation_checklist>
+
+<database_investigation>
+**To help understand your data structure better, please:**
+
+1. **Show me your current data files**
+   - What files exist in `/src/data/` folder?
+   - What does the provinces.json look like now?
+   - What insurance provider data do you have?
+
+2. **Check your assessment data flow**
+   - How is assessment data being stored? (localStorage, React state, database?)
+   - What format is the data in when passed to results page?
+   - Are you using any database or just static JSON files?
+
+3. **Verify your routing setup**
+   - What router are you using? (React Router, Wouter, etc.)
+   - Show me your route configuration
+   - What does your navigation code look like?
+
+**Report back with:**
+- Any console errors you see
+- What your current data structure looks like
+- Whether you're using database or just JSON files
+- What your router configuration includes
+</database_investigation>
+
+<output_format>
+**Please implement these fixes and report:**
+
+1. **Console errors found** - What specific errors appear in DevTools?
+2. **Data structure status** - What Quebec data exists and how is it structured?
+3. **Routing status** - Are assessment and results routes properly configured?
+4. **Fixed results page** - Show that it loads without getting stuck
+5. **Fixed navigation** - Show that "Back to Assessment" works
+6. **Complete user flow test** - Demo going from assessment to results successfully
+
+**After fixing, the app should:**
+- ✅ Complete assessment wizard without errors
+- ✅ Load results page with Quebec insurance recommendations  
+- ✅ Allow navigation back to assessment
+- ✅ Show Quebec-specific waiting period and RAMQ information
+</output_format>
+
+<constraints>
+- Focus on Quebec-only data - no multi-province logic needed
+- Ensure all navigation paths work correctly
+- Maintain existing UI/UX while fixing data issues
+- Use hardcoded Quebec data instead of dynamic province selection
+- Test thoroughly before considering it fixed
+</constraints>

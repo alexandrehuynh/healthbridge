@@ -21,6 +21,7 @@ function Router() {
         <Switch>
           <Route path="/" component={Landing} />
           <Route path="/wizard" component={Wizard} />
+          <Route path="/assessment" component={Wizard} />
           <Route path="/results" component={Results} />
           <Route path="/resources" component={Resources} />
           <Route path="/help" component={Help} />

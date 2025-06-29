@@ -21,14 +21,27 @@ export default function Results() {
     if (savedData) {
       setAssessmentData(JSON.parse(savedData));
     } else {
-      // Redirect to assessment if no data found
-      setLocation('/assessment');
+      // Redirect to wizard if no data found
+      setLocation('/wizard');
     }
   }, [setLocation]);
+
+  // Quebec-specific data structure
+  const quebecData = {
+    id: "quebec",
+    name: "Quebec",
+    abbreviation: "QC",
+    waitingPeriod: 90,
+    healthPlanName: "RAMQ",
+    applicationUrl: "https://www.ramq.gouv.qc.ca/en",
+    hasWaitingPeriod: true
+  };
 
   // Quebec-specific waiting period calculation
   const waitingPeriodCalculation = assessmentData?.ramqSubmissionDate 
     ? calculateWaitingPeriod(assessmentData.ramqSubmissionDate, 90) // 90 days for Quebec
+    : assessmentData?.arrivalDate 
+    ? calculateWaitingPeriod(assessmentData.arrivalDate, 90) 
     : null;
 
   const insuranceProviders = assessmentData ? getQuebecInsuranceProviders(
@@ -44,6 +57,7 @@ export default function Results() {
       timestamp: new Date().toISOString(),
       immigrationStatus: assessmentData.immigrationStatus,
       countryOfOrigin: assessmentData.countryOfOrigin,
+      arrivalDate: assessmentData.arrivalDate,
       ramqSubmissionDate: assessmentData.ramqSubmissionDate,
       familySize: assessmentData.familySize,
       healthPlanName: 'RAMQ (Régie de l\'assurance maladie du Québec)',
@@ -97,7 +111,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-600 mb-4">Loading your results...</p>
-          <Button onClick={() => setLocation('/assessment')}>
+          <Button onClick={() => setLocation('/wizard')}>
             Back to Assessment
           </Button>
         </div>
