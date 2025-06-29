@@ -347,7 +347,7 @@ export default function CountrySelector({ value, onChange, placeholder = "Search
       {/* Dropdown List */}
       {isOpen && (
         <div 
-          className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 sm:max-h-64 overflow-y-auto touch-manipulation"
+          className="absolute top-full left-0 right-0 z-50 mt-1 bg-white border border-gray-200 rounded-lg shadow-xl max-h-80 sm:max-h-64 overflow-y-auto touch-manipulation country-dropdown-scroll"
           style={{ 
             overscrollBehavior: 'contain',
             WebkitOverflowScrolling: 'touch',
