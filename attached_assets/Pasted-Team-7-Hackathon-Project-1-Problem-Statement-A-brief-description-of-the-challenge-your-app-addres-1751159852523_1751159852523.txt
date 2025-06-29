@@ -1,0 +1,89 @@
+Team 7- Hackathon Project
+1) Problem Statement: A brief description of the challenge your app addresses (max 150 words).
+Every year, 50,000+ new permanent residents arrive in Quebec facing a mandatory 3-month waiting period before RAMQ coverage begins, yet most don't know that work permit holders are often ineligible entirely. The province recommends purchasing private insurance within 5 days of arrival, but newcomers struggle to understand Quebec's complex eligibility rules and social security agreements that can waive waiting periods for citizens from 30+ countries. Montreal's 25,000+ annual international students face additional confusion—most aren't RAMQ-eligible and must navigate private options in French or English. Settlement agencies report that 45% of newcomers either miss the 5-day insurance recommendation or purchase inadequate coverage, not understanding which countries have bilateral agreements or whether their immigration status qualifies them for eventual RAMQ access. Despite being Canada's second-largest immigrant destination, Quebec lacks a centralized platform explaining these unique provincial rules during newcomers' critical first week.
+2) Target audience 
+1. Primary Users: New Permanent Residents
+New immigrants and permanent residents who have recently arrived in Canada are the core target. They are the most affected by the 3-month provincial health insurance waiting period and often lack clear guidance on what to do during that time. Many are unaware of their eligibility, confused by private insurance, or simply uninformed about where to seek care. The app provides them with timely, accessible, and language-friendly information and options.
+2. Secondary Users: Refugees, International Students, and Temporary Workers
+These users often face similar or overlapping challenges—like uncertainty around health coverage, limited access to reliable sources of help, or difficulty navigating the system. Refugees may be eligible for IFHP but struggle to find clinics that accept it. International students and temporary workers often don't know whether their permits qualify them for public insurance and need interim solutions.
+3. Tertiary Users: Settlement Agencies, Healthcare Providers, NGOs
+Organizations that work directly with newcomers—such as immigrant settlement services, community clinics, and nonprofits—can use the app as a trusted digital resource to support and educate their clients. These groups also benefit from easier referrals and communication tools built into the platform
+
+3) Solution Plan (What are you building and how?)
+We are building HealthBridge — a mobile-first, multilingual web application designed to assist newcomers to Canada, particularly new permanent residents, in navigating the confusing and critical period before they become eligible for public healthcare.
+What We’re Building:
+HealthBridge is a user-friendly, AI-powered platform that:
+Tracks the user's arrival date and identifies whether they’re currently in the 3-month waiting period.
+
+
+Explains health insurance options using simple, culturally sensitive language.
+
+
+Offers a personalized insurance assistant, helping users filter and compare short-term private plans based on budget, health needs, and eligibility.
+
+
+Guides users through Interim Federal Health Program (IFHP) access (for eligible refugee claimants).
+
+
+Maps and lists low-cost or newcomer-friendly clinics, telehealth providers, and pharmacy discount options.
+
+
+Sends notifications and reminders about when public coverage becomes available.
+
+
+How We’re Building It:
+Frontend: ReactJS / React Native (for cross-platform mobile responsiveness)
+
+
+Backend: Firebase (auth, Firestore, cloud functions)
+
+
+AI Integration: GPT-4 or Dialogflow for chatbot assistance + insurance comparison logic
+
+
+APIs Used: Google Maps (clinic locator), Medimap, Twilio (reminders), public health data
+
+
+Languages Supported: English, French, Arabic, Mandarin
+
+
+
+4) Tools & Tech (AI models, no-code tools, APIs, etc.)
+To build the first version of HealthBridge, we’re using a mix of no-code tools, AI models, and APIs to develop a fast, scalable, and user-friendly mobile-first web app—without needing a full development team.
+Core Development Tools
+Replit – for developing and testing the app using JavaScript and React, with MongoDB to store user data securely.
+
+
+Bubble (no-code tool) – for designing and building a responsive web and mobile interface, allowing rapid prototyping and deployment without heavy coding.
+AI & Smart Assistance
+ChatGPT (GPT-4 API) – powers an in-app chatbot to answer questions in simple, personalized language, helping users understand coverage and next steps.
+
+
+Google Translate API – enables real-time content translation into multiple languages, including English, French, Arabic, Mandarin, and Twi, improving accessibility for diverse newcomers.
+
+
+APIs & External Services
+Clinic Map Integration: Embeds a map showing nearby clinics that:
+
+
+Accept newcomers (with or without insurance)
+
+
+Offer low-cost or free care
+
+
+Speak the user's language
+
+
+Quiz Engine (custom-built): A short quiz that recommends private insurance plans based on immigration status, budget, and time in Canada, explained in clear, simple language.
+
+
+Reminder System: Sends timely alerts to remind users when their 3-month public coverage wait is ending so they don’t miss application deadlines.
+ Security & Independence
+All features are designed to function independently of government systems, with no sensitive health data stored, ensuring privacy and ease of adoption. The goal is to provide newcomers with instant guidance, practical tools, and peace of mind during a critical transition period.
+
+5) Solution Overview: A one-paragraph explanation, with optional sketches/mockups.
+HealthBridge (or BeginWell) is a mobile-first web application designed to support newcomers to Canada during the critical 3-month waiting period before they become eligible for public health insurance. The app helps users determine their coverage status based on immigration type and arrival date, then connects them to affordable or free healthcare options—including clinics that accept uninsured patients, trusted private insurance plans, and IFHP support for refugees. Using AI, the app offers personalized recommendations, insurance comparisons based on needs like pre-existing conditions and budget, and multilingual guidance in English, French, Arabic, Mandarin, and Twi. It includes an eligibility wizard, real-time clinic maps, prescription discount tools, and smart reminders to notify users when their wait is nearly over. By simplifying a confusing process with clear information and proactive support, HealthBridge empowers newcomers to make informed choices and protect their health from day one.
+
+
+
