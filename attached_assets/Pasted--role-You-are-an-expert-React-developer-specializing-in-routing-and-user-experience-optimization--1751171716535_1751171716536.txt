@@ -1,0 +1,203 @@
+<role>
+You are an expert React developer specializing in routing and user experience optimization.
+</role>
+
+<task>
+Fix the scroll position reset bug in HealthBridge where navigating between pages doesn't automatically scroll to the top, creating poor UX during page transitions.
+</task>
+
+<problem_description>
+**Current Issue:**
+When users navigate between pages/routes in the HealthBridge app, the scroll position stays where it was on the previous page instead of resetting to the top. This creates confusing UX where users land in the middle of a new page.
+
+**Expected Behavior:**
+Every page transition should automatically scroll to the top (0,0 position) to ensure users see the beginning of the new page content.
+
+**Root Cause:**
+React routers (including Wouter) don't automatically reset scroll position on navigation - this must be implemented manually.
+</problem_description>
+
+<implementation_requirements>
+**Solution Needed:**
+Add `window.scrollTo(0, 0)` to page transitions using one of these approaches:
+
+1. **Route Change Detection** - Hook into route changes and scroll to top
+2. **Component Mount** - Reset scroll when page components mount  
+3. **Navigation Wrapper** - Add scroll reset to navigation logic
+4. **Router Configuration** - If Wouter supports scroll reset options
+
+**Technical Considerations:**
+- Works with Wouter routing system used in HealthBridge
+- Smooth scrolling vs instant scrolling (prefer instant for immediate feedback)
+- Handle both programmatic navigation and browser back/forward
+- Don't interfere with in-page anchor links or modal scrolling
+- Maintain accessibility (screen readers should be notified of page change)
+</implementation_requirements>
+
+<technical_implementation>
+**Approach 1: useLocation Hook with useEffect**
+```typescript
+// Add to main app component or route wrapper
+import { useLocation } from 'wouter';
+import { useEffect } from 'react';
+
+function ScrollToTop() {
+  const [location] = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
+  
+  return null;
+}
+```
+
+**Approach 2: Route Component Wrapper**
+```typescript
+// Wrap each page component
+function PageWrapper({ children }: { children: React.ReactNode }) {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  
+  return <>{children}</>;
+}
+```
+
+**Approach 3: Custom Navigation Hook**
+```typescript
+// Enhance existing navigation
+function useNavigateWithScroll() {
+  const [, setLocation] = useLocation();
+  
+  const navigate = (path: string) => {
+    setLocation(path);
+    window.scrollTo(0, 0);
+  };
+  
+  return navigate;
+}
+```
+</technical_implementation>
+
+<files_to_modify>
+**Primary Implementation Locations:**
+
+1. **Main App Component** (`client/src/App.tsx` or main router file)
+   - Add global scroll reset component
+   - Most reliable approach for all navigation
+
+2. **Route Components** (Individual page files)
+   - Add useEffect to each page component
+   - Fallback if global approach doesn't work
+
+3. **Navigation Utilities** (If custom navigation hooks exist)
+   - Enhance existing navigation functions
+   - Maintain consistent navigation behavior
+
+4. **Wizard Components** (`client/src/components/wizard/`)
+   - Particularly important for multi-step flows
+   - Ensure wizard step transitions also reset scroll
+</files_to_modify>
+
+<testing_verification>
+**Test Scenarios:**
+
+1. **Page Navigation Test:**
+   - Scroll down on any page
+   - Navigate to different page
+   - ✅ Verify: New page loads scrolled to top
+
+2. **Wizard Flow Test:**
+   - Scroll down on wizard step
+   - Click "Next" to go to next step
+   - ✅ Verify: Next step loads scrolled to top
+
+3. **Browser Navigation Test:**
+   - Use browser back/forward buttons
+   - ✅ Verify: Each page loads scrolled to top
+
+4. **Deep Link Test:**
+   - Navigate directly to routes via URL
+   - ✅ Verify: Page loads scrolled to top
+
+5. **Mobile Test:**
+   - Test on mobile viewport
+   - ✅ Verify: Scroll reset works on touch devices
+
+**Edge Cases to Handle:**
+- Modal overlays (don't reset scroll when opening modals)
+- In-page anchor links (preserve anchor behavior)
+- Smooth scrolling preferences (respect user settings)
+- Initial page load (ensure first page also starts at top)
+</testing_verification>
+
+<wouter_specific_considerations>
+Since HealthBridge uses Wouter routing:
+
+**Wouter Location Hook:**
+```typescript
+import { useLocation } from 'wouter';
+
+// Monitor route changes
+const [location] = useLocation();
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, [location]);
+```
+
+**Wouter Navigation:**
+```typescript
+import { useLocation } from 'wouter';
+
+// Custom navigation with scroll reset
+const [, setLocation] = useLocation();
+const navigateWithScrollReset = (path: string) => {
+  setLocation(path);
+  window.scrollTo(0, 0);
+};
+```
+</wouter_specific_considerations>
+
+<implementation_approach>
+**Recommended Strategy:**
+
+1. **Start with Global Solution** - Add scroll reset to main App component using useLocation hook
+2. **Test Thoroughly** - Verify it works for all navigation types
+3. **Add Fallbacks** - If needed, add useEffect to individual page components
+4. **Optimize for Performance** - Ensure scroll reset doesn't cause layout flickers
+
+**Priority Implementation:**
+- High: Main page navigation (between different routes)
+- Medium: Wizard step transitions
+- Low: Modal/overlay interactions (may want to preserve scroll)
+</implementation_approach>
+
+<output_format>
+Provide:
+1. **Complete implementation code** for the chosen approach
+2. **Specific file modifications** with exact code placement
+3. **Testing instructions** to verify the fix works
+4. **Any edge cases discovered** and how they're handled
+5. **Performance impact assessment** (should be minimal)
+</output_format>
+
+<constraints>
+- Must work with existing Wouter routing setup
+- Cannot break current navigation functionality
+- Should be performant (no layout thrashing)
+- Must work on both desktop and mobile
+- Should handle browser back/forward navigation
+- Don't interfere with intentional scroll positions (modals, etc.)
+</constraints>
+
+<success_criteria>
+Fix succeeds when:
+- ✅ Every page navigation automatically scrolls to top
+- ✅ Wizard step transitions reset scroll position
+- ✅ Browser back/forward buttons trigger scroll reset
+- ✅ Mobile navigation works smoothly
+- ✅ No performance issues or layout flickers
+- ✅ Existing functionality remains intact
+- ✅ User experience feels polished and professional
+</success_criteria>

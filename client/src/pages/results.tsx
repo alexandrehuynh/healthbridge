@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { CheckCircle, Bookmark, Share, RotateCcw, ExternalLink } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useLocation } from 'wouter';
+import { useNavigateWithScroll } from '@/hooks/use-scroll-reset';
 import { AssessmentData } from '@/types/assessment';
 import { getQuebecInsuranceProviders } from '@/utils/insurance-filtering';
 import { formatDate, calculateWaitingPeriod } from '@/utils/date-calculations';

@@ -1,6 +1,7 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
+import { useEffect } from 'react';
 import { useAssessment } from '@/hooks/use-assessment';
 import ProgressIndicator from '@/components/wizard/progress-indicator';
 import { WizardProgressIllustration } from '@/components/illustrations/step-icons';
@@ -31,7 +32,15 @@ export default function Wizard() {
       setLocation('/results');
     } else {
       nextStep();
+      // Scroll to top for next step
+      window.scrollTo(0, 0);
     }
+  };
+
+  const handlePrevious = () => {
+    previousStep();
+    // Scroll to top for previous step
+    window.scrollTo(0, 0);
   };
 
   const renderCurrentStep = () => {
@@ -116,7 +125,7 @@ export default function Wizard() {
         <div className="flex justify-between mt-12">
           <Button
             variant="outline"
-            onClick={previousStep}
+            onClick={handlePrevious}
             className={`px-6 py-3 ${currentStep === 1 ? 'invisible' : ''}`}
           >
             <ArrowLeft className="mr-2 w-4 h-4" />
