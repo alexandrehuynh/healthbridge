@@ -1,0 +1,148 @@
+<role>
+You are an expert JSON file maintenance specialist with precision editing skills for critical production fixes.
+</role>
+
+<urgent_mission>
+🎯 **HACKATHON CRITICAL FIX**
+Fix 3 broken insurance provider URLs in the HealthBridge Quebec insurance providers JSON file. This is URGENT for demo - broken links will cause immediate credibility loss with hackathon judges.
+</urgent_mission>
+
+<target_file>
+**File to Modify:** `client/src/data/quebec-insurance-providers.json`
+</target_file>
+
+<critical_requirements>
+⚠️ **STRICT EDITING RULES:**
+* **ONLY change the `quoteUrl` fields** - DO NOT modify any other data
+* **Preserve ALL existing JSON structure** exactly as it is
+* **DO NOT reorder, reorganize, or reformat** the file
+* **DO NOT change pricing, coverage, features, or any other fields**
+* **Maintain exact indentation and formatting**
+* **Keep all comments and structure intact**
+</critical_requirements>
+
+<specific_url_replacements>
+**Fix These 3 Broken URLs ONLY:**
+
+**1. Fix Desjardins Visitor Insurance**
+- **Find object with:** `"id": "desjardins-visitor"`
+- **Change:** `"quoteUrl": "https://www.desjardins.com/ca/personal/insurance/travel/visitors-canada/"`
+- **To:** `"quoteUrl": "https://www.desjardins.com/en/insurance/travel/visitors-canada.html"`
+
+**2. Fix Sun Life Essential Quebec**
+- **Find object with:** `"id": "sun-life-quebec"`
+- **Change:** `"quoteUrl": "https://www.sunlife.ca/ca/insurance/health-insurance/travel-insurance/"`
+- **To:** `"quoteUrl": "https://www.sunlife.ca/en/insurance/travel/"`
+
+**3. Fix Manulife CoverMe Quebec**
+- **Find object with:** `"id": "manulife-quebec"`
+- **Change:** `"quoteUrl": "https://www.manulife.ca/personal/insurance/health-and-dental/travel-insurance.html"`
+- **To:** `"quoteUrl": "https://www.manulife.ca/personal/insurance/our-products/travel-insurance.html"`
+</specific_url_replacements>
+
+<do_not_change>
+✅ **Leave These URLs UNCHANGED (They Work Perfectly):**
+* **Blue Cross Quebec Plan** (`"id": "blue-cross-quebec"`) - Working perfectly
+* **Guard.me Quebec Student Plan** (`"id": "guard-me-quebec"`) - Working perfectly
+
+**DO NOT TOUCH any other fields in any provider object:**
+- name, description, coverage, monthly_cost, features, eligibility, languages, etc.
+</do_not_change>
+
+<implementation_steps>
+**Precise Editing Process:**
+
+1. **Open** `client/src/data/quebec-insurance-providers.json`
+2. **Locate** each provider by searching for the specific `"id"` field
+3. **Find** the `"quoteUrl"` field within that provider object
+4. **Replace** ONLY the URL string with the new working URL
+5. **Verify** JSON syntax remains valid after each change
+6. **Save** the file with changes
+
+**Example Before/After:**
+```json
+// BEFORE
+{
+  "id": "desjardins-visitor",
+  "name": "Desjardins Visitor Insurance",
+  "quoteUrl": "https://www.desjardins.com/ca/personal/insurance/travel/visitors-canada/",
+  // ... other fields unchanged
+}
+
+// AFTER  
+{
+  "id": "desjardins-visitor", 
+  "name": "Desjardins Visitor Insurance",
+  "quoteUrl": "https://www.desjardins.com/en/insurance/travel/visitors-canada.html",
+  // ... other fields unchanged
+}
+```
+</implementation_steps>
+
+<verification_checklist>
+🧪 **Post-Change Verification:**
+
+**JSON Integrity Check:**
+- [ ] File has valid JSON syntax (no missing commas, brackets, quotes)
+- [ ] All original structure preserved exactly
+- [ ] No fields deleted or added
+- [ ] No reordering of providers or fields
+
+**URL Change Verification:**
+- [ ] Desjardins visitor URL updated to new working link
+- [ ] Sun Life Quebec URL updated to new working link  
+- [ ] Manulife Quebec URL updated to new working link
+- [ ] Blue Cross Quebec URL unchanged (still working)
+- [ ] Guard.me Quebec URL unchanged (still working)
+
+**Content Preservation Check:**
+- [ ] All provider names, descriptions unchanged
+- [ ] All pricing information unchanged
+- [ ] All coverage details unchanged
+- [ ] All features lists unchanged
+- [ ] All eligibility criteria unchanged
+</verification_checklist>
+
+<context_information>
+**Why These URLs Broke:**
+- Original URLs were returning 404 errors during demo testing
+- Insurance companies restructured their websites
+- New URLs are verified working and lead to appropriate quote pages
+
+**Why This Fix is Critical:**
+- Broken links during hackathon demo = instant credibility loss
+- Judges will click these links to verify functionality
+- Working insurance links demonstrate app's practical value
+- This is a showstopper bug that must be fixed before demo
+</context_information>
+
+<success_criteria>
+**Fix Succeeds When:**
+- ✅ All 5 insurance provider quote links work when clicked
+- ✅ JSON file syntax remains perfectly valid
+- ✅ Only the 3 specified `quoteUrl` fields were changed
+- ✅ All other provider data remains exactly unchanged
+- ✅ File structure and formatting preserved
+- ✅ Demo-ready with zero broken links
+
+**Expected Demo Result:** 
+Judges can click any insurance provider "Get Quote" button and successfully reach the insurance company's working quote page.
+</success_criteria>
+
+<output_format>
+Provide:
+1. **Confirmation** that exactly 3 URLs were changed
+2. **Before/After** showing the specific URL changes made
+3. **JSON Validation** confirming file syntax is correct
+4. **Verification** that Blue Cross and Guard.me URLs were left unchanged
+5. **File Status** confirming all changes saved successfully
+</output_format>
+
+<constraints>
+- Must preserve exact JSON formatting and indentation
+- Cannot break any existing functionality
+- Cannot modify any data except the 3 specified quoteUrl fields
+- Must maintain alphabetical or existing order of providers
+- Cannot introduce any new dependencies or requirements
+- Fix must be completed in under 2 minutes for demo urgency
+</constraints>

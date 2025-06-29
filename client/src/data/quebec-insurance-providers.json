@@ -18,7 +18,7 @@
       "24/7 helpline",
       "Pre-existing condition coverage"
     ],
-    "quoteUrl": "https://www.desjardins.com/ca/personal/insurance/travel/",
+    "quoteUrl": "https://www.desjardins.com/en/insurance/travel/visitors-canada.html",
     "provinces": ["quebec"],
     "tag": "Most Popular in Quebec",
     "targetStatuses": ["permanent_resident", "work_permit", "study_permit", "visitor"],
@@ -69,7 +69,7 @@
       "Quick enrollment",
       "Online claims"
     ],
-    "quoteUrl": "https://www.sunlife.ca/en/insurance/health-insurance/",
+    "quoteUrl": "https://www.sunlife.ca/en/insurance/travel/",
     "provinces": ["quebec"],
     "tag": "Budget Option",
     "targetStatuses": ["permanent_resident", "work_permit", "study_permit", "visitor"],
@@ -94,7 +94,7 @@
       "Mental health support",
       "Bilingual customer service"
     ],
-    "quoteUrl": "https://www.manulife.ca/personal/insurance/health-and-dental.html",
+    "quoteUrl": "https://www.manulife.ca/personal/insurance/our-products/travel-insurance.html",
     "provinces": ["quebec"],
     "tag": "Balanced Coverage",
     "targetStatuses": ["permanent_resident", "work_permit", "study_permit"],
