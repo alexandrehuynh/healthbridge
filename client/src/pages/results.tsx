@@ -504,7 +504,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
                   <>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Monthly insurance premium</span>
-                      <span className="font-semibold text-gray-900">${insuranceProviders[0]?.monthlyPrice || 85}</span>
+                      <span className="font-semibold text-gray-900">${selectedProvider?.monthlyPrice || 85}</span>
                     </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Coverage period</span>
@@ -514,7 +514,7 @@ Visit HealthBridge to get your personalized Quebec healthcare navigation plan.`;
                     </div>
                     <div className="border-t pt-3 flex justify-between">
                       <span className="font-semibold text-gray-900">Monthly Cost</span>
-                      <span className="font-bold text-lg text-gray-900">${insuranceProviders[0]?.monthlyPrice || 85}</span>
+                      <span className="font-bold text-lg text-gray-900">${selectedProvider?.monthlyPrice || 85}</span>
                     </div>
                   </>
                 ) : (

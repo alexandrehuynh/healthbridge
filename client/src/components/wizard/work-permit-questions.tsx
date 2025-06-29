@@ -1,3 +1,4 @@
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -23,6 +24,7 @@ export default function WorkPermitQuestions({
   onArrivalDateChange,
   province
 }: WorkPermitQuestionsProps) {
+  const [calendarOpen, setCalendarOpen] = React.useState(false);
   // Fix timezone offset by creating date in local timezone
   const selectedDate = arrivalDate ? new Date(arrivalDate + 'T00:00:00') : undefined;
 
@@ -82,7 +84,7 @@ export default function WorkPermitQuestions({
               <p className="text-sm text-gray-600">
                 This helps us recommend the best insurance options for your situation in {province}.
               </p>
-              <Popover>
+              <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
                     variant="outline"
@@ -105,6 +107,7 @@ export default function WorkPermitQuestions({
                         const month = String(date.getMonth() + 1).padStart(2, '0');
                         const day = String(date.getDate()).padStart(2, '0');
                         onArrivalDateChange(`${year}-${month}-${day}`);
+                        setCalendarOpen(false);
                       }
                     }}
                     fromYear={2020}
@@ -113,18 +116,21 @@ export default function WorkPermitQuestions({
                     className="rounded-md"
                   />
                   <div className="p-3 border-t">
-                    <button
+                    <Button
+                      variant="outline"
+                      size="sm"
                       onClick={() => {
                         const today = new Date();
                         const year = today.getFullYear();
                         const month = String(today.getMonth() + 1).padStart(2, '0');
                         const day = String(today.getDate()).padStart(2, '0');
                         onArrivalDateChange(`${year}-${month}-${day}`);
+                        setCalendarOpen(false);
                       }}
-                      className="text-primary hover:text-primary/80 underline text-sm font-medium"
+                      className="w-full"
                     >
                       Today
-                    </button>
+                    </Button>
                   </div>
                 </PopoverContent>
               </Popover>

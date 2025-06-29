@@ -1,3 +1,4 @@
+import React from 'react';
 import { Calendar, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Calendar as CalendarComponent } from '@/components/ui/calendar';
@@ -12,6 +13,7 @@ interface ArrivalDateProps {
 }
 
 export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
+  const [calendarOpen, setCalendarOpen] = React.useState(false);
   // Fix timezone offset by creating date in local timezone
   const selectedDate = value ? new Date(value + 'T00:00:00') : undefined;
 
@@ -22,6 +24,7 @@ export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
       onChange(`${year}-${month}-${day}`);
+      setCalendarOpen(false);
     }
   };
 
@@ -31,6 +34,7 @@ export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
     const month = String(today.getMonth() + 1).padStart(2, '0');
     const day = String(today.getDate()).padStart(2, '0');
     onChange(`${year}-${month}-${day}`);
+    setCalendarOpen(false);
   };
 
   return (
@@ -53,7 +57,7 @@ export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
         </Label>
         
         <div className="space-y-3">
-          <Popover>
+          <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
             <PopoverTrigger asChild>
               <Button
                 variant="outline"
@@ -77,12 +81,14 @@ export default function ArrivalDate({ value, onChange }: ArrivalDateProps) {
                 className="rounded-md"
               />
               <div className="p-3 border-t">
-                <button
+                <Button
+                  variant="outline"
+                  size="sm"
                   onClick={handleTodayClick}
-                  className="text-primary hover:text-primary/80 underline text-sm font-medium"
+                  className="w-full"
                 >
                   Today
-                </button>
+                </Button>
               </div>
             </PopoverContent>
           </Popover>
