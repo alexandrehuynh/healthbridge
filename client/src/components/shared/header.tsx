@@ -24,14 +24,11 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <div className="w-8 h-8 bg-canadian-red rounded flex items-center justify-center">
-              <Clover className="w-4 h-4 text-white" />
+            <div className="w-8 h-8 bg-white border border-gray-200 rounded flex items-center justify-center">
+              <Cross className="w-5 h-5 text-red-600" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
-                <span>HealthBridge</span>
-                <Cross className="w-5 h-5 text-red-600" />
-              </h1>
+              <h1 className="text-xl font-bold text-gray-900">HealthBridge</h1>
               <p className="text-xs text-gray-600">Navigate Your Healthcare Coverage</p>
             </div>
           </Link>
@@ -66,14 +63,11 @@ export default function Header() {
               </SheetTrigger>
               <SheetContent side="right" className="w-64">
                 <div className="flex items-center space-x-3 mb-8">
-                  <div className="w-8 h-8 bg-canadian-red rounded flex items-center justify-center">
-                    <Clover className="w-4 h-4 text-white" />
+                  <div className="w-8 h-8 bg-white border border-gray-200 rounded flex items-center justify-center">
+                    <Cross className="w-4 h-4 text-red-600" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-gray-900 flex items-center space-x-2">
-                      <span>HealthBridge</span>
-                      <Cross className="w-4 h-4 text-red-600" />
-                    </h2>
+                    <h2 className="text-lg font-bold text-gray-900">HealthBridge</h2>
                   </div>
                 </div>
                 <nav className="space-y-4">
