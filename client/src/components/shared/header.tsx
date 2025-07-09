@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'wouter';
-import { Clover, Menu, X } from 'lucide-react';
+import { Clover, Menu, X, Cross } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
@@ -28,7 +28,10 @@ export default function Header() {
               <Clover className="w-4 h-4 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">HealthBridge</h1>
+              <h1 className="text-xl font-bold text-gray-900 flex items-center space-x-2">
+                <span>HealthBridge</span>
+                <Cross className="w-5 h-5 text-red-600" />
+              </h1>
               <p className="text-xs text-gray-600">Navigate Your Healthcare Coverage</p>
             </div>
           </Link>
@@ -67,7 +70,10 @@ export default function Header() {
                     <Clover className="w-4 h-4 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold text-gray-900">HealthBridge</h2>
+                    <h2 className="text-lg font-bold text-gray-900 flex items-center space-x-2">
+                      <span>HealthBridge</span>
+                      <Cross className="w-4 h-4 text-red-600" />
+                    </h2>
                   </div>
                 </div>
                 <nav className="space-y-4">
